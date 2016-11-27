@@ -1,0 +1,103 @@
+{% extends "dashboard/devices.html" %}
+
+{% block dashboard_content %}
+  <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
+    <h1 class="mdl-cell mdl-cell--12-col">
+      {{ device.model }}
+      <a
+        class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect"
+        style="float: right;"
+        href="{% url 'dashboard:device_update' device.id %}">
+        <i class="material-icons">edit</i>
+      </a>
+    </h1>
+
+    <div class="mdl-cell mdl-cell--12-col">
+      <span class="mdl-chip mdl-chip--contact">
+        <span class="mdl-chip__contact mdl-color--blue-grey mdl-color-text--white">
+          <i class="material-icons" style="vertical-align: middle">person</i>
+        </span>
+        <span class="mdl-chip__text">
+          {% if device.current_owner %}
+            {{ device.current_owner }}
+          {% else %}
+            No Current Owner
+          {% endif %}
+        </span>
+        {% if device.current_owner %}
+        <a
+          href="{% url 'dashboard:person_detail' device.current_owner.id %}"
+          class="mdl-chip__action">
+          <i class="material-icons">search</i>
+        </a>
+        {% endif %}
+      </span>
+      {% include 'devices/status_chip.html' %}
+    </div>
+
+    <div class="mdl-cell mdl-cell--2-col">
+      <strong>Manufacturer</strong><br>
+      <span>{{ device.manufacturer }}</span>
+    </div>
+    <div class="mdl-cell mdl-cell--2-col">
+      <strong>Model</strong><br>
+      <span>{{ device.model }}</span>
+    </div>
+    <div class="mdl-cell mdl-cell--2-col">
+      <strong>Serial #</strong><br>
+      <span>{{ device.serial }}</span>
+    </div>
+    <div class="mdl-cell mdl-cell--2-col">
+      <strong>Date Purchased</strong><br>
+      <span>{{ device.date_purchased }}</span>
+    </div>
+    <div class="mdl-cell mdl-cell--2-col">
+      <strong>Purchase Price</strong><br>
+      <span>{{ device.purchase_price }}</span>
+    </div>
+    <div class="mdl-cell mdl-cell--2-col">
+      <strong>Receipt</strong><br>
+      <span>
+          {{ device.receipt }}
+      </span>
+    </div>
+
+    {# notes #}
+    </div>
+  </div>
+
+  <div class="mdl-cell mdl-cell--12-col mdl-grid">
+    {% block cards %}
+      {% for event in device.events.all %}
+        {% include 'devices/events/event_card.html' %}
+      {% endfor %}
+    {% endblock %}
+  </div>
+{% endblock %}
+
+{% block body_end %}
+  <button
+    id="add-button"
+    class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+    <i class="material-icons">add</i>
+  </button>
+  <div class="mdl-tooltip mdl-tooltip--left mdl-tooltip--large" for="add-button">
+    Add an Event
+  </div>
+  <ul class="mdl-menu mdl-menu--top-right mdl-js-menu mdl-js-ripple-effect"
+    data-mdl-for="add-button">
+    <li class="mdl-menu__item">
+      <a href="{% url 'dashboard:note_add' device.pk %}">Note</a>
+    </li>
+    <li class="mdl-menu__item">
+        <a href="{% url 'dashboard:transfer_add' device.pk %}">Transfer</a>
+    </li>
+    <li class="mdl-menu__item">
+      <a href="{% url 'dashboard:repair_add' device.pk %}">Repair</a>
+    </li>
+    <li class="mdl-menu__item">
+      <a href="{% url 'dashboard:decommission_add' device.pk %}">Decommission</a>
+    </li>
+    <li class="mdl-menu__item">Loss/Theft</li>
+  </ul>
+{% endblock %}

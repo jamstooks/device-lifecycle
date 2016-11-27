@@ -1,0 +1,20 @@
+{% extends 'devices/events/event_card_base.html' %}
+
+{% block card_title_style %}
+  mdl-color--pink mdl-color-text--white
+{% endblock %}
+
+{% block card_content %}
+  <dl>
+    <dt>Cost:</dt>
+    <dd>{% if event.repairevent.cost %}${% endif %}{{ event.repairevent.cost }}</dd>
+    <dt>Receipt:</dt>
+    <dd>{{ event.repairevent.receipt }}</dd>
+    <dt>Vendor:</dt>
+    <dd>{{ event.repairevent.vendor_name }}</dd>
+    <dt>Address:</dt>
+    <dd>{{ event.repairevent.vendor_address }}</dd>
+    <dt>Notes:</dt>
+    <dd>{{ event.repairevent.notes }}</dd>
+  </dl>
+{% endblock %}

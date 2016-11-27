@@ -1,0 +1,55 @@
+{% extends 'dashboard/reports/base.html' %}
+
+{% block dashboard_content %}
+  <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
+    <h1 class="mdl-cell mdl-cell--12-col">Summary</h1>
+
+    {% with 'ages' as active %}
+      {% include 'dashboard/reports/tabs.html' %}
+    {% endwith %}
+
+    <div class="mdl-cell mdl-cell--12-col" style="height: 350px" id="chart"></div>
+  </div>
+{% endblock %}
+
+{% block body_end %}
+  {{ block.super }}
+  <script>
+    var chart = c3.generate({
+      bindto: '#chart',
+      data: {
+        x: 'x',
+        columns: [
+          ['x', {% for y in years %}'{{ y|date:"Y-m-d" }}'{% if not forloop.last %},{% endif %}{% endfor %}],
+          {% for row in rows %}
+            [
+              '{{ row.label}}',
+              {% for count in row.values %}
+                {{ count}}{% if not forloop.last %},{% endif %}
+              {% endfor %}
+            ]{% if not forloop.last %},{% endif %}
+          {% endfor %}
+        ],
+        type : 'bar'
+      },
+      axis: {
+        y: {
+          tick: {
+            values: [
+              {% for v in x_axis_vals %}
+                {{ v }}{% if not forloop.last %},{% endif %}
+              {% endfor %}
+            ]
+          }
+        },
+        x: {
+            type: 'timeseries',
+            tick: {
+                format: '%Y'
+            },
+            label: 'Year Purchased'
+        }
+      }
+  });
+  </script>
+{% endblock %}

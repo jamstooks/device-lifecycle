@@ -1,0 +1,35 @@
+<nav class="mdl-navigation mdl-color--blue-grey">
+
+  <a
+    class="mdl-navigation__link mdl-color-text--black {% if selected == 'dashboard' %}is-active{% endif %}"
+    href="{% url 'dashboard:device_list' %}">
+      <i class="mdl-color-text--black material-icons" role="presentation">
+        home</i>
+      Dashboard
+  </a>
+  <a
+    class="mdl-navigation__link mdl-color-text--black {% if selected == 'devices' %}is-active{% endif %}"
+    href="{% url 'dashboard:device_list' %}">
+      <i class="mdl-color-text--black material-icons" role="presentation">
+        laptop</i>
+      Devices
+  </a>
+  <a
+    class="mdl-navigation__link mdl-color-text--black {% if selected == 'people' %}is-active{% endif %}"
+    href="{% url 'dashboard:person_list' %}">
+      <i class="mdl-color-text--black material-icons" role="presentation">
+        people_outline</i>
+      People
+  </a>
+  <a class="mdl-navigation__link mdl-color-text--black {% if selected == 'reports' %}is-active{% endif %}"
+    href="{% url 'dashboard:reports_summary' %}">
+      <i class="mdl-color-text--black material-icons" role="presentation">
+        insert_chart</i>
+      Reports
+  </a>
+  <a class="mdl-navigation__link mdl-color-text--black {% if selected == 'settings' %}is-active{% endif %}" href="/dashboard/settings/">
+      <i class="mdl-color-text--black material-icons" role="presentation">
+        settings</i>
+      Settings
+  </a>
+</nav>

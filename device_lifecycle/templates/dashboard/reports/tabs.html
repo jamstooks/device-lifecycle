@@ -1,0 +1,10 @@
+<div class="mdl-cell mdl-cell--12-col">
+  <div class="mdl-layout__tab-bar mdl-color--white mdl-js-ripple-effect">
+    <a href="{% url 'dashboard:reports_summary' %}" class="mdl-color-text--blue-grey mdl-layout__tab{% if active == 'types' %} is-active{% endif %}">
+      Devices
+    </a>
+    <a href="{% url 'dashboard:reports_age' %}" class="mdl-color-text--blue-grey mdl-layout__tab{% if active == 'ages' %} is-active{% endif %}">
+      Age
+    </a>
+  </div>
+</div>

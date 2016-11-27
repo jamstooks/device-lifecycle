@@ -1,0 +1,18 @@
+{% extends 'devices/events/event_card_base.html' %}
+
+{% block card_title_style %}
+  mdl-color--red mdl-color-text--white
+{% endblock %}
+
+{% block card_content %}
+  <dl>
+    <dt>Method:</dt>
+    <dd>{{ event.decommissionevent.method }}</dd>
+    <dt>Receipt:</dt>
+    <dd>{{ event.decommissionevent.receipt }}</dd>
+    <dt>Cost:</dt>
+    <dd>{% if event.decommissionevent.cost %}${% endif %}{{ event.decommissionevent.cost }}</dd>
+    <dt>Notes:</dt>
+    <dd>{{ event.decommissionevent.notes }}</dd>
+  </dl>
+{% endblock %}

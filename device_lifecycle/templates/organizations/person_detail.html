@@ -1,0 +1,38 @@
+{% extends "dashboard/people.html" %}
+
+{% block dashboard_content %}
+  <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
+    <h1 class="mdl-cell mdl-cell--12-col">
+      {{ object.name }}
+      <a
+        class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect"
+        style="float: right;"
+        href="{% url 'dashboard:person_update' person.id %}">
+        <i class="material-icons">edit</i>
+      </a>
+    </h1>
+    <div class="mdl-cell mdl-cell--12-col">
+      <strong>{{ object.position }}</strong><br>
+      <span>{{ object.email }}</span>
+    </div>
+  </div>
+  <div class="mdl-cell mdl-cell--12-col mdl-grid">
+    {% block cards %}
+      {% for device in person.device_set.all %}
+        {% include 'devices/device_card.html' %}
+      {% endfor %}
+    {% endblock %}
+  </div>
+
+{% endblock %}
+
+{% block body_end %}
+  <a
+    href="{% url 'dashboard:device_add' %}" id="add-button"
+    class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+    <i class="material-icons">add</i>
+  </a>
+  <div class="mdl-tooltip mdl-tooltip--left mdl-tooltip--large" for="add-button">
+    Add a Device
+  </div>
+{% endblock %}

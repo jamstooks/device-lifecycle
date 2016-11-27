@@ -1,0 +1,26 @@
+{% extends 'devices/events/event_card_base.html' %}
+
+{% block card_title_style %}
+  mdl-color--cyan mdl-color-text--white
+{% endblock %}
+
+{% block card_content %}
+  <dl>
+    <dt>Transferred from:</dt>
+    <dd>
+      {% if event.transferevent.transferred_from %}
+        {{ event.transferevent.transferred_from }}
+      {% else %}
+        Spare
+      {% endif %}
+    </dd>
+    <dt>Transferred to:</dt>
+    <dd>
+      {% if event.transferevent.transferred_to %}
+        {{ event.transferevent.transferred_to }}
+      {% else %}
+        Spare
+      {% endif %}
+    </dd>
+  </dl>
+{% endblock %}

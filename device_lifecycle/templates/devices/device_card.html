@@ -1,0 +1,28 @@
+<style>
+.mdl-card__menu {
+  color: #fff;
+}
+</style>
+
+<div class="mdl-card mdl-shadow--2dp">
+  <div class="mdl-card__title mdl-card--expand mdl-color--light-green mdl-color-text--white">
+    <h2 class="mdl-card__title-text">
+      <i class="material-icons" style="vertical-align: middle">{{ device.get_icon }}</i>
+      {{ device.model }}
+    </h2>
+
+  </div>
+  <div class="mdl-card__supporting-text">
+    <p style="text-align: right">purchased: {{ device.date_purchased }}</p>
+    {{ device.manufacturer }}<br>
+    {{ device.model }}<br>
+    <strong>Serial #:</strong> {{ device.serial }}
+  </div>
+  <div class="mdl-card__menu">
+    <a
+      class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect"
+      href="{% url 'dashboard:device_detail' device.id %}">
+      <i class="material-icons">search</i>
+    </a>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+{% extends 'dashboard/reports/base.html' %}
+
+{% block dashboard_content %}
+  <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
+    <h1 class="mdl-cell mdl-cell--12-col">Summary</h1>
+
+    {% with 'types' as active %}
+      {% include 'dashboard/reports/tabs.html' %}
+    {% endwith %}
+
+    <div class="mdl-cell mdl-cell--12-col" style="height: 350px" id="chart"></div>
+  </div>
+{% endblock %}
+
+{% block body_end %}
+  {{ block.super }}
+  <script>
+    var chart = c3.generate({
+      bindto: '#chart',
+      data: {
+        columns: [
+            {% for dt in device_counts %}
+              ['{{ dt.device_type }}', '{{ dt.dcount }}']{% if not forloop.last %},{% endif %}
+            {% endfor %}
+        ],
+        type : 'pie'
+      }
+  });
+  </script>
+{% endblock %}

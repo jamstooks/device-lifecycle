@@ -1,0 +1,42 @@
+{% extends "dashboard/devices.html" %}
+
+{% block dashboard_content %}
+  <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
+      <h1 class="mdl-cell mdl-cell--12-col">Device List</h1>
+      <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+        <thead>
+          <tr>
+            <th class="mdl-data-table__cell--non-numeric">Model</th>
+            <!-- <th class="mdl-data-table__cell--non-numeric">Manufacturer</th> -->
+            <th class="mdl-data-table__cell--non-numeric">Current Owner</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for device in object_list %}
+          <tr>
+            <td class="mdl-data-table__cell--non-numeric">
+              <i class="material-icons" style="vertical-align: middle;margin-right: .3em;">{{ device.get_icon }}</i>
+              <a href="{% url 'dashboard:device_detail' device.id %}">
+                {{ device.model }}</a>
+            </td>
+            <!-- <td class="mdl-data-table__cell--non-numeric">
+              {{ device.manufacturer }}</td> -->
+            <td class="mdl-data-table__cell--non-numeric">
+              {{ device.current_owner }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+  </div>
+{% endblock %}
+
+{% block body_end %}
+  <a
+    href="{% url 'dashboard:device_add' %}" id="add-button"
+    class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+    <i class="material-icons">add</i>
+  </a>
+  <div class="mdl-tooltip mdl-tooltip--left mdl-tooltip--large" for="add-button">
+    Add a Device
+  </div>
+{% endblock %}
