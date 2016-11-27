@@ -1,18 +1,18 @@
-[ ] undo events
-[ ] filter devices
-  [ ] by type
-  [ ] year purchased or age
-  [ ] warranty information
-  [ ] graphs should link to these filtered versions
-[ ] qr codes
-  [ ] add to review
-  [ ] print options
-[ ] warranty information
-[ ] reports
+- [ ] undo events
+- [ ] filter devices
+  - [ ] by type
+  - [ ] year purchased or age
+  - [ ] warranty information
+  - [ ] graphs should link to these filtered versions
+- [ ] qr codes
+  - [ ] add to review
+  - [ ] print options
+- [ ] warranty information
+- [ ] reports
   - ages of devices
   - percentage of devices with current warranties
-[ ] dashboard
+- [ ] dashboard
   - upcoming warranty expirations
   - devices in replacement window
   - devices coming up for replacement
-[ ] check-ins for condition assessment and location updates
+- [ ] check-ins for condition assessment and location updates
