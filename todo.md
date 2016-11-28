@@ -1,3 +1,8 @@
+# Todo
+
+- [ ] Search
+  - [ ] serial #
+  - [ ] person
 - [ ] undo events
 - [ ] filter devices
   - [ ] by type
@@ -17,3 +22,11 @@
   - devices in replacement window
   - devices coming up for replacement
 - [ ] check-ins for condition assessment and location updates
+- [ ] features
+  - [ ] bulk add
+  - [ ] import tools
+  - [ ] exportable reports
+
+## ideas
+
+  - [ ] could ability to add to-do items for a machine?
