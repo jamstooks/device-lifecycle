@@ -53,7 +53,6 @@ class Device(models.Model):
     purchase_price = models.FloatField(blank=True, null=True)
     receipt = models.FileField(blank=True, null=True)
     current_owner = models.ForeignKey(Person, blank=True, null=True)
-    notes = models.TextField(blank=True, null=True)
     status = models.CharField(
         max_length=16, choices=STATUS_CHOICES, default=STATUS_CHOICES.active)
 
