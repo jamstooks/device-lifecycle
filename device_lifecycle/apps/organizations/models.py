@@ -11,6 +11,9 @@ class Person(models.Model):
     position = models.CharField(max_length=256)
     is_active = models.BooleanField(default=True)
 
+    class Meta:
+        ordering = ['name']
+
     def get_absolute_url(self):
         return reverse(
             'dashboard:person_detail',
