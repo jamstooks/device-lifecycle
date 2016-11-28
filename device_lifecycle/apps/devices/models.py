@@ -49,7 +49,7 @@ class Device(models.Model):
     manufacturer = models.CharField(max_length=32)
     model = models.CharField(max_length=64)
     serial = models.CharField(max_length=128)
-    date_purchased = models.DateField()
+    date_purchased = models.DateField(blank=True, null=True)
     purchase_price = models.FloatField(blank=True, null=True)
     receipt = models.FileField(blank=True, null=True)
     current_owner = models.ForeignKey(Person, blank=True, null=True)
