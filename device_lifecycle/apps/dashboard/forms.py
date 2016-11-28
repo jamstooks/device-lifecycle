@@ -41,5 +41,4 @@ class TransferEventForm(BaseEventForm):
 
     def save(self, device, transferred_from, commit=True):
         self.instance.transferred_from = transferred_from
-        import pdb; pdb.set_trace()
         return super(TransferEventForm, self).save(device, commit)
