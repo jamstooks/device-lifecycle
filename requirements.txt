@@ -1,6 +1,6 @@
 dj-database-url
 Django==1.10.3
-django-allauth-0.29.0
+django-allauth==0.29.0
 django-material==0.10.1
 django-model-utils==2.6
 ipython
