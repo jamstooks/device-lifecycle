@@ -25,6 +25,7 @@ class Device(models.Model):
         ('tablet', 'Tablet'),
         ('headset', 'Headset'),
         ('hard_drive', 'Hard Drive'),
+        ('webcam', 'Web Cam'),
     )
 
     STATUS_CHOICES = Choices(
@@ -42,7 +43,8 @@ class Device(models.Model):
         'projector': 'cast',
         'tablet': 'tablet_android',
         'headset': 'headset_mic',
-        'hard_drive': 'storage'
+        'hard_drive': 'storage',
+        'webcam': 'linked_camera'
     }
 
     device_type = models.CharField(max_length=16, choices=DEVICE_TYPE_CHOICES)
