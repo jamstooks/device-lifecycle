@@ -27,6 +27,7 @@ class Device(models.Model):
         ('hard_drive', 'Hard Drive'),
         ('webcam', 'Web Cam'),
         ('keyboard', 'Keyboard'),
+        ('mouse', 'Mouse'),
     )
 
     STATUS_CHOICES = Choices(
@@ -47,6 +48,7 @@ class Device(models.Model):
         'hard_drive': 'storage',
         'webcam': 'linked_camera',
         'keyboard': 'keyboard',
+        'mouse': 'mouse',
     }
 
     device_type = models.CharField(max_length=16, choices=DEVICE_TYPE_CHOICES)
