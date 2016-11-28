@@ -127,6 +127,9 @@ MEDIA_ROOT = os.environ.get("MEDIA_ROOT", None)
 STATIC_ROOT = 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+    os.path.join(PROJECT_DIR, 'static'),
+)
 
 #################################################
 # django_all_auth
