@@ -1,9 +1,10 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from model_utils import Choices
+from django.urls import reverse
 
 from collections import OrderedDict
+from model_utils import Choices
 
 from ..organizations.models import Person
 
@@ -71,6 +72,11 @@ class Device(models.Model):
 
     def get_icon(self):
         return self.TYPE_ICONS[self.device_type]
+
+    def get_absolute_url(self):
+        return reverse(
+            'dashboard:device_detail',
+            kwargs={'pk': self.pk})
 
     def __unicode__(self):
         return self.model

@@ -1,12 +1,12 @@
 <nav class="mdl-navigation mdl-color--blue-grey">
 
-  <a
+  <!-- <a
     class="mdl-navigation__link mdl-color-text--black {% if selected == 'dashboard' %}is-active{% endif %}"
     href="{% url 'dashboard:device_list' %}">
       <i class="mdl-color-text--black material-icons" role="presentation">
         home</i>
       Dashboard
-  </a>
+  </a> -->
   <a
     class="mdl-navigation__link mdl-color-text--black {% if selected == 'devices' %}is-active{% endif %}"
     href="{% url 'dashboard:device_list' %}">
@@ -27,9 +27,15 @@
         insert_chart</i>
       Reports
   </a>
-  <a class="mdl-navigation__link mdl-color-text--black {% if selected == 'settings' %}is-active{% endif %}" href="/dashboard/settings/">
+  <!-- <a class="mdl-navigation__link mdl-color-text--black {% if selected == 'settings' %}is-active{% endif %}" href="/dashboard/settings/">
       <i class="mdl-color-text--black material-icons" role="presentation">
         settings</i>
       Settings
+  </a> -->
+  <a class="mdl-navigation__link mdl-color-text--black {% if selected == 'settings' %}is-active{% endif %}"
+    href="{% url 'account_logout' %}">
+      <i class="mdl-color-text--black material-icons" role="presentation">
+        eject</i>
+      Sign Out
   </a>
 </nav>

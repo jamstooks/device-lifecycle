@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count
 from django.db.models.functions import TruncYear
 from django.http import HttpResponseRedirect
@@ -15,19 +16,23 @@ from .forms import (
 from datetime import date, timedelta
 
 
-class Dashboard(TemplateView):
+class DashboardBaseView(LoginRequiredMixin):
+    pass
+
+
+class Dashboard(DashboardBaseView, TemplateView):
     template_name = 'dashboard/dashboard.html'
 
 
-class DeviceList(ListView):
+class DeviceList(DashboardBaseView, ListView):
     model = Device
 
 
-class DeviceDetail(DetailView):
+class DeviceDetail(DashboardBaseView, DetailView):
     queryset = Device.objects.all()
 
 
-class DeviceCreate(CreateView):
+class DeviceCreate(DashboardBaseView, CreateView):
     """
         @todo - if a device is created without an owner,
         it should be set as spare
@@ -51,7 +56,7 @@ class DeviceCreate(CreateView):
     success_url = '/dashboard/'
 
 
-class DeviceUpdate(UpdateView):
+class DeviceUpdate(DashboardBaseView, UpdateView):
     model = Device
     template_name = 'devices/device_edit.html'
     fields = [
@@ -65,15 +70,15 @@ class DeviceUpdate(UpdateView):
     ]
 
 
-class PersonList(ListView):
+class PersonList(DashboardBaseView, ListView):
     model = Person
 
 
-class PersonDetail(DetailView):
+class PersonDetail(DashboardBaseView, DetailView):
     queryset = Person.objects.all()
 
 
-class PersonCreate(CreateView):
+class PersonCreate(DashboardBaseView, CreateView):
     model = Person
     fields = [
         'name', 'position', 'email', 'is_active'
@@ -81,7 +86,7 @@ class PersonCreate(CreateView):
     success_url = '/dashboard/people'  # @todo - reverse
 
 
-class PersonUpdate(UpdateView):
+class PersonUpdate(DashboardBaseView, UpdateView):
     model = Person
     template_name = 'organizations/person_edit.html'
 
@@ -90,7 +95,7 @@ class PersonUpdate(UpdateView):
     ]
 
 
-class EventCreateBase(CreateView):
+class EventCreateBase(DashboardBaseView, CreateView):
 
     def get_device(self):
         if not hasattr(self, 'device'):
@@ -166,7 +171,7 @@ class DecommissionEventCreate(EventCreateBase):
         return HttpResponseRedirect(self.get_success_url())
 
 
-class SummaryReport(TemplateView):
+class SummaryReport(DashboardBaseView, TemplateView):
     template_name = 'dashboard/reports/summary.html'
 
     def get_context_data(self, *args, **kwargs):
@@ -177,7 +182,7 @@ class SummaryReport(TemplateView):
         return _ctx
 
 
-class AgeReport(TemplateView):
+class AgeReport(DashboardBaseView, TemplateView):
     template_name = 'dashboard/reports/age.html'
 
     def get_context_data(self, *args, **kwargs):

@@ -20,8 +20,8 @@ from .views import (
 urlpatterns = [
 
     # devices
-    url(r'^$', Dashboard.as_view(), name='dashboard'),
-    url(r'^devices/$', DeviceList.as_view(), name='device_list'),
+    # url(r'^$', Dashboard.as_view(), name='dashboard'),
+    url(r'^$', DeviceList.as_view(), name='device_list'),
     url(r'^devices/add/$', DeviceCreate.as_view(), name='device_add'),
     url(
         r'^devices/(?P<pk>[\w\-]+)/$',

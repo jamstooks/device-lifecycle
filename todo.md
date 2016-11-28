@@ -11,6 +11,7 @@
 - [ ] reports
   - ages of devices
   - percentage of devices with current warranties
+  - missing data (like receipts or purchase prices)
 - [ ] dashboard
   - upcoming warranty expirations
   - devices in replacement window

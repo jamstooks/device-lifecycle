@@ -1,17 +1,5 @@
-{% extends "dashboard/devices.html" %}
+{% extends "base_form.html" %}
 
-{% load material_form %}
-
-{% block dashboard_content %}
-  <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-grid">
-    <h1 class="mdl-cell mdl-cell--12-col">
-      {% block edit_title %}Add a Device{% endblock %}</h1>
-
-    <form method="post">
-      {% csrf_token %}
-      {% form form=form %}{% endform %}
-      <button type="submit" name="_submit" class="btn">Submit</button>
-    </form>
-
-  </div>
+{% block form_title %}
+  Add a Device
 {% endblock %}
