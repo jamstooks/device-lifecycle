@@ -1,18 +1,12 @@
 {% extends 'dashboard/reports/base.html' %}
 
-{% block dashboard_content %}
-  <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
-    <h1 class="mdl-cell mdl-cell--12-col">Reports</h1>
-
-    {% with 'types' as active %}
-      {% include 'dashboard/reports/tabs.html' %}
-    {% endwith %}
-
-    <div class="mdl-cell mdl-cell--12-col" style="height: 350px" id="chart"></div>
-  </div>
+{% block report_tabs %}
+  {% with 'types' as active %}
+    {% include 'dashboard/reports/tabs.html' %}
+  {% endwith %}
 {% endblock %}
 
-{% block body_end %}
+{% block footer_js %}
   {{ block.super }}
   <script>
     var chart = c3.generate({

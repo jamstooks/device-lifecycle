@@ -1,38 +1,63 @@
 {% extends "dashboard/people.html" %}
 
+
 {% block dashboard_content %}
-  <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
-    <h1 class="mdl-cell mdl-cell--12-col">
-      {{ object.name }}
-      <a
-        class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect"
-        style="float: right;"
-        href="{% url 'dashboard:person_update' person.id %}">
-        <i class="material-icons">edit</i>
+  <div class="card">
+    <div class="header">
+      <a href="{% url 'dashboard:person_update' person.id %}">
+        <i class="fa fa-edit pull-right"></i>
       </a>
-    </h1>
-    <div class="mdl-cell mdl-cell--12-col">
-      <strong>{{ object.position }}</strong><br>
-      <span>{{ object.email }}</span>
+      <h2 class="title">
+        {{ person.name }}
+      </h2>
+      <p class="category">
+        {{ person.position }}
+        <a href="mailto:{{ person.email }}">{{ person.email }}</a>
+      </p>
     </div>
-  </div>
-  <div class="mdl-cell mdl-cell--12-col mdl-grid">
-    {% block cards %}
-      {% for device in person.device_set.all %}
-        {% include 'devices/device_card.html' %}
-      {% endfor %}
-    {% endblock %}
-  </div>
 
-{% endblock %}
+    <div class="content">
+      <div class="row">
+        <div class="col-md-12">
+          <h4>Devices</h4>
+          {% if person.device_set.all %}
 
-{% block body_end %}
-  <a
-    href="{% url 'dashboard:device_add' %}" id="add-button"
-    class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
-    <i class="material-icons">add</i>
-  </a>
-  <div class="mdl-tooltip mdl-tooltip--left mdl-tooltip--large" for="add-button">
-    Add a Device
+            <table class="table table-hover table-striped">
+                <thead>
+                  <th>Model</th>
+                  <th>Manufacturer</th>
+                  <th>Serial #</th>
+                  <th>Purhcase Date</th>
+                </thead>
+                <tbody>
+                  {% for device in person.device_set.all %}
+                    <tr>
+                      <td>
+                        <i class="{{ device.icon }}"></i>
+                        <a href="{{ device.get_absolute_url }}">
+                          {{ device.model }}
+                        </a>
+                      </td>
+                      <td>{{ device.manufacturer }}</td>
+                      <td>{{ device.serial }}</td>
+                      <td>{{ device.date_purchased }}</td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+            </table>
+
+          {% else %}
+            <span class="muted">No devices tied to {{ person.name }} yet.</span>
+          {% endif %}
+
+          <a
+            class="btn btn-warning btn-fill btn-lg fab"
+            href="{% url 'dashboard:device_add' %}">
+            <i class="fa fa-plus"></i>
+          </a>
+
+        </div>
+      </div>
+    </div>
   </div>
 {% endblock %}

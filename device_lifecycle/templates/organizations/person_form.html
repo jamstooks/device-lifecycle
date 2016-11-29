@@ -1,3 +1,15 @@
-{% extends "base_form.html" %}
+{% extends "dashboard/people.html" %}
 
-{% block form_title %}Add a Person{% endblock %}
+{% block dashboard_content %}
+  <div class="card">
+    <div class="header">
+      <h2 class="title">
+        {% block form_title %}Add a Person{% endblock %}
+      </h2>
+    </div>
+    <div class="content">
+      {% url 'dashboard:person_list' as cancel_url %}
+      {% include 'dashboard/base_form.html' %}
+    </div>
+  </div>
+{% endblock %}

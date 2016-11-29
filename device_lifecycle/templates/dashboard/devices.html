@@ -1,5 +1,7 @@
 {% extends 'dashboard/base.html' %}
 
+{% block title %}Devices | {{ block.super }}{% endblock %}
+
 {% block dashboard_menu %}
   {% with 'devices' as selected %}
     {% include 'dashboard/menu.html' %}

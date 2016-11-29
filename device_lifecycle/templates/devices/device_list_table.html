@@ -1,0 +1,23 @@
+<table class="table table-hover table-striped">
+    <thead>
+      <th>Model</th>
+      <th>Current Owner</th>
+      <th>Serial #</th>
+      <th>Purhcase Date</th>
+    </thead>
+    <tbody>
+      {% for device in device_list %}
+        <tr>
+          <td>
+            <i class="{{ device.icon }}"></i>
+            <a href="{{ device.get_absolute_url }}">
+              {{ device.model }}
+            </a>
+          </td>
+          <td>{{ device.current_owner }}</td>
+          <td>{{ device.serial }}</td>
+          <td>{{ device.date_purchased }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+</table>

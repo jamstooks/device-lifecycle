@@ -34,14 +34,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'device_lifecycle.apps.devices',
+    'device_lifecycle.apps.organizations',
+
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'material',
-    'material.frontend',
-
-    'device_lifecycle.apps.devices',
-    'device_lifecycle.apps.organizations'
+    'bootstrapform',
 ]
 
 MIDDLEWARE = [

@@ -30,3 +30,4 @@
 ## ideas
 
   - [ ] could ability to add to-do items for a machine?
+  - [ ] add photo uploads

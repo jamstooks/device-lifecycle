@@ -1,5 +1,7 @@
 {% extends 'dashboard/base.html' %}
 
+{% block title %}People | {{ block.super }}{% endblock %}
+
 {% block dashboard_menu %}
   {% with 'people' as selected %}
     {% include 'dashboard/menu.html' %}

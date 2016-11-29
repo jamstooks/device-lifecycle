@@ -1,10 +1,26 @@
-{% extends "base_form.html" %}
+{% extends "devices/device_detail.html" %}
 
-{% block form_buttons %}
-  <button type="submit" name="_submit" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-    Submit
-  </button>
-  <a href="{% url 'dashboard:device_detail' device.id %}" class="mdl-button mdl-color-text--red mdl-js-button mdl-js-ripple-effect">
-    Cancel
-  </a>
+{% load bootstrap %}
+
+{% block activity_feed %}
+<div class="card">
+  <div class="header">
+    <h4>{% block form_title %}{% endblock %}</h4>
+  </div>
+  <div class="content">
+    <form role="form" method="post">
+      {% csrf_token %}
+      {{ form|bootstrap }}
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary btn-fill">
+          Submit
+        </button>
+        <a class="btn btn-warning btn-fill"
+          href="{% url 'dashboard:device_detail' device.id %}">
+          Cancel
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
 {% endblock %}

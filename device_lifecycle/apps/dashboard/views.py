@@ -49,7 +49,8 @@ class DeviceCreate(DashboardBaseView, CreateView):
         'date_purchased',
         'purchase_price',
         'receipt',
-        'current_owner'
+        'current_owner',
+        'description',
     ]
 
     success_url = '/dashboard/'
@@ -64,7 +65,8 @@ class DeviceUpdate(DashboardBaseView, UpdateView):
         'serial',
         'date_purchased',
         'purchase_price',
-        'receipt'
+        'receipt',
+        'description',
     ]
 
 
