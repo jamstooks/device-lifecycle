@@ -134,7 +134,7 @@ class RepairEventCreate(EventCreateBase):
 class TransferEventCreate(EventCreateBase):
     model = TransferEvent
     form_class = TransferEventForm
-    template_name = 'devices/events/repairevent_form.html'
+    template_name = 'devices/events/transferevent_form.html'
 
     def form_valid(self, form):
 

@@ -31,13 +31,13 @@ class RepairEventForm(BaseEventForm):
 class DecommissionEventForm(BaseEventForm):
     class Meta:
         model = DecommissionEvent
-        fields = ['date', 'method', 'cost', 'receipt']
+        fields = ['date', 'method', 'cost', 'receipt', 'notes']
 
 
 class TransferEventForm(BaseEventForm):
     class Meta:
         model = TransferEvent
-        fields = ['date', 'transferred_to']
+        fields = ['date', 'transferred_to', 'notes']
 
     def save(self, device, transferred_from, commit=True):
         self.instance.transferred_from = transferred_from
