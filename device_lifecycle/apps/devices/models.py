@@ -114,8 +114,8 @@ class EventBase(models.Model):
     ICON_MAPPINGS = {
         'note': 'fa fa-bookmark',
         'repair': 'fa fa-wrench',
-        'transfer': 'fa fa-arrows-v',
-        'decommission': 'fa fa-recyle-h',
+        'transfer': 'fa fa-exchange',
+        'decommission': 'fa fa-recycle',
         'loss': 'fa fa-exclamation-triangle'
     }
 
