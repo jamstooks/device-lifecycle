@@ -21,6 +21,7 @@
   - upcoming warranty expirations
   - devices in replacement window
   - devices coming up for replacement
+  - total active devices / total spares / total retired
 - [ ] check-ins for condition assessment and location updates
 - [ ] features
   - [ ] bulk add

@@ -24,7 +24,11 @@
           <span class="label label-default">retired</span>
         {% endif %}
       </h2>
-      <p class="category">Current Owner: {{ device.current_owner }}</p>
+      <p class="category">
+        Current Owner:
+        <a href="{{ device.current_owner.get_absolute_url }}">
+          {{ device.current_owner }}</a>
+      </p>
     </div>
     <div class="content">
       <div class="row">
