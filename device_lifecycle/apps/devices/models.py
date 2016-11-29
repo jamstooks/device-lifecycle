@@ -37,18 +37,18 @@ class Device(models.Model):
     )
 
     TYPE_ICONS = {
-        'laptop': 'laptop',
-        'desktop': 'desktop_mac',
-        'printer': 'print',
-        'phone': 'phone_iphone',
-        'monitor': 'tv',
-        'projector': 'cast',
-        'tablet': 'tablet_android',
-        'headset': 'headset_mic',
-        'hard_drive': 'storage',
-        'webcam': 'linked_camera',
-        'keyboard': 'keyboard',
-        'mouse': 'mouse',
+        'laptop': 'fa fa-laptop',
+        'desktop': 'fa fa-desktop',
+        'printer': 'fa fa-print',
+        'phone': 'fa fa-mobile',
+        'monitor': 'fa fa-television',
+        'projector': 'fa fa-film',
+        'tablet': 'fa fa-tablet',
+        'headset': 'fa fa-headphones',
+        'hard_drive': 'fa fa-hdd-o',
+        'webcam': 'fa fa-camera',
+        'keyboard': 'fa fa-keyboard-o',
+        'mouse': 'fa fa-mouse-pointer',
     }
 
     device_type = models.CharField(max_length=16, choices=DEVICE_TYPE_CHOICES)
@@ -61,6 +61,9 @@ class Device(models.Model):
     current_owner = models.ForeignKey(Person, blank=True, null=True)
     status = models.CharField(
         max_length=16, choices=STATUS_CHOICES, default=STATUS_CHOICES.active)
+    description = models.TextField(
+        blank=True, null=True,
+        help_text="Any additional description of the device if necessary")
 
     objects = DeviceManager()
 
@@ -75,7 +78,8 @@ class Device(models.Model):
         }
         return styles[self.status]
 
-    def get_icon(self):
+    @property
+    def icon(self):
         return self.TYPE_ICONS[self.device_type]
 
     def get_absolute_url(self):
@@ -107,6 +111,14 @@ class EventBase(models.Model):
     An event is anything that can happen to a device.
     This is an abstract base class
     """
+    ICON_MAPPINGS = {
+        'note': 'fa fa-bookmark',
+        'repair': 'fa fa-wrench',
+        'transfer': 'fa fa-arrows-v',
+        'decommission': 'fa fa-recyle-h',
+        'loss': 'fa fa-exclamation-triangle'
+    }
+
     event_type = models.CharField(max_length=40)
     device = models.ForeignKey(Device, related_name='events')
     date = models.DateField()
@@ -130,14 +142,7 @@ class EventBase(models.Model):
 
     @property
     def icon(self):
-        mapping = {
-            'note': 'bookmark',
-            'repair': 'build',
-            'transfer': 'swap_horiz',
-            'decommission': 'cancel',
-            'loss': 'warning'
-        }
-        return mapping[self.event_type]
+        return self.ICON_MAPPINGS[self.event_type]
 
 
 class NoteEvent(EventBase):

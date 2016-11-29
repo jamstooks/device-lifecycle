@@ -1,127 +1,123 @@
+{% extends 'base.html' %}
+
 {% load static %}
 
-<!doctype html>
+{% block head_styles %}
+  <!-- Bootstrap core CSS     -->
+  <link href="{% static 'x_lbd_free_v1.3/assets/css/bootstrap.min.css' %}" rel="stylesheet" />
+  <!-- Animation library for notifications   -->
+  <link href="{% static 'x_lbd_free_v1.3/assets/css/animate.min.css' %}" rel="stylesheet"/>
+  <!--  Light Bootstrap Table core CSS    -->
+  <link href="{% static 'x_lbd_free_v1.3/assets/css/light-bootstrap-dashboard.css' %}" rel="stylesheet"/>
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="{% block meta-description%}{% endblock %}">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <title>Dashboard | Device Lifecycle</title>
+  <!--     Fonts and icons     -->
+  <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
+  <link href="{% static 'x_lbd_free_v1.3/assets/css/pe-icon-7-stroke.css' %}" rel="stylesheet" />
 
-    <!-- Add to homescreen for Chrome on Android -->
-    <!-- <meta name="mobile-web-app-capable" content="yes">
-    <link rel="icon" sizes="192x192" href="images/android-desktop.png"> -->
+  <link href="{% static 'css/style.css' %}" rel="stylesheet"/>
+{% endblock %}
 
-    <!-- Add to homescreen for Safari on iOS -->
-    <!-- <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="Material Design Lite">
-    <link rel="apple-touch-icon-precomposed" href="images/ios-desktop.png"> -->
 
-    <!-- Tile icon for Win8 (144x144 + tile color) -->
-    <!-- <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
-    <meta name="msapplication-TileColor" content="#3372DF"> -->
+{% block wrapper_content %}
+    <div class="sidebar" data-color="orange" data-image="{% static 'img/clouds.jpg' %}">
 
-    <link rel="shortcut icon" href="images/favicon.png">
+    <!--   you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | purple" -->
 
-    {# {% include 'material/includes/material_css.html' %} #}
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.blue_grey-orange.min.css" />
-    <link rel="stylesheet" href="https://cdn.rawgit.com/CreativeIT/getmdl-select/master/getmdl-select.min.css">
 
-    <style>
-      body {
-        color: #757575;
-      }
-
-      #add-button {
-        position: fixed;
-        display: block;
-        right: 0;
-        bottom: 0;
-        margin-right: 40px;
-        margin-bottom: 40px;
-        z-index: 900;
-      }
-
-      .is-active {
-        background: white;
-        color: black;
-      }
-
-      form {
-        margin: 2em auto;
-      }
-
-      strong {
-        font-weight: bold;
-      }
-
-      nav i.material-icons {
-        display: inline;
-      }
-
-      main {
-        padding-bottom: 90px;
-      }
-
-      .mdl-card {
-        margin: .5em;
-      }
-      </style>
-
-      {% block extra_head %}{% endblock %}
-
-  </head>
-  <body>
-    <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
-      <header class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
-        <div class="mdl-layout-spacer"></div>
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
-          <label class="mdl-button mdl-js-button mdl-button--icon" for="search">
-            <i class="material-icons">search</i>
-          </label>
-          <div class="mdl-textfield__expandable-holder">
-            <input class="mdl-textfield__input" type="text" id="search">
-            <label class="mdl-textfield__label" for="search">Enter your query...</label>
-          </div>
-        </div>
-      </header>
-      <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-500 mdl-color-text--white">
-        <!-- <header class="demo-drawer-header">
-          <img src="images/user.jpg" class="demo-avatar">
-          <div class="demo-avatar-dropdown">
-            <span>AASHE</span>
-            <div class="mdl-layout-spacer"></div>
-            <button id="accbtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-              <i class="material-icons" role="presentation">arrow_drop_down</i>
-              <span class="visuallyhidden">Accounts</span>
-            </button>
-            <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="accbtn">
-              <li class="mdl-menu__item">Log out</li>
-            </ul>
-          </div>
-        </header> -->
-        {% block dashboard_menu %}
-          {% include 'dashboard/menu.html' %}
-        {% endblock %}
-      </div>
-      <main class="mdl-layout__content mdl-color--grey-100">
-        <div class="mdl-grid">
-          {% block dashboard_content %}{% endblock %}
-        </div>
-      </main>
+    	<div class="sidebar-wrapper">
+            <div class="logo">
+                <a href="http://www.devicelifecycle.com" class="simple-text">
+                    Device Lifecycle
+                </a>
+            </div>
+            {% block dashboard_menu %}
+              {% include 'dashboard/menu.html' %}
+            {% endblock %}
+    	</div>
     </div>
 
-    {% block body_end %}{% endblock %}
+    <div class="main-panel">
+        <nav class="navbar navbar-default navbar-fixed">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <!-- <a class="navbar-brand" href="#">Typography</a> -->
+                </div>
+                <div class="collapse navbar-collapse">
+                    <!-- <ul class="nav navbar-nav navbar-left">
+                        <li>
+                           <a href="">
+                                <i class="fa fa-search"></i>
+                            </a>
+                        </li>
+                    </ul> -->
 
-    <script src="https://code.getmdl.io/1.2.1/material.min.js"></script>
-    <script defer src="https://cdn.rawgit.com/CreativeIT/getmdl-select/master/getmdl-select.min.js"></script>
+                    <ul class="nav navbar-nav navbar-right">
+                        <!-- <li>
+                           <a href="">
+                               Account
+                            </a>
+                        </li> -->
+                        <li>
+                            <a href="{% url 'account_logout' %}">
+                                Log out
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
 
-    <script src="{% static 'material/js/jquery-2.2.0.js' %}"></script>
-    {% include 'material/includes/material_js.html' %}
-  </body>
-</html>
+
+        <div class="content" style="padding-bottom: 70px;">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                      {% block dashboard_content %}{% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <div class="container-fluid">
+                <!-- <nav class="pull-left">
+                    <ul>
+                        <li>
+                            <a href="/">
+                                Home
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                About
+                            </a>
+                        </li>
+                    </ul>
+                </nav> -->
+                <p class="copyright pull-left">
+                    &copy; 2016 <a href="http://www.devicelifecycle.com">Device Lifecycle</a>
+                </p>
+            </div>
+        </footer>
+
+    </div>
+{% endblock %}
+
+{% block footer_js %}
+  <!--   Core JS Files   -->
+  <script src="{% static 'x_lbd_free_v1.3/assets/js/jquery-1.10.2.js' %}" type="text/javascript"></script>
+  <script src="{% static 'x_lbd_free_v1.3/assets/js/bootstrap.min.js' %}" type="text/javascript"></script>
+  <!--  Checkbox, Radio & Switch Plugins -->
+  <script src="{% static 'x_lbd_free_v1.3/assets/js/bootstrap-checkbox-radio-switch.js' %}"></script>
+  <!--  Notifications Plugin    -->
+  <script src="{% static 'x_lbd_free_v1.3/assets/js/bootstrap-notify.js' %}"></script>
+  <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
+  <script src="{% static 'x_lbd_free_v1.3/assets/js/light-bootstrap-dashboard.js' %}"></script>
+{% endblock %}

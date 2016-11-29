@@ -1,38 +1,35 @@
 {% extends "dashboard/people.html" %}
 
 {% block dashboard_content %}
-  <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
-      <h1 class="mdl-cell mdl-cell--12-col">People</h1>
-      <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp mdl-cell mdl-cell--12-col">
-        <thead>
-          <tr>
-            <th class="mdl-data-table__cell--non-numeric">Name</th>
-            <th class="mdl-data-table__cell--non-numeric">Position</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for person in object_list %}
-          <tr>
-            <td class="mdl-data-table__cell--non-numeric">
-              <a href="{% url 'dashboard:person_detail' person.id %}">
-                {{ person.name }}</a>
-            </td>
-            <td class="mdl-data-table__cell--non-numeric">
-              {{ person.position }}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+  <div class="card">
+      <div class="header">
+          <h4 class="title">People</h4>
+          <p class="category"></p>
+      </div>
+      <div class="content table-responsive table-full-width">
+          <table class="table table-hover table-striped">
+              <thead>
+                <th>Name</th>
+                <th>Position</th>
+              </thead>
+              <tbody>
+                {% for person in object_list %}
+                  <tr>
+                    <td>
+                      <a href="{% url 'dashboard:person_detail' person.id %}">
+                        {{ person.name }}</a>
+                    </td>
+                    <td>{{ person.position }}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+          </table>
+      </div>
   </div>
-{% endblock %}
 
-{% block body_end %}
   <a
-    href="{% url 'dashboard:person_add' %}" id="add-button"
-    class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
-    <i class="material-icons">add</i>
+    class="btn btn-warning btn-fill btn-lg fab"
+    href="{% url 'dashboard:person_add' %}">
+    <i class="fa fa-plus"></i>
   </a>
-  <div class="mdl-tooltip mdl-tooltip--left mdl-tooltip--large" for="add-button">
-    Add a Person
-  </div>
 {% endblock %}

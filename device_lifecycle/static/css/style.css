@@ -1,0 +1,33 @@
+.timeline-panel {
+  background-color: white;
+}
+
+.device-detail-prop {
+  padding-bottom: .5em;
+}
+
+.fab {
+  position: fixed;
+  right: 30px;
+  bottom: 80px;
+}
+
+.form-buttons {
+  /*border-top: 1px solid #eee;*/
+  background-color: #fcfcfc;
+  /*text-align: right;*/
+  maring-top: 1em;
+  padding: 1em 2em;
+}
+
+#chart {
+  margin: 3em 0;
+}
+
+ .login-card {
+   margin-top: 2em;
+ }
+
+ .title .device-icon {
+   margin-right: .8em;
+ }

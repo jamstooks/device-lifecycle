@@ -1,41 +1,20 @@
-<nav class="mdl-navigation mdl-color--blue-grey">
-
-  <!-- <a
-    class="mdl-navigation__link mdl-color-text--black {% if selected == 'dashboard' %}is-active{% endif %}"
-    href="{% url 'dashboard:device_list' %}">
-      <i class="mdl-color-text--black material-icons" role="presentation">
-        home</i>
-      Dashboard
-  </a> -->
-  <a
-    class="mdl-navigation__link mdl-color-text--black {% if selected == 'devices' %}is-active{% endif %}"
-    href="{% url 'dashboard:device_list' %}">
-      <i class="mdl-color-text--black material-icons" role="presentation">
-        laptop</i>
-      Devices
-  </a>
-  <a
-    class="mdl-navigation__link mdl-color-text--black {% if selected == 'people' %}is-active{% endif %}"
-    href="{% url 'dashboard:person_list' %}">
-      <i class="mdl-color-text--black material-icons" role="presentation">
-        people_outline</i>
-      People
-  </a>
-  <a class="mdl-navigation__link mdl-color-text--black {% if selected == 'reports' %}is-active{% endif %}"
-    href="{% url 'dashboard:reports_summary' %}">
-      <i class="mdl-color-text--black material-icons" role="presentation">
-        insert_chart</i>
-      Reports
-  </a>
-  <!-- <a class="mdl-navigation__link mdl-color-text--black {% if selected == 'settings' %}is-active{% endif %}" href="/dashboard/settings/">
-      <i class="mdl-color-text--black material-icons" role="presentation">
-        settings</i>
-      Settings
-  </a> -->
-  <a class="mdl-navigation__link mdl-color-text--black {% if selected == 'settings' %}is-active{% endif %}"
-    href="{% url 'account_logout' %}">
-      <i class="mdl-color-text--black material-icons" role="presentation">
-        eject</i>
-      Sign Out
-  </a>
-</nav>
+<ul class="nav">
+    <li{% if selected == 'devices' %} class="active"{% endif %}>
+        <a href="{% url 'dashboard:device_list' %}">
+            <i class="pe-7s-note2"></i>
+            <p>Inventory</p>
+        </a>
+    </li>
+    <li{% if selected == 'people' %} class="active"{% endif %}>
+        <a href="{% url 'dashboard:person_list' %}">
+            <i class="pe-7s-users"></i>
+            <p>People</p>
+        </a>
+    </li>
+    <li{% if selected == 'reports' %} class="active"{% endif %}>
+        <a href="{% url 'dashboard:reports_summary' %}">
+            <i class="pe-7s-graph3"></i>
+            <p>Reports</p>
+        </a>
+    </li>
+</ul>

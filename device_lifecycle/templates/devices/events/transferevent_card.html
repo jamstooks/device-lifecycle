@@ -1,11 +1,9 @@
 {% extends 'devices/events/event_card_base.html' %}
 
-{% block card_title_style %}
-  mdl-color--cyan mdl-color-text--white
-{% endblock %}
+{% block badge-color %}primary{% endblock %}
 
 {% block card_content %}
-  <dl>
+  <dl class="dl-horizontal">
     <dt>Transferred from:</dt>
     <dd>
       {% if event.transferevent.transferred_from %}
