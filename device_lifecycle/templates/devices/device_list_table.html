@@ -9,7 +9,9 @@
       {% for device in device_list %}
         <tr>
           <td>
-            <i class="{{ device.icon }}"></i>
+            <i
+              class="{{ device.icon }}"
+              title="{{ device.device_type }}"></i>
             <a href="{{ device.get_absolute_url }}">
               {{ device.model }}
             </a>

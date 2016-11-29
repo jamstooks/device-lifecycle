@@ -31,3 +31,4 @@
 
   - [ ] could ability to add to-do items for a machine?
   - [ ] add photo uploads
+  - [ ] integrations with ticketing systems to add events for service requests

@@ -14,7 +14,9 @@
         <i class="fa fa-edit pull-right"></i>
       </a>
       <h2 class="title">
-        <i class="{{ device.icon }} device-icon"></i>
+        <i
+          class="{{ device.icon }} device-icon"
+          title="{{ device.device_type }}"></i>
         {{ device.model }}
         {% if device.status == device.STATUS_CHOICES.spare %}
           <span class="label label-warning">spare</span>

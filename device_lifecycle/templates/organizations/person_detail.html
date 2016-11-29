@@ -11,7 +11,7 @@
         {{ person.name }}
       </h2>
       <p class="category">
-        {{ person.position }}
+        {{ person.position }}<br/>
         <a href="mailto:{{ person.email }}">{{ person.email }}</a>
       </p>
     </div>
@@ -33,7 +33,9 @@
                   {% for device in person.device_set.all %}
                     <tr>
                       <td>
-                        <i class="{{ device.icon }}"></i>
+                        <i
+                          class="{{ device.icon }}"
+                          title="{{ device.device_type }}"></i>
                         <a href="{{ device.get_absolute_url }}">
                           {{ device.model }}
                         </a>
