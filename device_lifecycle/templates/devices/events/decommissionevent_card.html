@@ -9,7 +9,12 @@
     <dt>Method:</dt>
     <dd>{{ event.decommissionevent.method }}</dd>
     <dt>Receipt:</dt>
-    <dd>{{ event.decommissionevent.receipt }}</dd>
+    <dd>
+      {% if event.decommissionevent.receipt %}
+        <a href="{{ event.decommissionevent.receipt.url }}">
+          {{ event.decommissionevent.receipt }}</a>
+      {% endif %}
+    </dd>
     <dt>Cost:</dt>
     <dd>{% if event.decommissionevent.cost %}${% endif %}{{ event.decommissionevent.cost }}</dd>
     <dt>Notes:</dt>

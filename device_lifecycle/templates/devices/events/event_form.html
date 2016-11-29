@@ -8,19 +8,8 @@
     <h4>{% block form_title %}{% endblock %}</h4>
   </div>
   <div class="content">
-    <form role="form" method="post">
-      {% csrf_token %}
-      {{ form|bootstrap }}
-      <div class="form-group">
-        <button type="submit" class="btn btn-primary btn-fill">
-          Submit
-        </button>
-        <a class="btn btn-warning btn-fill"
-          href="{% url 'dashboard:device_detail' device.id %}">
-          Cancel
-        </a>
-      </div>
-    </form>
+    {% url 'dashboard:device_detail' device.id as cancel_url %}
+    {% include 'dashboard/base_form.html' %}
   </div>
 </div>
 {% endblock %}

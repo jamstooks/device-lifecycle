@@ -55,7 +55,9 @@
         <div class="col-md-2 col-xs-6 device-detail-prop">
           <strong>Receipt</strong><br>
           <span>
-              {{ device.receipt }}
+            {% if device.receipt %}
+              <a href="{{ device.receipt.url }}">{{ device.receipt }}</a>
+            {% endif %}
           </span>
         </div>
       </div>

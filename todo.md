@@ -18,6 +18,7 @@
   - percentage of devices with current warranties
   - missing data (like receipts or purchase prices)
 - [ ] dashboard
+  - overall activity feed
   - upcoming warranty expirations
   - devices in replacement window
   - devices coming up for replacement
@@ -33,3 +34,11 @@
   - [ ] could ability to add to-do items for a machine?
   - [ ] add photo uploads
   - [ ] integrations with ticketing systems to add events for service requests
+  - [ ] initial sale vendor
+  - [ ] notifications/alerts
+    - [ ] when devices are added and repaired
+    - [ ] decommissions
+    - [ ] user settings
+  - [ ] tools for owners
+    - [ ] report theft
+    - [ ] report repair
