@@ -32,6 +32,11 @@
     </div>
     <div class="content">
       <div class="row">
+        {% if device.description %}
+        <div class="col-md-12 device-detail-prop">
+          <p class="category">{{ device.description }}</p>
+        </div>
+        {% endif %}
         <div class="col-md-2 col-xs-6 device-detail-prop">
           <strong>Manufacturer</strong><br>
           <span>{{ device.manufacturer }}</span>
