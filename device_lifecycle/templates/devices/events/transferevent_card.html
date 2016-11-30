@@ -2,6 +2,12 @@
 
 {% block badge-color %}primary{% endblock %}
 
+{% block event_buttons %}
+  {% with 'dashboard:transfer_edit' as event_edit_url %}
+    {{ block.super }}
+  {% endwith %}
+{% endblock %}
+
 {% block card_content %}
   <dl class="dl-horizontal">
     <dt>Transferred from:</dt>

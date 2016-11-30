@@ -1,0 +1,20 @@
+{% extends "devices/device_detail.html" %}
+
+
+
+{% block dashboard_content %}
+  <form action="" method="post">{% csrf_token %}
+    <div class="alert alert-danger">
+        <span style="margin-right: 1em;">
+          Are you sure you want to delete this device?
+        </span>
+        <button type="submit" value="Confirm" style="margin-right: 1em;" class="btn btn-danger btn-fill">
+          yes
+        </button>
+        <a href="{{ device.get_absolute_url }}" role="button" class="btn btn-default btn-fill">
+          no, scratch that!
+        </a>
+    </div>
+  </form>
+  {{ block.super }}
+{% endblock %}

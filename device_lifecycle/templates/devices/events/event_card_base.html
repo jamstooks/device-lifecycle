@@ -4,6 +4,15 @@
   </div>
   <div class="timeline-panel">
     <div class="timeline-heading">
+      {% block event_buttons %}
+        {% if event_edit_url %}
+          <a
+            href="{% url event_edit_url device.id event.id %}"
+            class="pull-right">
+            <i class="fa fa-edit"></i>
+          </a>
+        {% endif %}
+      {% endblock %}
       <h4 class="timeline-title">{{ event.instance_type }}</h4>
       <p><small class="text-muted">
         <i class="fa fa-calendar"></i> {{ event.date }}

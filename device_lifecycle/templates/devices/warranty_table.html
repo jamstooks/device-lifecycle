@@ -1,0 +1,34 @@
+<table class="table table-hover table-striped">
+    <thead>
+      <th>Name</th>
+      <th>Start Date</th>
+      <th>End Date</th>
+      <th></th> <!-- Any files -->
+    </thead>
+    <tbody>
+      {% for warranty in warranty_set %}
+        <tr>
+          <td>
+            {% if warranty.link %}
+              <a href="{{ warranty.link }}">{{ warranty.description }}</a>
+            {% else %}
+              {{ warranty.description }}
+            {% endif %}
+          </td>
+          <td>{{ warranty.start_date }}</td>
+          <td>{{ warranty.end_date }}</td>
+
+          <td>
+            <a href="{% url 'dashboard:warranty_edit' device.id warranty.id %}">
+              <i class="fa fa-edit"></i>
+            </a>
+            {% if warranty.documentation %}
+              <a href="{{ warranty.documentation.url }}">
+                <i class="fa fa-file"></i>
+              </a>
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+</table>

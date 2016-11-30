@@ -18,12 +18,10 @@
           class="{{ device.icon }} device-icon"
           title="{{ device.device_type }}"></i>
         {{ device.model }}
-        {% if device.status == device.STATUS_CHOICES.spare %}
-          <span class="label label-warning">spare</span>
-        {% elif device.status == device.STATUS_CHOICES.retired %}
-          <span class="label label-default">retired</span>
-        {% endif %}
       </h2>
+      <p class="category">
+        Status: <span class="text-{{ device.get_status_class }}">{{ device.status }}</span>
+      </p>
       <p class="category">
         Current Owner:
         <a href="{{ device.current_owner.get_absolute_url }}">
@@ -66,47 +64,18 @@
           </span>
         </div>
       </div>
-      {% if device.warranty_set.all %}
+      {% block device_warranty %}
+        {% if device.warranty_set.all %}
         <div class="row">
           <div class="col-md-12">
             <h4>Warranty Details</h4>
-            <table class="table table-hover table-striped">
-                <thead>
-                  <th>Name</th>
-                  <th>Start Date</th>
-                  <th>End Date</th>
-                  <th></th> <!-- Any files -->
-                </thead>
-                <tbody>
-                  {% for warranty in device.warranty_set.all %}
-                    <tr>
-                      <td>
-                        {% if warranty.link %}
-                          <a href="{{ warranty.link }}">{{ warranty.description }}</a>
-                        {% else %}
-                          {{ warranty.description }}
-                        {% endif %}
-                      </td>
-                      <td>{{ warranty.start_date }}</td>
-                      <td>{{ warranty.end_date }}</td>
-
-                      <td>
-                        <a href="{% url 'dashboard:warranty_edit' device.id warranty.id %}">
-                          <i class="fa fa-edit"></i>
-                        </a>
-                        {% if warranty.documentation %}
-                          <a href="{{ warranty.documentation.url }}">
-                            <i class="fa fa-file"></i>
-                          </a>
-                        {% endif %}
-                      </td>
-                    </tr>
-                  {% endfor %}
-                </tbody>
-            </table>
+            {% with device.warranty_set.all as warranty_set %}
+              {% include 'devices/warranty_table.html' %}
+            {% endwith %}
           </div>
         </div>
-      {% endif %}
+        {% endif %}
+      {% endblock %}
     </div>
   </div>
 

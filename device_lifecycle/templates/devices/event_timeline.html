@@ -1,5 +1,3 @@
-{% load static %}
-
 <ul class="timeline">
   {% for event in device.events.all %}
     {% cycle '' 'timeline-inverted' as timeline_side silent %}

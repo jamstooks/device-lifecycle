@@ -1,21 +1,31 @@
 from django.conf.urls import url
 
 from .views import (
-    Dashboard,
-    DeviceCreate,
-    DeviceDetail,
-    DeviceList,
-    DeviceUpdate,
+    DashboardView,
+    DeviceCreateView,
+    DeviceDeleteView,
+    DeviceDetailView,
+    DeviceListView,
+    DeviceUpdateView,
     PersonList,
     PersonDetail,
     PersonCreate,
     PersonUpdate,
     WarrantyCreateView,
-    WarrantyEditView,
-    NoteEventCreate,
-    RepairEventCreate,
-    TransferEventCreate,
-    DecommissionEventCreate,
+    WarrantyUpdateView,
+    WarrantyDeleteView,
+    NoteEventCreateView,
+    NoteEventUpdateView,
+    NoteEventDeleteView,
+    RepairEventCreateView,
+    RepairEventUpdateView,
+    RepairEventDeleteView,
+    TransferEventCreateView,
+    TransferEventUpdateView,
+    TransferEventDeleteView,
+    DecommissionEventCreateView,
+    DecommissionEventUpdateView,
+    DecommissionEventDeleteView,
     SummaryReport,
     AgeReport)
 
@@ -23,40 +33,80 @@ urlpatterns = [
 
     # devices
     # url(r'^$', Dashboard.as_view(), name='dashboard'),
-    url(r'^$', DeviceList.as_view(), name='device_list'),
-    url(r'^devices/add/$', DeviceCreate.as_view(), name='device_add'),
+    url(r'^$', DeviceListView.as_view(), name='device_list'),
+    url(r'^devices/add/$', DeviceCreateView.as_view(), name='device_add'),
     url(
         r'^devices/(?P<pk>[\w\-]+)/$',
-        DeviceDetail.as_view(),
+        DeviceDetailView.as_view(),
         name='device_detail'),
     url(
         r'^devices/(?P<pk>[\w\-]+)/edit/$',
-        DeviceUpdate.as_view(),
+        DeviceUpdateView.as_view(),
         name='device_update'),
+    url(
+        r'^devices/(?P<pk>[\w\-]+)/delete/$',
+        DeviceDeleteView.as_view(),
+        name='device_delete'),
     url(
         r'^devices/(?P<pk>[\w\-]+)/warranty/add/$',
         WarrantyCreateView.as_view(),
         name='warranty_add'),
     url(
-        r'^devices/(?P<pk>[\w\-]+)/warranty/(?P<wpk>[\w\-]+)/$',
-        WarrantyEditView.as_view(),
+        r'^devices/(?P<pk>[\w\-]+)/warranty/(?P<child_pk>[\w\-]+)/$',
+        WarrantyUpdateView.as_view(),
         name='warranty_edit'),
     url(
+        r'^devices/(?P<pk>[\w\-]+)/warranty/(?P<child_pk>[\w\-]+)/delete/$',
+        WarrantyDeleteView.as_view(),
+        name='warranty_delete'),
+    url(
         r'^devices/(?P<pk>[\w\-]+)/note/add/$',
-        NoteEventCreate.as_view(),
+        NoteEventCreateView.as_view(),
         name='note_add'),
     url(
+        r'^devices/(?P<pk>[\w\-]+)/note/(?P<child_pk>[\w\-]+)/$',
+        NoteEventUpdateView.as_view(),
+        name='note_edit'),
+    url(
+        r'^devices/(?P<pk>[\w\-]+)/note/(?P<child_pk>[\w\-]+)/del/$',
+        NoteEventDeleteView.as_view(),
+        name='note_delete'),
+    url(
         r'^devices/(?P<pk>[\w\-]+)/repair/add/$',
-        RepairEventCreate.as_view(),
+        RepairEventCreateView.as_view(),
         name='repair_add'),
     url(
+        r'^devices/(?P<pk>[\w\-]+)/repair/(?P<child_pk>[\w\-]+)/$',
+        RepairEventUpdateView.as_view(),
+        name='repair_edit'),
+    url(
+        r'^devices/(?P<pk>[\w\-]+)/repair/(?P<child_pk>[\w\-]+)/del/$',
+        RepairEventDeleteView.as_view(),
+        name='repair_delete'),
+    url(
         r'^devices/(?P<pk>[\w\-]+)/transfer/add/$',
-        TransferEventCreate.as_view(),
+        TransferEventCreateView.as_view(),
         name='transfer_add'),
     url(
+        r'^devices/(?P<pk>[\w\-]+)/transfer/(?P<child_pk>[\w\-]+)/$',
+        TransferEventUpdateView.as_view(),
+        name='transfer_edit'),
+    url(
+        r'^devices/(?P<pk>[\w\-]+)/transfer/(?P<child_pk>[\w\-]+)/del/$',
+        TransferEventDeleteView.as_view(),
+        name='transfer_delete'),
+    url(
         r'^devices/(?P<pk>[\w\-]+)/decommission/add/$',
-        DecommissionEventCreate.as_view(),
+        DecommissionEventCreateView.as_view(),
         name='decommission_add'),
+    url(
+        r'^devices/(?P<pk>[\w\-]+)/decommission/(?P<child_pk>[\w\-]+)/$',
+        DecommissionEventUpdateView.as_view(),
+        name='decommission_edit'),
+    url(
+        r'^devices/(?P<pk>[\w\-]+)/decommission/(?P<child_pk>[\w\-]+)/del/$',
+        DecommissionEventDeleteView.as_view(),
+        name='decommission_delete'),
 
 
     # people

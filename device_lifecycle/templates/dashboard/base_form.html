@@ -13,5 +13,11 @@
         Cancel
       </a>
     {% endif %}
+    {% if delete_url %}
+      <a class="btn btn-danger btn-fill"
+        href="{{ delete_url }}">
+        Delete
+      </a>
+    {% endif %}
   </div>
 </form>

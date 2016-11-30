@@ -4,6 +4,12 @@
   mdl-color--red mdl-color-text--white
 {% endblock %}
 
+{% block event_buttons %}
+  {% with 'dashboard:decommission_edit' as event_edit_url %}
+    {{ block.super }}
+  {% endwith %}
+{% endblock %}
+
 {% block card_content %}
   <dl class="dl-horizontal">
     <dt>Method:</dt>

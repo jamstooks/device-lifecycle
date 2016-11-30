@@ -1,3 +1,9 @@
 {% extends 'devices/events/event_card_base.html' %}
 
+{% block event_buttons %}
+  {% with 'dashboard:note_edit' as event_edit_url %}
+    {{ block.super }}
+  {% endwith %}
+{% endblock %}
+
 {% block badge-color %}info{% endblock %}

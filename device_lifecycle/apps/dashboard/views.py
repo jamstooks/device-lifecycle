@@ -1,10 +1,11 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.urlresolvers import reverse_lazy
 from django.db.models import Count
 from django.db.models.functions import TruncYear
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.views.generic import (
-    CreateView, DetailView, ListView, TemplateView, UpdateView)
+    CreateView, DeleteView, DetailView, ListView, TemplateView, UpdateView)
 from django.urls import reverse
 
 from ..devices.models import (
@@ -18,22 +19,25 @@ from datetime import date, timedelta
 
 
 class DashboardBaseView(LoginRequiredMixin):
+    """
+    This will eventually have more auth stuff going on
+    """
     pass
 
 
-class Dashboard(DashboardBaseView, TemplateView):
+class DashboardView(DashboardBaseView, TemplateView):
     template_name = 'dashboard/dashboard.html'
 
 
-class DeviceList(DashboardBaseView, ListView):
+class DeviceListView(DashboardBaseView, ListView):
     model = Device
 
 
-class DeviceDetail(DashboardBaseView, DetailView):
+class DeviceDetailView(DashboardBaseView, DetailView):
     queryset = Device.objects.all()
 
 
-class DeviceCreate(DashboardBaseView, CreateView):
+class DeviceCreateView(DashboardBaseView, CreateView):
     """
         @todo - if a device is created without an owner,
         it should be set as spare
@@ -43,32 +47,41 @@ class DeviceCreate(DashboardBaseView, CreateView):
     """
     model = Device
     fields = [
+        'status',
         'device_type',
         'manufacturer',
         'model',
         'serial',
+        'current_owner',
         'date_purchased',
         'purchase_price',
         'receipt',
-        'current_owner',
         'description',
     ]
 
     success_url = '/dashboard/'
 
 
-class DeviceUpdate(DashboardBaseView, UpdateView):
+class DeviceUpdateView(DashboardBaseView, UpdateView):
     model = Device
     template_name = 'devices/device_edit.html'
     fields = [
+        'status',
+        'device_type',
         'manufacturer',
         'model',
         'serial',
+        'current_owner',
         'date_purchased',
         'purchase_price',
         'receipt',
         'description',
     ]
+
+
+class DeviceDeleteView(DashboardBaseView, DeleteView):
+    model = Device
+    success_url = reverse_lazy('dashboard:device_list')
 
 
 class PersonList(DashboardBaseView, ListView):
@@ -109,6 +122,7 @@ class DeviceChildEditMixin(DashboardBaseView):
         _context['device'] = self.get_device()
         if hasattr(self, 'form_title'):
             _context['form_title'] = self.form_title
+        _context['delete_url'] = self.get_delete_url()
         return _context
 
     def form_valid(self, form):
@@ -121,44 +135,86 @@ class DeviceChildEditMixin(DashboardBaseView):
             'dashboard:device_detail',
             kwargs={'pk': self.object.device.id})
 
+    def get_object(self, queryset=None):
+        # should only be called for edit/delete views
+        if not hasattr(self, 'object'):
+            d = self.get_device()
+            self.object = get_object_or_404(
+                self.model.objects.filter(device=d),
+                pk=self.kwargs['child_pk'])
+        return self.object
 
-class WarrantyCreateView(DeviceChildEditMixin, CreateView):
+    def get_delete_url(self):
+        obj = self.get_object()
+        if obj:
+            return obj.get_delete_url()
+
+
+class WarrantyBaseView(DeviceChildEditMixin):
     model = Warranty
     form_class = WarrantyForm
     template_name = 'devices/events/device_child_form.html'
+
+
+class WarrantyCreateView(WarrantyBaseView, CreateView):
     form_title = "Add a Warranty"
 
 
-class WarrantyEditView(DeviceChildEditMixin, UpdateView):
-    model = Warranty
-    form_class = WarrantyForm
-    template_name = 'devices/events/device_child_form.html'
+class WarrantyUpdateView(WarrantyBaseView, UpdateView):
     form_title = "Edit Warranty"
 
-    def get_object(self, queryset=None):
-        d = self.get_device()
-        return get_object_or_404(d.warranty_set.all(), pk=self.kwargs['wpk'])
+
+class WarrantyDeleteView(WarrantyBaseView, DeleteView):
+    template_name = 'devices/warranty_confirm_delete.html'
+
+    def get_context_data(self, *args, **kwargs):
+        # this insures that only this warranty gets displayed
+        _context = super(WarrantyDeleteView, self).get_context_data(
+            *args, **kwargs)
+        _context['warranty_set'] = [self.get_object()]
+        return _context
 
 
-class NoteEventCreate(DeviceChildEditMixin, CreateView):
+class NoteEventBaseView(DeviceChildEditMixin):
     model = NoteEvent
     form_class = NoteEventForm
     template_name = 'devices/events/device_child_form.html'
+
+
+class NoteEventCreateView(NoteEventBaseView, CreateView):
     form_title = "Add a Note"
 
 
-class RepairEventCreate(DeviceChildEditMixin, CreateView):
+class NoteEventUpdateView(NoteEventBaseView, UpdateView):
+    form_title = "Change Note"
+
+
+class NoteEventDeleteView(NoteEventUpdateView, DeleteView):
+    template_name = 'devices/events/event_confirm_delete.html'
+
+
+class RepairEventBaseView(DeviceChildEditMixin):
     model = RepairEvent
     form_class = RepairEventForm
     template_name = 'devices/events/device_child_form.html'
+
+
+class RepairEventCreateView(RepairEventBaseView, CreateView):
     form_title = "Add a Repair"
 
 
-class TransferEventCreate(DeviceChildEditMixin, CreateView):
+class RepairEventUpdateView(RepairEventBaseView, UpdateView):
+    form_title = "Update Repair"
+
+
+class RepairEventDeleteView(RepairEventBaseView, DeleteView):
+    template_name = 'devices/events/event_confirm_delete.html'
+
+
+class TransferEventBaseView(DeviceChildEditMixin):
     model = TransferEvent
     form_class = TransferEventForm
     template_name = 'devices/events/device_child_form.html'
-    form_title = "Transfer this Device"
 
     def form_valid(self, form):
 
@@ -178,11 +234,22 @@ class TransferEventCreate(DeviceChildEditMixin, CreateView):
         return HttpResponseRedirect(self.get_success_url())
 
 
-class DecommissionEventCreate(DeviceChildEditMixin, CreateView):
+class TransferEventCreateView(TransferEventBaseView, CreateView):
+    form_title = "Transfer this device"
+
+
+class TransferEventUpdateView(TransferEventBaseView, UpdateView):
+    form_title = "Change this transfer"
+
+
+class TransferEventDeleteView(TransferEventBaseView, DeleteView):
+    template_name = 'devices/events/event_confirm_delete.html'
+
+
+class DecommissionEventBaseView(DeviceChildEditMixin):
     model = DecommissionEvent
     form_class = DecommissionEventForm
     template_name = 'devices/events/device_child_form.html'
-    form_title = "Decommission this device"
 
     def form_valid(self, form):
 
@@ -194,6 +261,18 @@ class DecommissionEventCreate(DeviceChildEditMixin, CreateView):
         self.object.device.save()
 
         return HttpResponseRedirect(self.get_success_url())
+
+
+class DecommissionEventCreateView(DecommissionEventBaseView, CreateView):
+    form_title = "Decommission this device"
+
+
+class DecommissionEventUpdateView(DecommissionEventBaseView, UpdateView):
+    form_title = "Change this decommission"
+
+
+class DecommissionEventDeleteView(DecommissionEventBaseView, DeleteView):
+    template_name = 'devices/events/event_confirm_delete.html'
 
 
 class SummaryReport(DashboardBaseView, TemplateView):

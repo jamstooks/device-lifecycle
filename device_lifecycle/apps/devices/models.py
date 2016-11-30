@@ -18,6 +18,7 @@ class Device(models.Model):
 
     DEVICE_TYPE_CHOICES = Choices(
         ('laptop', 'Laptop'),
+        ('desktop', 'Desktop'),
         ('printer', 'Printer'),
         ('phone', 'Phone'),
         ('monitor', 'Monitor'),
@@ -70,14 +71,6 @@ class Device(models.Model):
     # @todo
     # current_location
 
-    def get_status_chip_style(self):
-        styles = {
-            'active': 'mdl-color--green mdl-color-text--white',
-            'spare': 'mdl-color--amber mdl-color-text--white',
-            'retired': 'mdl-color--red mdl-color-text--white'
-        }
-        return styles[self.status]
-
     @property
     def icon(self):
         return self.TYPE_ICONS[self.device_type]
@@ -86,6 +79,13 @@ class Device(models.Model):
         return reverse(
             'dashboard:device_detail',
             kwargs={'pk': self.pk})
+
+    def get_status_class(self):
+        return {
+            'active': 'success',
+            'spare': 'warning',
+            'retired': 'danger',
+        }[self.status]
 
     def __unicode__(self):
         return self.model
@@ -103,6 +103,12 @@ class Warranty(models.Model):
 
     class Meta:
         verbose_name_plural = "Warranties"
+        ordering = ['-end_date']
+
+    def get_delete_url(self):
+        return reverse(
+            "dashboard:warranty_delete",
+            kwargs={'pk': self.device.id, 'child_pk': self.id})
 
 
 class EventBase(models.Model):
@@ -142,6 +148,14 @@ class EventBase(models.Model):
     @property
     def icon(self):
         return self.ICON_MAPPINGS[self.event_type]
+
+    def get_delete_url(self):
+        # dict-find-by-value action
+        short_type_name = EVENT_TYPES.keys()[
+            EVENT_TYPES.values().index(self.__class__)]
+        return reverse(
+            "dashboard:%s_delete" % short_type_name,
+            kwargs={'pk': self.device.id, 'child_pk': self.id})
 
 
 class NoteEvent(EventBase):
