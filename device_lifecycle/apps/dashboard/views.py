@@ -11,7 +11,8 @@ from ..devices.models import (
     Device, Warranty, NoteEvent, RepairEvent, TransferEvent, DecommissionEvent)
 from ..organizations.models import Person
 from .forms import (
-    NoteEventForm, RepairEventForm, TransferEventForm, DecommissionEventForm)
+    NoteEventForm, RepairEventForm, TransferEventForm,
+    DecommissionEventForm, WarrantyForm)
 
 from datetime import date, timedelta
 
@@ -95,7 +96,7 @@ class PersonUpdate(DashboardBaseView, UpdateView):
     ]
 
 
-class EventCreateBase(DashboardBaseView, CreateView):
+class DeviceChildEditMixin(DashboardBaseView):
 
     def get_device(self):
         if not hasattr(self, 'device'):
@@ -103,9 +104,11 @@ class EventCreateBase(DashboardBaseView, CreateView):
         return self.device
 
     def get_context_data(self, *args, **kwargs):
-        _context = super(EventCreateBase, self).get_context_data(
+        _context = super(DeviceChildEditMixin, self).get_context_data(
             *args, **kwargs)
         _context['device'] = self.get_device()
+        if hasattr(self, 'form_title'):
+            _context['form_title'] = self.form_title
         return _context
 
     def form_valid(self, form):
@@ -119,22 +122,43 @@ class EventCreateBase(DashboardBaseView, CreateView):
             kwargs={'pk': self.object.device.id})
 
 
-class NoteEventCreate(EventCreateBase):
+class WarrantyCreateView(DeviceChildEditMixin, CreateView):
+    model = Warranty
+    form_class = WarrantyForm
+    template_name = 'devices/events/device_child_form.html'
+    form_title = "Add a Warranty"
+
+
+class WarrantyEditView(DeviceChildEditMixin, UpdateView):
+    model = Warranty
+    form_class = WarrantyForm
+    template_name = 'devices/events/device_child_form.html'
+    form_title = "Edit Warranty"
+
+    def get_object(self, queryset=None):
+        d = self.get_device()
+        return get_object_or_404(d.warranty_set.all(), pk=self.kwargs['wpk'])
+
+
+class NoteEventCreate(DeviceChildEditMixin, CreateView):
     model = NoteEvent
     form_class = NoteEventForm
-    template_name = 'devices/events/noteevent_form.html'
+    template_name = 'devices/events/device_child_form.html'
+    form_title = "Add a Note"
 
 
-class RepairEventCreate(EventCreateBase):
+class RepairEventCreate(DeviceChildEditMixin, CreateView):
     model = RepairEvent
     form_class = RepairEventForm
-    template_name = 'devices/events/repairevent_form.html'
+    template_name = 'devices/events/device_child_form.html'
+    form_title = "Add a Repair"
 
 
-class TransferEventCreate(EventCreateBase):
+class TransferEventCreate(DeviceChildEditMixin, CreateView):
     model = TransferEvent
     form_class = TransferEventForm
-    template_name = 'devices/events/transferevent_form.html'
+    template_name = 'devices/events/device_child_form.html'
+    form_title = "Transfer this Device"
 
     def form_valid(self, form):
 
@@ -154,10 +178,11 @@ class TransferEventCreate(EventCreateBase):
         return HttpResponseRedirect(self.get_success_url())
 
 
-class DecommissionEventCreate(EventCreateBase):
+class DecommissionEventCreate(DeviceChildEditMixin, CreateView):
     model = DecommissionEvent
     form_class = DecommissionEventForm
-    template_name = 'devices/events/decommissionevent_form.html'
+    template_name = 'devices/events/device_child_form.html'
+    form_title = "Decommission this device"
 
     def form_valid(self, form):
 

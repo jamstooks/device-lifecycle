@@ -2,25 +2,32 @@ from django.forms import ModelForm
 from django.forms import modelform_factory
 
 from ..devices.models import (
-    NoteEvent, RepairEvent, TransferEvent, DecommissionEvent)
+    NoteEvent, RepairEvent, TransferEvent, DecommissionEvent, Warranty)
 
 
-class BaseEventForm(ModelForm):
+class DeviceChildForm(ModelForm):
     """
     Use modelforms to extend this
     """
     def save(self, device, commit=True):
         self.instance.device = device
-        return super(BaseEventForm, self).save(commit)
+        return super(DeviceChildForm, self).save(commit)
 
 
-class NoteEventForm(BaseEventForm):
+class WarrantyForm(DeviceChildForm):
+    class Meta:
+        model = Warranty
+        fields = [
+            'start_date', 'end_date', 'description', 'link', 'documentation']
+
+
+class NoteEventForm(DeviceChildForm):
     class Meta:
         model = NoteEvent
         fields = ['date', 'notes']
 
 
-class RepairEventForm(BaseEventForm):
+class RepairEventForm(DeviceChildForm):
     class Meta:
         model = RepairEvent
         fields = [
@@ -28,13 +35,13 @@ class RepairEventForm(BaseEventForm):
             'vendor_name', 'vendor_address', 'notes']
 
 
-class DecommissionEventForm(BaseEventForm):
+class DecommissionEventForm(DeviceChildForm):
     class Meta:
         model = DecommissionEvent
         fields = ['date', 'method', 'cost', 'receipt', 'notes']
 
 
-class TransferEventForm(BaseEventForm):
+class TransferEventForm(DeviceChildForm):
     class Meta:
         model = TransferEvent
         fields = ['date', 'transferred_to', 'notes']

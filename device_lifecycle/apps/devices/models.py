@@ -99,7 +99,6 @@ class Warranty(models.Model):
     end_date = models.DateField()
     link = models.URLField(
         blank=True, null=True, help_text="A link to more information.")
-    notes = models.TextField(blank=True, null=True)
     documentation = models.FileField(blank=True, null=True)
 
     class Meta:

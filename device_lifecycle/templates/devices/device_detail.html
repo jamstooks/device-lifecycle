@@ -66,6 +66,47 @@
           </span>
         </div>
       </div>
+      {% if device.warranty_set.all %}
+        <div class="row">
+          <div class="col-md-12">
+            <h4>Warranty Details</h4>
+            <table class="table table-hover table-striped">
+                <thead>
+                  <th>Name</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th></th> <!-- Any files -->
+                </thead>
+                <tbody>
+                  {% for warranty in device.warranty_set.all %}
+                    <tr>
+                      <td>
+                        {% if warranty.link %}
+                          <a href="{{ warranty.link }}">{{ warranty.description }}</a>
+                        {% else %}
+                          {{ warranty.description }}
+                        {% endif %}
+                      </td>
+                      <td>{{ warranty.start_date }}</td>
+                      <td>{{ warranty.end_date }}</td>
+
+                      <td>
+                        <a href="{% url 'dashboard:warranty_edit' device.id warranty.id %}">
+                          <i class="fa fa-edit"></i>
+                        </a>
+                        {% if warranty.documentation %}
+                          <a href="{{ warranty.documentation.url }}">
+                            <i class="fa fa-file"></i>
+                          </a>
+                        {% endif %}
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+            </table>
+          </div>
+        </div>
+      {% endif %}
     </div>
   </div>
 
@@ -87,6 +128,7 @@
         <li><a href="{% url 'dashboard:transfer_add' device.pk %}">Transfer</a></li>
         <li><a href="{% url 'dashboard:repair_add' device.pk %}">Repair</a></li>
         <li><a href="{% url 'dashboard:decommission_add' device.pk %}">Decommission</a></li>
+        <li><a href="{% url 'dashboard:warranty_add' device.pk %}">Warranty</a></li>
       </ul>
     </div>
   {% endblock %}

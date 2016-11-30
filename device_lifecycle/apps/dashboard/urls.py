@@ -10,6 +10,8 @@ from .views import (
     PersonDetail,
     PersonCreate,
     PersonUpdate,
+    WarrantyCreateView,
+    WarrantyEditView,
     NoteEventCreate,
     RepairEventCreate,
     TransferEventCreate,
@@ -32,19 +34,27 @@ urlpatterns = [
         DeviceUpdate.as_view(),
         name='device_update'),
     url(
-        r'^devices/(?P<pk>[\w\-]+)/add-note/$',
+        r'^devices/(?P<pk>[\w\-]+)/warranty/add/$',
+        WarrantyCreateView.as_view(),
+        name='warranty_add'),
+    url(
+        r'^devices/(?P<pk>[\w\-]+)/warranty/(?P<wpk>[\w\-]+)/$',
+        WarrantyEditView.as_view(),
+        name='warranty_edit'),
+    url(
+        r'^devices/(?P<pk>[\w\-]+)/note/add/$',
         NoteEventCreate.as_view(),
         name='note_add'),
     url(
-        r'^devices/(?P<pk>[\w\-]+)/add-repair/$',
+        r'^devices/(?P<pk>[\w\-]+)/repair/add/$',
         RepairEventCreate.as_view(),
         name='repair_add'),
     url(
-        r'^devices/(?P<pk>[\w\-]+)/add-transfer/$',
+        r'^devices/(?P<pk>[\w\-]+)/transfer/add/$',
         TransferEventCreate.as_view(),
         name='transfer_add'),
     url(
-        r'^devices/(?P<pk>[\w\-]+)/add-decommission/$',
+        r'^devices/(?P<pk>[\w\-]+)/decommission/add/$',
         DecommissionEventCreate.as_view(),
         name='decommission_add'),
 
