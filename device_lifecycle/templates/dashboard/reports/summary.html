@@ -17,7 +17,10 @@
               ['{{ dt.device_type }}', '{{ dt.dcount }}']{% if not forloop.last %},{% endif %}
             {% endfor %}
         ],
-        type : 'pie'
+        type : 'pie',
+      },
+      color: {
+          pattern: colorPattern,
       }
   });
   </script>
