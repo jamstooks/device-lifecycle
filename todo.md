@@ -18,11 +18,11 @@
   - percentage of devices with current warranties
   - missing data (like receipts or purchase prices)
 - [ ] dashboard
-  - overall activity feed
-  - upcoming warranty expirations
-  - devices in replacement window
-  - devices coming up for replacement
-  - total active devices / total spares / total retired
+  - [x] overall activity feed
+  - [ ] upcoming warranty expirations
+  - [ ] devices in replacement window
+  - [ ] devices coming up for replacement
+  - [ ] total active devices / total spares / total retired
 - [ ] check-ins for condition assessment and location updates
 - [ ] features
   - [ ] bulk add
@@ -44,3 +44,4 @@
   - [ ] tools for owners
     - [ ] report theft
     - [ ] report repair
+  - [ ] allow categories for people (maybe departments?)
