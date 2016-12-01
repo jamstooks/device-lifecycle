@@ -13,7 +13,7 @@ from ..devices.models import (
     RepairEvent, TransferEvent, DecommissionEvent)
 from ..organizations.models import Person
 from .forms import (
-    PurchaseEventForm, NoteEventForm, RepairEventForm,
+    DeviceForm, PurchaseEventForm, NoteEventForm, RepairEventForm,
     TransferEventForm, DecommissionEventForm, WarrantyForm)
 
 from datetime import date, timedelta
@@ -56,31 +56,14 @@ class DeviceCreateView(DashboardBaseView, CreateView):
         if so, I should add a "make spare" event
     """
     model = Device
-    fields = [
-        'status',
-        'device_type',
-        'manufacturer',
-        'model',
-        'serial',
-        'current_owner',
-        'description',
-    ]
-
-    success_url = '/dashboard/'
+    form_class = DeviceForm
+    success_url = reverse_lazy('dashboard:device_list')
 
 
 class DeviceUpdateView(DashboardBaseView, UpdateView):
     model = Device
+    form_class = DeviceForm
     template_name = 'devices/device_edit.html'
-    fields = [
-        'status',
-        'device_type',
-        'manufacturer',
-        'model',
-        'serial',
-        'current_owner',
-        'description',
-    ]
 
 
 class DeviceDeleteView(DashboardBaseView, DeleteView):

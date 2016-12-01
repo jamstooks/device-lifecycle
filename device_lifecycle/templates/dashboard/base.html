@@ -2,6 +2,11 @@
 
 {% load static %}
 
+{% block head_styles %}
+  {{ block.super }}
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+{% endblock %}
+
 {% block wrapper_content %}
     <div class="sidebar" data-color="orange" data-image="{% static 'img/clouds.jpg' %}">
 
@@ -91,4 +96,18 @@
         </footer>
 
     </div>
+{% endblock %}
+
+{% block footer_js %}
+  {{ block.super }}
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+  $( function() {
+    $( ".datepicker" ).datepicker(
+      {
+        dateFormat: "yy-mm-dd"
+      }
+    );
+  } );
+  </script>
 {% endblock %}

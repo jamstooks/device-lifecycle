@@ -2,14 +2,32 @@ from django.forms import ModelForm
 from django.forms import modelform_factory
 
 from ..devices.models import (
-    PurchaseEvent, NoteEvent, RepairEvent,
+    Device, PurchaseEvent, NoteEvent, RepairEvent,
     TransferEvent, DecommissionEvent, Warranty)
+
+
+class DeviceForm(ModelForm):
+    class Meta:
+        model = Device
+        fields = [
+            'status',
+            'device_type',
+            'manufacturer',
+            'model',
+            'serial',
+            'current_owner',
+            'description',
+        ]
 
 
 class DeviceChildForm(ModelForm):
     """
     Use modelforms to extend this
     """
+    def __init__(self, *args, **kwargs):
+        super(DeviceChildForm, self).__init__(*args, **kwargs)
+        self.fields['date'].widget.attrs['class'] = 'datepicker'
+
     def save(self, device, commit=True):
         self.instance.device = device
         return super(DeviceChildForm, self).save(commit)
@@ -20,6 +38,11 @@ class WarrantyForm(DeviceChildForm):
         model = Warranty
         fields = [
             'start_date', 'end_date', 'description', 'link', 'documentation']
+
+    def __init__(self, *args, **kwargs):
+        super(DeviceChildForm, self).__init__(*args, **kwargs)
+        self.fields['start_date'].widget.attrs['class'] = 'datepicker'
+        self.fields['end_date'].widget.attrs['class'] = 'datepicker'
 
 
 class PurchaseEventForm(DeviceChildForm):
