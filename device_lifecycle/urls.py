@@ -2,10 +2,16 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.views.generic.base import RedirectView
 
+from .apps.dashboard.views import DashboardRedirectView
+
 urlpatterns = [
     url(r'^$', RedirectView.as_view(url='/accounts/login/')),
     url(
-        r'^dashboard/',
+        '^dashboard/$',
+        DashboardRedirectView.as_view(),
+        name='dashboard_redirect'),
+    url(
+        r'^dashboard/(?P<org_slug>[\w\-]+)/',
         include(
             'device_lifecycle.apps.dashboard.urls',
             namespace='dashboard')

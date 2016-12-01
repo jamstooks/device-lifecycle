@@ -1,11 +1,11 @@
 <ul class="nav nav-tabs nav-justified">
   <li role="presentation"{% if active == 'types' %} class="active"{% endif %}>
-    <a href="{% url 'dashboard:reports_summary' %}">
+    <a href="{% url 'dashboard:reports_summary' organization.slug %}">
       Types
     </a>
   </li>
   <li role="presentation"{% if active == 'ages' %} class="active"{% endif %}>
-    <a href="{% url 'dashboard:reports_age' %}">
+    <a href="{% url 'dashboard:reports_age' organization.slug %}">
       Ages
     </a>
   </li>

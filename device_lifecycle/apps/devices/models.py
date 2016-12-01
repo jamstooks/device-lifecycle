@@ -7,6 +7,7 @@ from collections import OrderedDict
 from model_utils import Choices
 
 from ..people.models import Person
+from organizations.models import Organization
 
 
 class DeviceManager(models.Manager):
@@ -52,6 +53,7 @@ class Device(models.Model):
         'mouse': 'fa fa-mouse-pointer',
     }
 
+    organization = models.ForeignKey(Organization)
     device_type = models.CharField(max_length=16, choices=DEVICE_TYPE_CHOICES)
     manufacturer = models.CharField(max_length=32)
     model = models.CharField(max_length=64)
@@ -75,7 +77,7 @@ class Device(models.Model):
     def get_absolute_url(self):
         return reverse(
             'dashboard:device_detail',
-            kwargs={'pk': self.pk})
+            kwargs={'org_slug': self.organization.slug, 'pk': self.pk})
 
     def get_status_class(self):
         return {
@@ -105,7 +107,10 @@ class Warranty(models.Model):
     def get_delete_url(self):
         return reverse(
             "dashboard:warranty_delete",
-            kwargs={'pk': self.device.id, 'child_pk': self.id})
+            kwargs={
+                'org_slug': self.device.organization.slug,
+                'pk': self.device.id,
+                'child_pk': self.id})
 
 
 class EventBase(models.Model):
@@ -153,7 +158,10 @@ class EventBase(models.Model):
             EVENT_TYPES.values().index(self.__class__)]
         return reverse(
             "dashboard:%s_delete" % short_type_name,
-            kwargs={'pk': self.device.id, 'child_pk': self.id})
+            kwargs={
+                'org_slug': self.device.organization.slug,
+                'pk': self.device.id,
+                'child_pk': self.id})
 
 
 class PurchaseEvent(EventBase):

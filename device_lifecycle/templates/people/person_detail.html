@@ -4,7 +4,7 @@
 {% block dashboard_content %}
   <div class="card">
     <div class="header">
-      <a href="{% url 'dashboard:person_update' person.id %}">
+      <a href="{% url 'dashboard:person_update' organization.slug person.id %}">
         <i class="fa fa-edit pull-right"></i>
       </a>
       <h2 class="title">
@@ -54,7 +54,7 @@
 
           <a
             class="btn btn-warning btn-fill btn-lg fab"
-            href="{% url 'dashboard:device_add' %}">
+            href="{% url 'dashboard:device_add' organization.slug  %}">
             <i class="fa fa-plus"></i>
           </a>
 

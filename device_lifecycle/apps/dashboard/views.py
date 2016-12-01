@@ -2,7 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.urlresolvers import reverse_lazy
 from django.db.models import Count
 from django.db.models.functions import TruncYear
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.shortcuts import get_object_or_404
 from django.views.generic import (
     CreateView, DeleteView, DetailView, ListView, TemplateView, UpdateView)
@@ -13,17 +13,66 @@ from ..devices.models import (
     RepairEvent, TransferEvent, DecommissionEvent)
 from ..people.models import Person
 from .forms import (
-    DeviceForm, PurchaseEventForm, NoteEventForm, RepairEventForm,
+    DeviceForm, PersonForm, PurchaseEventForm, NoteEventForm, RepairEventForm,
     TransferEventForm, DecommissionEventForm, WarrantyForm)
 
 from datetime import date, timedelta
+from organizations.mixins import MembershipRequiredMixin
+from organizations.models import Organization, OrganizationUser
 
 
-class DashboardBaseView(LoginRequiredMixin):
+class DashboardRedirectView(LoginRequiredMixin, TemplateView):
     """
-    This will eventually have more auth stuff going on
+    Either displays a list of orgs a user can access
+    or redirects them to their only one
+
+    If a user does not have an org, then they will be directed
+    to register eventually
     """
-    pass
+    template_name = "dashboard/org_list.html"
+
+    def dispatch(self, request, *args, **kwargs):
+        self.ou_list = OrganizationUser.objects.filter(user=self.request.user)
+        if not self.ou_list:
+            # redirect to registration eventually
+            return HttpResponseForbidden()
+        if self.ou_list.count() == 1:
+            return HttpResponseRedirect(
+                reverse(
+                    'dashboard:device_list',
+                    kwargs={"org_slug": self.ou_list[0].organization.slug}))
+
+        return super(DashboardRedirectView, self).dispatch(
+            request, *args, **kwargs)
+
+    def get_context_data(self, *args, **kwargs):
+        _context = super(DashboardRedirectView, self).get_context_data(
+            *args, **kwargs)
+        org_list = []
+        for org_user in self.ou_list:
+            org_list.append(org_user.organization)
+        _context['organization_list'] = self.org_list
+        return _context
+
+
+class DashboardBaseView(LoginRequiredMixin, MembershipRequiredMixin):
+    """
+    Currently requires login and
+    requires that the user belong to the selected organization
+
+    Adds the current organization to the context
+    """
+    def get_organization(self):
+        if not hasattr(self, 'organization'):
+            self.organization = get_object_or_404(
+                Organization, slug=self.kwargs['org_slug'])
+        return self.organization
+
+    def get_context_data(self, *args, **kwargs):
+        _context = super(DashboardBaseView, self).get_context_data(
+            *args, **kwargs)
+        _context['organization'] = self.get_organization()
+        return _context
 
 
 class ActivityFeedView(DashboardBaseView, ListView):
@@ -39,15 +88,34 @@ class DashboardView(DashboardBaseView, TemplateView):
     template_name = 'dashboard/dashboard.html'
 
 
-class DeviceListView(DashboardBaseView, ListView):
-    model = Device
+class DeviceBaseView(DashboardBaseView):
+
+    def get_queryset(self):
+        # @todo - consider pagination or filtering
+        org = self.get_organization()
+        return org.device_set.all()
+
+    def form_valid(self, form):
+        # only used for the form versions, but useful for simplicity
+        # the current device needs to be automatically added to the event
+        self.object = form.save(organization=self.get_organization())
+        return HttpResponseRedirect(self.get_success_url())
+
+    def get_form_kwargs(self):
+        kwargs = super(DeviceBaseView, self).get_form_kwargs()
+        kwargs['organization'] = self.get_organization()
+        return kwargs
 
 
-class DeviceDetailView(DashboardBaseView, DetailView):
-    queryset = Device.objects.all()
+class DeviceListView(DeviceBaseView, ListView):
+    pass
 
 
-class DeviceCreateView(DashboardBaseView, CreateView):
+class DeviceDetailView(DeviceBaseView, DetailView):
+    pass
+
+
+class DeviceCreateView(DeviceBaseView, CreateView):
     """
         @todo - if a device is created without an owner,
         it should be set as spare
@@ -57,10 +125,14 @@ class DeviceCreateView(DashboardBaseView, CreateView):
     """
     model = Device
     form_class = DeviceForm
-    success_url = reverse_lazy('dashboard:device_list')
+
+    def get_success_url(self):
+        return reverse(
+            'dashboard:device_list',
+            kwargs={'org_slug': self.get_organization().slug})
 
 
-class DeviceUpdateView(DashboardBaseView, UpdateView):
+class DeviceUpdateView(DeviceBaseView, UpdateView):
     model = Device
     form_class = DeviceForm
     template_name = 'devices/device_edit.html'
@@ -68,32 +140,49 @@ class DeviceUpdateView(DashboardBaseView, UpdateView):
 
 class DeviceDeleteView(DashboardBaseView, DeleteView):
     model = Device
-    success_url = reverse_lazy('dashboard:device_list')
+
+    def get_success_url(self):
+        return reverse(
+            'dashboard:device_list',
+            kwargs={'org_slug': self.get_organization().slug})
 
 
-class PersonList(DashboardBaseView, ListView):
+class PersonBaseView(DashboardBaseView):
+
+    def get_queryset(self):
+        # @todo - consider pagination or filtering
+        org = self.get_organization()
+        return org.person_set.all()
+
+    def form_valid(self, form):
+        # only used for the form versions, but useful for simplicity
+        # the current device needs to be automatically added to the event
+        self.object = form.save(organization=self.get_organization())
+        return HttpResponseRedirect(self.get_success_url())
+
+
+class PersonList(PersonBaseView, ListView):
+    pass
+
+
+class PersonDetail(PersonBaseView, DetailView):
+    pass
+
+
+class PersonCreate(PersonBaseView, CreateView):
     model = Person
+    form_class = PersonForm
+
+    def get_success_url(self):
+        return reverse(
+            'dashboard:person_list',
+            kwargs={'org_slug': self.get_organization().slug})
 
 
-class PersonDetail(DashboardBaseView, DetailView):
-    queryset = Person.objects.all()
-
-
-class PersonCreate(DashboardBaseView, CreateView):
+class PersonUpdate(PersonBaseView, UpdateView):
     model = Person
-    fields = [
-        'name', 'position', 'email', 'is_active'
-    ]
-    success_url = '/dashboard/people'  # @todo - reverse
-
-
-class PersonUpdate(DashboardBaseView, UpdateView):
-    model = Person
+    form_class = PersonForm
     template_name = 'people/person_edit.html'
-
-    fields = [
-        'name', 'position', 'email', 'is_active'
-    ]
 
 
 class DeviceChildEditMixin(DashboardBaseView):
@@ -120,7 +209,9 @@ class DeviceChildEditMixin(DashboardBaseView):
     def get_success_url(self):
         return reverse(
             'dashboard:device_detail',
-            kwargs={'pk': self.object.device.id})
+            kwargs={
+                'org_slug': self.get_organization().slug,
+                'pk': self.object.device.id})
 
     def get_object(self, queryset=None):
         # should only be called for edit/delete views
@@ -220,6 +311,11 @@ class TransferEventBaseView(DeviceChildEditMixin):
     model = TransferEvent
     form_class = TransferEventForm
     template_name = 'devices/events/device_child_form.html'
+
+    def get_form_kwargs(self):
+        kwargs = super(TransferEventBaseView, self).get_form_kwargs()
+        kwargs['organization'] = self.get_organization()
+        return kwargs
 
     def form_valid(self, form):
 

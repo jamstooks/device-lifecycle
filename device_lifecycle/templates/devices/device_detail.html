@@ -10,7 +10,7 @@
 {% block dashboard_content %}
   <div class="card">
     <div class="header">
-      <a href="{% url 'dashboard:device_update' device.id %}">
+      <a href="{% url 'dashboard:device_update' organization.slug device.id %}">
         <i class="fa fa-edit pull-right"></i>
       </a>
       <h2 class="title">
@@ -77,7 +77,7 @@
             You don't have purchase details for this device.
           </span>
           <a
-            href="{% url 'dashboard:purchase_add' device.pk %}"
+            href="{% url 'dashboard:purchase_add' organization.slug device.pk %}"
             role="button" class="btn btn-warning btn-fill">
             Add Purchase Details.
           </a>
@@ -97,13 +97,13 @@
       </button>
       <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu2">
         {% if not device.purchaseevent %}
-          <li><a href="{% url 'dashboard:purchase_add' device.pk %}">Purchase</a></li>
+          <li><a href="{% url 'dashboard:purchase_add' organization.slug device.pk %}">Purchase</a></li>
         {% endif %}
-        <li><a href="{% url 'dashboard:note_add' device.pk %}">Note</a></li>
-        <li><a href="{% url 'dashboard:transfer_add' device.pk %}">Transfer</a></li>
-        <li><a href="{% url 'dashboard:repair_add' device.pk %}">Repair</a></li>
-        <li><a href="{% url 'dashboard:decommission_add' device.pk %}">Decommission</a></li>
-        <li><a href="{% url 'dashboard:warranty_add' device.pk %}">Warranty</a></li>
+        <li><a href="{% url 'dashboard:note_add' organization.slug device.pk %}">Note</a></li>
+        <li><a href="{% url 'dashboard:transfer_add' organization.slug device.pk %}">Transfer</a></li>
+        <li><a href="{% url 'dashboard:repair_add' organization.slug device.pk %}">Repair</a></li>
+        <li><a href="{% url 'dashboard:decommission_add' organization.slug device.pk %}">Decommission</a></li>
+        <li><a href="{% url 'dashboard:warranty_add' organization.slug device.pk %}">Warranty</a></li>
       </ul>
     </div>
   {% endblock %}
