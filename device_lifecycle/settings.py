@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'bootstrapform',
+    'bootstrap_notify',
     'organizations',
 ]
 

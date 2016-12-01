@@ -1,0 +1,15 @@
+<!-- MESSAGES -->
+
+{% if message_list %}
+  <script>
+    {% for message in message_list %}
+    $.notify({
+      // options
+      message: "{{ message.message }}"
+    },{
+      // settings
+      type: "{{ message.msg_class }}"
+    });
+    {% endfor %}
+  </script>
+{% endif %}

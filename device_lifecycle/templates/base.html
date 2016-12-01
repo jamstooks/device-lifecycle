@@ -1,4 +1,5 @@
 {% load static %}
+{% load bootstrap_notify %}
 
 <!doctype html>
 <html lang="en">
@@ -47,6 +48,8 @@
     <script src="{% static 'x_lbd_free_v1.3/assets/js/bootstrap-notify.js' %}"></script>
     <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
     <script src="{% static 'x_lbd_free_v1.3/assets/js/light-bootstrap-dashboard.js' %}"></script>
+
+    {% show_bootstrap_messages %}
   {% endblock %}
 
 </html>

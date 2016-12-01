@@ -106,5 +106,7 @@ class TransferEventForm(DeviceChildForm):
         self.fields['transferred_to'].queryset = organization.person_set.all()
 
     def save(self, device, transferred_from, commit=True):
-        self.instance.transferred_from = transferred_from
+        if not hasattr(self.instance, 'id'):
+            # only update the transferred from when created
+            self.instance.transferred_from = transferred_from
         return super(TransferEventForm, self).save(device, commit)

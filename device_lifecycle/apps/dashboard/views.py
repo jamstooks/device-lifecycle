@@ -11,10 +11,11 @@ from django.urls import reverse
 from ..devices.models import (
     Device, Warranty, EventBase, PurchaseEvent, NoteEvent,
     RepairEvent, TransferEvent, DecommissionEvent)
-from ..people.models import Person
 from .forms import (
     DeviceForm, PersonForm, PurchaseEventForm, NoteEventForm, RepairEventForm,
     TransferEventForm, DecommissionEventForm, WarrantyForm)
+from ..people.models import Person
+from .utils import FormMessagingMixin
 
 from datetime import date, timedelta
 from organizations.mixins import MembershipRequiredMixin
@@ -206,6 +207,7 @@ class DeviceChildEditMixin(DashboardBaseView):
         return _context
 
     def form_valid(self, form):
+
         # the current device needs to be automatically added to the event
         self.object = form.save(device=self.get_device())
         return HttpResponseRedirect(self.get_success_url())

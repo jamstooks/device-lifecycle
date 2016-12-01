@@ -49,7 +49,12 @@
     - [ ] report repair
   - [ ] allow categories for people (maybe departments?)
   - [ ] vendors as object
-    [ ] phone
-    [ ] how to recycle
+    - [ ] phone
+    - [ ] how to recycle
   - [ ] general documentation tab...
     - [ ] lifecycle policy
+  - [ ] partnerships
+    - [ ] recycling companies
+  - [ ] software tracking
+    - [ ] installed software and licenses
+    - [ ] software requests?
