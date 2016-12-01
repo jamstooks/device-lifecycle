@@ -32,15 +32,19 @@ class DashboardRedirectView(LoginRequiredMixin, TemplateView):
     template_name = "dashboard/org_list.html"
 
     def dispatch(self, request, *args, **kwargs):
-        self.ou_list = OrganizationUser.objects.filter(user=self.request.user)
-        if not self.ou_list:
-            # redirect to registration eventually
-            return HttpResponseForbidden()
-        if self.ou_list.count() == 1:
-            return HttpResponseRedirect(
-                reverse(
-                    'dashboard:device_list',
-                    kwargs={"org_slug": self.ou_list[0].organization.slug}))
+
+        if self.request.user.is_authenticated():
+            self.ou_list = OrganizationUser.objects.filter(
+                user=self.request.user)
+            if not self.ou_list:
+                # redirect to registration eventually
+                return HttpResponseForbidden()
+            if self.ou_list.count() == 1:
+                return HttpResponseRedirect(
+                    reverse(
+                        'dashboard:device_list',
+                        kwargs={
+                            "org_slug": self.ou_list[0].organization.slug}))
 
         return super(DashboardRedirectView, self).dispatch(
             request, *args, **kwargs)
