@@ -5,11 +5,14 @@
       <div class="header">
           <h4 class="title">Inventory</h4>
           <p class="category">
-            {{ object_list.count }} active devices
+            {{ filter.qs.count }} active devices
           </p>
+          <form action="" method="get" class="pull-right">
+            {{ filter.form.as_p }}
+          </form>
       </div>
       <div class="content table-responsive table-full-width">
-        {% with object_list as device_list %}
+        {% with filter.qs as device_list %}
           {% include 'devices/device_list_table.html' %}
         {% endwith %}
       </div>

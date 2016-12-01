@@ -11,11 +11,12 @@ from django.urls import reverse
 from ..devices.models import (
     Device, Warranty, EventBase, PurchaseEvent, NoteEvent,
     RepairEvent, TransferEvent, DecommissionEvent)
+from .filters import DeviceFilter
 from .forms import (
     DeviceForm, PersonForm, PurchaseEventForm, NoteEventForm, RepairEventForm,
     TransferEventForm, DecommissionEventForm, WarrantyForm)
 from ..people.models import Person
-from .utils import FormMessagingMixin
+from .utils import get_device_qs_purchase_years
 
 from datetime import date, timedelta
 from organizations.mixins import MembershipRequiredMixin
@@ -113,7 +114,14 @@ class DeviceBaseView(DashboardBaseView):
 
 
 class DeviceListView(DeviceBaseView, ListView):
-    pass
+
+    def get_context_data(self, *args, **kwargs):
+        _context = super(DeviceListView, self).get_context_data(
+            *args, **kwargs)
+        _context['filter'] = DeviceFilter(
+            self.request.GET,
+            queryset=self.get_queryset())
+        return _context
 
 
 class DeviceDetailView(DeviceBaseView, DetailView):
@@ -400,14 +408,8 @@ class AgeReport(DashboardBaseView, TemplateView):
         _ctx = super(AgeReport, self).get_context_data(*args, **kwargs)
 
         # The x-axis: purchase years
-        qs = Device.objects.active()
-        qs = qs.order_by('purchaseevent__date')
-        qs = qs.filter(purchaseevent__date__isnull=False)
-        qs = qs.annotate(year=TruncYear('purchaseevent__date'))
-        years = []
-        for y in qs.values_list('year', flat=True):
-            if y not in years:  # distinct not support locally in sqlite
-                years.append(y)
+        qs = self.get_organization().device_set.active()
+        years = get_device_qs_purchase_years(qs)
         _ctx['years'] = years
 
         # The y-axis: counts by device
@@ -415,7 +417,7 @@ class AgeReport(DashboardBaseView, TemplateView):
         rows = []
         for _type, label in Device.DEVICE_TYPE_CHOICES:
 
-            qs = Device.objects.active()
+            qs = self.get_organization().device_set.active()
             qs = qs.filter(purchaseevent__date__isnull=False)
             qs = qs.order_by('purchaseevent__date')
             qs = qs.filter(device_type=_type)
@@ -423,10 +425,10 @@ class AgeReport(DashboardBaseView, TemplateView):
             if qs:
                 row = {
                     'label': label,
-                    'values': [0 for i in range(len(_ctx['years']))]
+                    'values': [0 for i in range(len(years))]
                 }
                 # we have to have 0 values when the year doesn't exist
-                row['values'] = [0 for i in range(len(_ctx['years']))]
+                row['values'] = [0 for i in range(len(years))]
 
                 qs = qs.annotate(year=TruncYear('purchaseevent__date'))
                 qs = qs.values('year').annotate(ycount=Count('year'))
