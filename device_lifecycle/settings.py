@@ -35,7 +35,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'device_lifecycle.apps.devices',
-    'device_lifecycle.apps.organizations',
     'device_lifecycle.apps.people',
 
     'allauth',
