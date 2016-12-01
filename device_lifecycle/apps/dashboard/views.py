@@ -11,7 +11,7 @@ from django.urls import reverse
 from ..devices.models import (
     Device, Warranty, EventBase, PurchaseEvent, NoteEvent,
     RepairEvent, TransferEvent, DecommissionEvent)
-from ..organizations.models import Person
+from ..people.models import Person
 from .forms import (
     DeviceForm, PurchaseEventForm, NoteEventForm, RepairEventForm,
     TransferEventForm, DecommissionEventForm, WarrantyForm)
@@ -89,7 +89,7 @@ class PersonCreate(DashboardBaseView, CreateView):
 
 class PersonUpdate(DashboardBaseView, UpdateView):
     model = Person
-    template_name = 'organizations/person_edit.html'
+    template_name = 'people/person_edit.html'
 
     fields = [
         'name', 'position', 'email', 'is_active'

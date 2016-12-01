@@ -6,7 +6,7 @@ from django.urls import reverse
 from collections import OrderedDict
 from model_utils import Choices
 
-from ..organizations.models import Person
+from ..people.models import Person
 
 
 class DeviceManager(models.Manager):
