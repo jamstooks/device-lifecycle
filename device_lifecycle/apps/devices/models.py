@@ -50,7 +50,7 @@ class Device(models.Model):
         'hard_drive': 'fa fa-hdd-o',
         'webcam': 'fa fa-camera',
         'keyboard': 'fa fa-keyboard-o',
-        'mouse': 'fa fa-mouse-pointer',
+        'mouse': 'pe-7s-mouse',
     }
 
     organization = models.ForeignKey(Organization)
