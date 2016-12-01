@@ -4,7 +4,9 @@
   <div class="card">
       <div class="header">
           <h4 class="title">Inventory</h4>
-          <p class="category">All active devices</p>
+          <p class="category">
+            {{ object_list.count }} active devices
+          </p>
       </div>
       <div class="content table-responsive table-full-width">
         {% with object_list as device_list %}
