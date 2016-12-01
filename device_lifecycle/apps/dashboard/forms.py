@@ -1,8 +1,7 @@
-from django.forms import ModelForm
-from django.forms import modelform_factory
+from django.forms import ModelForm, ChoiceField
 
 from ..devices.models import (
-    Device, PurchaseEvent, NoteEvent, RepairEvent,
+    Device, Person, PurchaseEvent, NoteEvent, RepairEvent,
     TransferEvent, DecommissionEvent, Warranty)
 
 
@@ -18,6 +17,25 @@ class DeviceForm(ModelForm):
             'current_owner',
             'description',
         ]
+
+    def __init__(self, organization, *args, **kwargs):
+        # limit the current owner choices
+        super(DeviceForm, self).__init__(*args, **kwargs)
+        self.fields['current_owner'].queryset = organization.person_set.all()
+
+    def save(self, organization, commit=True):
+        self.instance.organization = organization
+        return super(DeviceForm, self).save(commit)
+
+
+class PersonForm(ModelForm):
+    class Meta:
+        model = Person
+        fields = ['name', 'position', 'email', 'is_active']
+
+    def save(self, organization, commit=True):
+        self.instance.organization = organization
+        return super(PersonForm, self).save(commit)
 
 
 class DeviceChildForm(ModelForm):
@@ -81,6 +99,11 @@ class TransferEventForm(DeviceChildForm):
     class Meta:
         model = TransferEvent
         fields = ['date', 'transferred_to', 'notes']
+
+    def __init__(self, organization, *args, **kwargs):
+        # limit the current owner choices
+        super(TransferEventForm, self).__init__(*args, **kwargs)
+        self.fields['transferred_to'].queryset = organization.person_set.all()
 
     def save(self, device, transferred_from, commit=True):
         self.instance.transferred_from = transferred_from

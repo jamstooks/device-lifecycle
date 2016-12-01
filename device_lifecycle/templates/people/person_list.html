@@ -16,7 +16,7 @@
                 {% for person in object_list %}
                   <tr>
                     <td>
-                      <a href="{% url 'dashboard:person_detail' person.id %}">
+                      <a href="{% url 'dashboard:person_detail' organization.slug person.id %}">
                         {{ person.name }}</a>
                     </td>
                     <td>{{ person.position }}</td>
@@ -29,7 +29,7 @@
 
   <a
     class="btn btn-warning btn-fill btn-lg fab"
-    href="{% url 'dashboard:person_add' %}">
+    href="{% url 'dashboard:person_add' organization.slug %}">
     <i class="fa fa-plus"></i>
   </a>
 {% endblock %}

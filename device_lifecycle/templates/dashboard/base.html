@@ -15,9 +15,11 @@
 
     	<div class="sidebar-wrapper">
             <div class="logo">
-                <a href="http://www.devicelifecycle.com" class="simple-text">
+                <!-- <a href="http://www.devicelifecycle.com" class="simple-text">
                     Device Lifecycle
-                </a>
+                </a> -->
+                <span class="simple-text">
+                {{ organization.name }}</span>
             </div>
             {% block dashboard_menu %}
               {% include 'dashboard/menu.html' %}

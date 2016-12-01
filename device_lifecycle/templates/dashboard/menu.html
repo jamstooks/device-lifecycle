@@ -1,24 +1,24 @@
 <ul class="nav">
     <li{% if selected == 'feed' %} class="active"{% endif %}>
-        <a href="{% url 'dashboard:activity_feed' %}">
+        <a href="{% url 'dashboard:activity_feed' organization.slug %}">
             <i class="pe-7s-date"></i>
             <p>Activity Feed</p>
         </a>
     </li>
     <li{% if selected == 'devices' %} class="active"{% endif %}>
-        <a href="{% url 'dashboard:device_list' %}">
+        <a href="{% url 'dashboard:device_list' organization.slug %}">
             <i class="pe-7s-note2"></i>
             <p>Inventory</p>
         </a>
     </li>
     <li{% if selected == 'people' %} class="active"{% endif %}>
-        <a href="{% url 'dashboard:person_list' %}">
+        <a href="{% url 'dashboard:person_list' organization.slug %}">
             <i class="pe-7s-users"></i>
             <p>People</p>
         </a>
     </li>
     <li{% if selected == 'reports' %} class="active"{% endif %}>
-        <a href="{% url 'dashboard:reports_summary' %}">
+        <a href="{% url 'dashboard:reports_summary' organization.slug %}">
             <i class="pe-7s-graph3"></i>
             <p>Reports</p>
         </a>

@@ -19,7 +19,7 @@
           <td>{{ warranty.end_date }}</td>
 
           <td>
-            <a href="{% url 'dashboard:warranty_edit' device.id warranty.id %}">
+            <a href="{% url 'dashboard:warranty_edit' organization.slug device.id warranty.id %}">
               <i class="fa fa-edit"></i>
             </a>
             {% if warranty.documentation %}

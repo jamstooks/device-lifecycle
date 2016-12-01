@@ -7,7 +7,7 @@
       {% block event_buttons %}
         {% if event_edit_url and not hide_edit_url %}
           <a
-            href="{% url event_edit_url device.id event.id %}"
+            href="{% url event_edit_url organization.slug device.id event.id %}"
             class="pull-right">
             <i class="fa fa-edit"></i>
           </a>

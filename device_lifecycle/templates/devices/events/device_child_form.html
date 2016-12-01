@@ -8,7 +8,7 @@
     <h4>{% block form_title %}{{ form_title }}{% endblock %}</h4>
   </div>
   <div class="content">
-    {% url 'dashboard:device_detail' device.id as cancel_url %}
+    {% url 'dashboard:device_detail' organization.slug device.id as cancel_url %}
     {% include 'dashboard/base_form.html' %}
   </div>
 </div>
