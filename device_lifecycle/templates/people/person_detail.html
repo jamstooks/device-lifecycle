@@ -16,44 +16,44 @@
       </p>
     </div>
 
-    <div class="content table-responsive table-full-width">
-          {% if person.device_set.all %}
-            <table class="table table-hover table-striped">
-                <thead>
-                  <th>Model</th>
-                  <th>Manufacturer</th>
-                  <th>Serial #</th>
-                  <th>Purhcase Date</th>
-                </thead>
-                <tbody>
-                  {% for device in person.device_set.all %}
-                    <tr>
-                      <td>
-                        <i
-                          class="{{ device.icon }}"
-                          title="{{ device.device_type }}"></i>
-                        <a href="{{ device.get_absolute_url }}">
-                          {{ device.model }}
-                        </a>
-                      </td>
-                      <td>{{ device.manufacturer }}</td>
-                      <td>{{ device.serial }}</td>
-                      <td>{{ device.purchaseevent.date }}</td>
-                    </tr>
-                  {% endfor %}
-                </tbody>
-            </table>
-
-          {% else %}
-            <span class="muted">No devices tied to {{ person.name }} yet.</span>
-          {% endif %}
-
-          <a
-            class="btn btn-warning btn-fill btn-lg fab"
-            href="{% url 'dashboard:device_add' organization.slug  %}">
-            <i class="fa fa-plus"></i>
-          </a>
-
+    {% if person.device_set.all %}
+      <div class="content table-responsive table-full-width">
+        <table class="table table-hover table-striped">
+            <thead>
+              <th>Model</th>
+              <th>Manufacturer</th>
+              <th>Serial #</th>
+              <th>Purhcase Date</th>
+            </thead>
+            <tbody>
+              {% for device in person.device_set.all %}
+                <tr>
+                  <td>
+                    <i
+                      class="{{ device.icon }}"
+                      title="{{ device.device_type }}"></i>
+                    <a href="{{ device.get_absolute_url }}">
+                      {{ device.model }}
+                    </a>
+                  </td>
+                  <td>{{ device.manufacturer }}</td>
+                  <td>{{ device.serial }}</td>
+                  <td>{{ device.purchaseevent.date }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+        </table>
+      </div>
+      {% else %}
+        <div class="content">
+          <span class="text-warning">No devices tied to {{ person.name }} yet.</span>
         </div>
+      {% endif %}
   </div>
+
+  <a
+    class="btn btn-warning btn-fill btn-lg fab"
+    href="{% url 'dashboard:device_add' organization.slug  %}">
+    <i class="fa fa-plus"></i>
+  </a>
 {% endblock %}
