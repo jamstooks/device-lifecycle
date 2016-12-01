@@ -2,6 +2,7 @@ dj-database-url
 Django==1.10.3
 django-allauth==0.29.0
 django-bootstrap-form==3.2.1
+django-organizations==0.8.2
 django-model-utils==2.6
 ipython
 

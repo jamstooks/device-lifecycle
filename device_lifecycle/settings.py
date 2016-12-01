@@ -36,6 +36,7 @@ INSTALLED_APPS = [
 
     'device_lifecycle.apps.devices',
     'device_lifecycle.apps.organizations',
+    'device_lifecycle.apps.people',
 
     'allauth',
     'allauth.account',
