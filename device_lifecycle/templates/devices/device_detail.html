@@ -19,22 +19,21 @@
           title="{{ device.device_type }}"></i>
         {{ device.model }}
       </h2>
-      <p class="category">
-        Status: <span class="text-{{ device.get_status_class }}">{{ device.status }}</span>
-      </p>
-      <p class="category">
-        Current Owner:
-        <a href="{{ device.current_owner.get_absolute_url }}">
-          {{ device.current_owner }}</a>
-      </p>
+      {% if device.description %}
+        <p class="category">{{ device.description }}</p>
+      {% endif %}
     </div>
     <div class="content">
       <div class="row">
-        {% if device.description %}
-        <div class="col-md-12 device-detail-prop">
-          <p class="category">{{ device.description }}</p>
+        <div class="col-md-2 col-xs-6 device-detail-prop">
+          <strong>Current Owner</strong><br>
+          <a href="{{ device.current_owner.get_absolute_url }}">
+            {{ device.current_owner }}</a>
         </div>
-        {% endif %}
+        <div class="col-md-2 col-xs-6 device-detail-prop">
+          <strong>Status</strong><br>
+          <span class="text-{{ device.get_status_class }}">{{ device.status }}</span>
+        </div>
         <div class="col-md-2 col-xs-6 device-detail-prop">
           <strong>Manufacturer</strong><br>
           <span>{{ device.manufacturer }}</span>
@@ -49,19 +48,9 @@
         </div>
         <div class="col-md-2 col-xs-6 device-detail-prop">
           <strong>Date Purchased</strong><br>
-          <span>{{ device.date_purchased }}</span>
-        </div>
-        <div class="col-md-2 col-xs-6 device-detail-prop">
-          <strong>Purchase Price</strong><br>
-          <span>{{ device.purchase_price }}</span>
-        </div>
-        <div class="col-md-2 col-xs-6 device-detail-prop">
-          <strong>Receipt</strong><br>
-          <span>
-            {% if device.receipt %}
-              <a href="{{ device.receipt.url }}">{{ device.receipt }}</a>
-            {% endif %}
-          </span>
+          {% if device.purchaseevent %}
+            <span>{{ device.purchaseevent.date }}</span>
+          {% endif %}
         </div>
       </div>
       {% block device_warranty %}
@@ -82,17 +71,34 @@
   {% block activity_feed %}
 
     <h3>Device History</h3>
+      {% if not device.purchaseevent %}
+      <div class="alert alert-warning">
+          <span style="margin-right: 1em;">
+            You don't have purchase details for this device.
+          </span>
+          <a
+            href="{% url 'dashboard:purchase_add' device.pk %}"
+            role="button" class="btn btn-warning btn-fill">
+            Add Purchase Details.
+          </a>
+      </div>
+      {% endif %}
       {% if not device.events.all %}
         <span class="muted">No events yet.</span>
       {% endif %}
 
-    {% include 'devices/event_timeline.html' %}
+      {% with device.events.all as event_list %}
+        {% include 'devices/event_timeline.html' %}
+      {% endwith %}
 
     <div class="dropup fab">
       <button class="btn btn-warning btn-fill btn-lg dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <i class="fa fa-plus"></i>
       </button>
       <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu2">
+        {% if not device.purchaseevent %}
+          <li><a href="{% url 'dashboard:purchase_add' device.pk %}">Purchase</a></li>
+        {% endif %}
         <li><a href="{% url 'dashboard:note_add' device.pk %}">Note</a></li>
         <li><a href="{% url 'dashboard:transfer_add' device.pk %}">Transfer</a></li>
         <li><a href="{% url 'dashboard:repair_add' device.pk %}">Repair</a></li>

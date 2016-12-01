@@ -9,11 +9,12 @@ from django.views.generic import (
 from django.urls import reverse
 
 from ..devices.models import (
-    Device, Warranty, NoteEvent, RepairEvent, TransferEvent, DecommissionEvent)
+    Device, Warranty, EventBase, PurchaseEvent, NoteEvent,
+    RepairEvent, TransferEvent, DecommissionEvent)
 from ..organizations.models import Person
 from .forms import (
-    NoteEventForm, RepairEventForm, TransferEventForm,
-    DecommissionEventForm, WarrantyForm)
+    PurchaseEventForm, NoteEventForm, RepairEventForm,
+    TransferEventForm, DecommissionEventForm, WarrantyForm)
 
 from datetime import date, timedelta
 
@@ -23,6 +24,15 @@ class DashboardBaseView(LoginRequiredMixin):
     This will eventually have more auth stuff going on
     """
     pass
+
+
+class ActivityFeedView(DashboardBaseView, ListView):
+    model = EventBase
+    template_name = 'dashboard/activity_feed.html'
+
+    def get_queryset(self):
+        # @todo - consider pagination or filtering
+        return self.model.objects.all()[:30]
 
 
 class DashboardView(DashboardBaseView, TemplateView):
@@ -53,9 +63,6 @@ class DeviceCreateView(DashboardBaseView, CreateView):
         'model',
         'serial',
         'current_owner',
-        'date_purchased',
-        'purchase_price',
-        'receipt',
         'description',
     ]
 
@@ -72,9 +79,6 @@ class DeviceUpdateView(DashboardBaseView, UpdateView):
         'model',
         'serial',
         'current_owner',
-        'date_purchased',
-        'purchase_price',
-        'receipt',
         'description',
     ]
 
@@ -173,6 +177,24 @@ class WarrantyDeleteView(WarrantyBaseView, DeleteView):
             *args, **kwargs)
         _context['warranty_set'] = [self.get_object()]
         return _context
+
+
+class PurchaseEventBaseView(DeviceChildEditMixin):
+    model = PurchaseEvent
+    form_class = PurchaseEventForm
+    template_name = 'devices/events/device_child_form.html'
+
+
+class PurchaseEventCreateView(PurchaseEventBaseView, CreateView):
+    form_title = "Add Purchase Details"
+
+
+class PurchaseEventUpdateView(PurchaseEventBaseView, UpdateView):
+    form_title = "Change Purchase Details"
+
+
+class PurchaseEventDeleteView(PurchaseEventBaseView, DeleteView):
+    template_name = 'devices/events/event_confirm_delete.html'
 
 
 class NoteEventBaseView(DeviceChildEditMixin):
@@ -294,9 +316,9 @@ class AgeReport(DashboardBaseView, TemplateView):
 
         # The x-axis: purchase years
         qs = Device.objects.active()
-        qs = qs.order_by('date_purchased')
-        qs = qs.filter(date_purchased__isnull=False)
-        qs = qs.annotate(year=TruncYear('date_purchased'))
+        qs = qs.order_by('purchaseevent__date')
+        qs = qs.filter(purchaseevent__date__isnull=False)
+        qs = qs.annotate(year=TruncYear('purchaseevent__date'))
         years = []
         for y in qs.values_list('year', flat=True):
             if y not in years:  # distinct not support locally in sqlite
@@ -308,8 +330,9 @@ class AgeReport(DashboardBaseView, TemplateView):
         rows = []
         for _type, label in Device.DEVICE_TYPE_CHOICES:
 
-            qs = Device.objects.active().filter(date_purchased__isnull=False)
-            qs = qs.order_by('date_purchased')
+            qs = Device.objects.active()
+            qs = qs.filter(purchaseevent__date__isnull=False)
+            qs = qs.order_by('purchaseevent__date')
             qs = qs.filter(device_type=_type)
 
             if qs:
@@ -320,7 +343,7 @@ class AgeReport(DashboardBaseView, TemplateView):
                 # we have to have 0 values when the year doesn't exist
                 row['values'] = [0 for i in range(len(_ctx['years']))]
 
-                qs = qs.annotate(year=TruncYear('date_purchased'))
+                qs = qs.annotate(year=TruncYear('purchaseevent__date'))
                 qs = qs.values('year').annotate(ycount=Count('year'))
 
                 for d in qs:

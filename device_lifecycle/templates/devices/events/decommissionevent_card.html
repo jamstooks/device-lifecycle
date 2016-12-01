@@ -22,7 +22,9 @@
       {% endif %}
     </dd>
     <dt>Cost:</dt>
-    <dd>{% if event.decommissionevent.cost %}${% endif %}{{ event.decommissionevent.cost }}</dd>
+    <dd>{% if event.decommissionevent.cost %}
+      ${% endif %}{{ event.decommissionevent.cost|floatformat:2 }}
+    </dd>
     <dt>Notes:</dt>
     <dd>{{ event.decommissionevent.notes }}</dd>
   </dl>

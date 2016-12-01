@@ -56,9 +56,6 @@ class Device(models.Model):
     manufacturer = models.CharField(max_length=32)
     model = models.CharField(max_length=64)
     serial = models.CharField(max_length=128)
-    date_purchased = models.DateField(blank=True, null=True)
-    purchase_price = models.FloatField(blank=True, null=True)
-    receipt = models.FileField(blank=True, null=True)
     current_owner = models.ForeignKey(Person, blank=True, null=True)
     status = models.CharField(
         max_length=16, choices=STATUS_CHOICES, default=STATUS_CHOICES.active)
@@ -117,6 +114,7 @@ class EventBase(models.Model):
     This is an abstract base class
     """
     ICON_MAPPINGS = {
+        'purchase': 'fa fa-usd',
         'note': 'fa fa-bookmark',
         'repair': 'fa fa-wrench',
         'transfer': 'fa fa-exchange',
@@ -156,6 +154,40 @@ class EventBase(models.Model):
         return reverse(
             "dashboard:%s_delete" % short_type_name,
             kwargs={'pk': self.device.id, 'child_pk': self.id})
+
+
+class PurchaseEvent(EventBase):
+    """
+    Purchase Events are slightly different from other events, because there
+    can only be one purchase per device.
+
+    I made this an event instead of creating a separate one-to-one model here
+    because I want to be able to include this event when showing all events.
+
+    The `purchase_price` and `receipt` fields come from the device and will be
+    displayed in the form, but the `date` field needs to mirror. To do this,
+    I've added an additional one-to-one field on this model and ensure that
+    every device has only one purchase event and that event can be accessed
+    efficiently for display and reports (`select_related()`).
+
+    Events:
+        device is created:
+            - device form is displayed
+            - after save, user is encouraged to record the purchase event
+
+        purchase is created:
+            - `PurchaseEvent` is created.
+            - "+" menu no longer displays option for adding a purchase
+    """
+    purchased_device = models.OneToOneField(Device)
+    vendor_name = models.CharField(max_length=128, blank=True, null=True)
+    vendor_address = models.TextField(blank=True, null=True)
+    vendor_website = models.URLField(blank=True, null=True)
+    purchase_price = models.FloatField(blank=True, null=True)
+    receipt = models.FileField(blank=True, null=True)
+
+    class Meta:
+        verbose_name = 'Purchase'
 
 
 class NoteEvent(EventBase):
@@ -223,6 +255,7 @@ class LossEvent(EventBase):
 #     new_location
 
 EVENT_TYPES = OrderedDict()
+EVENT_TYPES['purchase'] = PurchaseEvent
 EVENT_TYPES['note'] = NoteEvent
 EVENT_TYPES['repair'] = RepairEvent
 EVENT_TYPES['transfer'] = TransferEvent

@@ -1,5 +1,5 @@
 <ul class="timeline">
-  {% for event in device.events.all %}
+  {% for event in event_list %}
     {% cycle '' 'timeline-inverted' as timeline_side silent %}
     {% include 'devices/events/event_card.html' %}
   {% endfor %}

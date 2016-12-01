@@ -5,7 +5,7 @@
   <div class="timeline-panel">
     <div class="timeline-heading">
       {% block event_buttons %}
-        {% if event_edit_url %}
+        {% if event_edit_url and not hide_edit_url %}
           <a
             href="{% url event_edit_url device.id event.id %}"
             class="pull-right">
@@ -19,6 +19,22 @@
       </small></p>
     </div>
     <div class="timeline-body">
+      {% if show_device %}
+      <dl class="dl-horizontal">
+        <dt>Device:</dt>
+        <dd>
+          <a href="{{ event.device.get_absolute_url }}">{{ event.device.model }}</a>
+        </dd>
+        <dt>Current Owner:</dt>
+        <dd>
+          {% if event.device.current_owner %}
+            <a href="{{ event.device.current_owner.get_absolute_url }}">
+              {{ event.device.current_owner }}
+            </a>
+          {% endif %}
+        </dd>
+      </dl>
+      {% endif %}
       {% block card_content %}<p>{{ event.notes }}</p>{% endblock %}
     </div>
   </div>

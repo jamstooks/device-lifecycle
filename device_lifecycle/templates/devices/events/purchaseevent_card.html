@@ -1,0 +1,40 @@
+{% extends 'devices/events/event_card_base.html' %}
+
+{% block badge-color %}warning{% endblock %}
+
+{% block event_buttons %}
+  {% with 'dashboard:purchase_edit' as event_edit_url %}
+    {{ block.super }}
+  {% endwith %}
+{% endblock %}
+
+{% block card_content %}
+  <dl class="dl-horizontal">
+    <dt>Purchase Price:</dt>
+    <dd>
+      {% if event.purchaseevent.purchase_price %}
+        ${% endif %}{{ event.purchaseevent.purchase_price|floatformat:2 }}
+    </dd>
+    <dt>Receipt:</dt>
+    <dd>
+      {% if event.purchaseevent.receipt %}
+        <a href="{{ event.purchaseevent.receipt.url }}">
+          {{ event.purchaseevent.receipt }}</a>
+      {% endif %}
+    </dd>
+    <dt>Vendor:</dt>
+    <dd>
+      {% if event.purchaseeventvendor_website %}
+        <a href="{{ event.purchaseeventvendor_website }}">
+          {{ event.purchaseevent.vendor_name }}
+        </a>
+      {% else %}
+        {{ event.purchaseevent.vendor_name }}
+      {% endif %}
+    </dd>
+    <dt>Address:</dt>
+    <dd>{{ event.purchaseevent.vendor_address }}</dd>
+    <dt>Notes:</dt>
+    <dd>{{ event.purchaseevent.notes }}</dd>
+  </dl>
+{% endblock %}

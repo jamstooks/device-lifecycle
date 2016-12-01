@@ -33,7 +33,9 @@
 
   - [ ] could ability to add to-do items for a machine?
   - [ ] add photo uploads
-  - [ ] integrations with ticketing systems to add events for service requests
+  - [ ] integrations
+    - [ ] ticketing systems to add events for service requests
+    - [ ] vendors, like geek squad to track repairs
   - [ ] initial sale vendor
   - [ ] notifications/alerts
     - [ ] when devices are added and repaired

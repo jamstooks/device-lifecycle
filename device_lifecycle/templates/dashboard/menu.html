@@ -1,4 +1,10 @@
 <ul class="nav">
+    <li{% if selected == 'feed' %} class="active"{% endif %}>
+        <a href="{% url 'dashboard:activity_feed' %}">
+            <i class="pe-7s-date"></i>
+            <p>Activity Feed</p>
+        </a>
+    </li>
     <li{% if selected == 'devices' %} class="active"{% endif %}>
         <a href="{% url 'dashboard:device_list' %}">
             <i class="pe-7s-note2"></i>

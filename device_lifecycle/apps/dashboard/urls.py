@@ -1,6 +1,7 @@
 from django.conf.urls import url
 
 from .views import (
+    ActivityFeedView,
     DashboardView,
     DeviceCreateView,
     DeviceDeleteView,
@@ -14,6 +15,9 @@ from .views import (
     WarrantyCreateView,
     WarrantyUpdateView,
     WarrantyDeleteView,
+    PurchaseEventCreateView,
+    PurchaseEventUpdateView,
+    PurchaseEventDeleteView,
     NoteEventCreateView,
     NoteEventUpdateView,
     NoteEventDeleteView,
@@ -34,6 +38,7 @@ urlpatterns = [
     # devices
     # url(r'^$', Dashboard.as_view(), name='dashboard'),
     url(r'^$', DeviceListView.as_view(), name='device_list'),
+    url(r'^activity/$', ActivityFeedView.as_view(), name='activity_feed'),
     url(r'^devices/add/$', DeviceCreateView.as_view(), name='device_add'),
     url(
         r'^devices/(?P<pk>[\w\-]+)/$',
@@ -59,6 +64,18 @@ urlpatterns = [
         r'^devices/(?P<pk>[\w\-]+)/warranty/(?P<child_pk>[\w\-]+)/delete/$',
         WarrantyDeleteView.as_view(),
         name='warranty_delete'),
+    url(
+        r'^devices/(?P<pk>[\w\-]+)/purchase/add/$',
+        PurchaseEventCreateView.as_view(),
+        name='purchase_add'),
+    url(
+        r'^devices/(?P<pk>[\w\-]+)/purchase/(?P<child_pk>[\w\-]+)/$',
+        PurchaseEventUpdateView.as_view(),
+        name='purchase_edit'),
+    url(
+        r'^devices/(?P<pk>[\w\-]+)/purchase/(?P<child_pk>[\w\-]+)/del/$',
+        PurchaseEventDeleteView.as_view(),
+        name='purchase_delete'),
     url(
         r'^devices/(?P<pk>[\w\-]+)/note/add/$',
         NoteEventCreateView.as_view(),

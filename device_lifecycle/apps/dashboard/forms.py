@@ -2,7 +2,8 @@ from django.forms import ModelForm
 from django.forms import modelform_factory
 
 from ..devices.models import (
-    NoteEvent, RepairEvent, TransferEvent, DecommissionEvent, Warranty)
+    PurchaseEvent, NoteEvent, RepairEvent,
+    TransferEvent, DecommissionEvent, Warranty)
 
 
 class DeviceChildForm(ModelForm):
@@ -19,6 +20,18 @@ class WarrantyForm(DeviceChildForm):
         model = Warranty
         fields = [
             'start_date', 'end_date', 'description', 'link', 'documentation']
+
+
+class PurchaseEventForm(DeviceChildForm):
+    class Meta:
+        model = PurchaseEvent
+        fields = [
+            'date', 'vendor_name', 'vendor_address',
+            'vendor_website', 'purchase_price', 'receipt']
+
+    def save(self, device, commit=True):
+        self.instance.purchased_device = device
+        return super(PurchaseEventForm, self).save(device, commit)
 
 
 class NoteEventForm(DeviceChildForm):
