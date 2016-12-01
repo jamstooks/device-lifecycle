@@ -16,12 +16,8 @@
       </p>
     </div>
 
-    <div class="content">
-      <div class="row">
-        <div class="col-md-12">
-          <h4>Devices</h4>
+    <div class="content table-responsive table-full-width">
           {% if person.device_set.all %}
-
             <table class="table table-hover table-striped">
                 <thead>
                   <th>Model</th>
@@ -59,7 +55,5 @@
           </a>
 
         </div>
-      </div>
-    </div>
   </div>
 {% endblock %}

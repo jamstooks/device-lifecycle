@@ -23,7 +23,10 @@
   - [ ] devices in replacement window
   - [ ] devices coming up for replacement
   - [ ] total active devices / total spares / total retired
-- [ ] check-ins for condition assessment and location updates
+- [ ] check-ins
+  - [ ] condition assessments
+  - [ ] location updates
+  - [ ] OS up-to-date
 - [ ] features
   - [ ] bulk add
   - [ ] import tools
@@ -45,3 +48,8 @@
     - [ ] report theft
     - [ ] report repair
   - [ ] allow categories for people (maybe departments?)
+  - [ ] vendors as object
+    [ ] phone
+    [ ] how to recycle
+  - [ ] general documentation tab...
+    - [ ] lifecycle policy

@@ -70,6 +70,9 @@ class Device(models.Model):
     # @todo
     # current_location
 
+    class Meta:
+        ordering = ['-purchaseevent__date']
+
     @property
     def icon(self):
         return self.TYPE_ICONS[self.device_type]
