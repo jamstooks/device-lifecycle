@@ -19,16 +19,16 @@
   <div class="card">
     <div class="header">
       <h2 class="title">Recent Activity</h2>
-      <p class="category">The last 30 events across all devices</p>
+      <p class="category">
+        The last 30 events across all devices<br><br>
+      </p>
     </div>
-    <div class="content">
-      <div class="row">
-        <div class="col-md-12">
-          {% with object_list as event_list and True as hide_edit_url and True as show_device %}
-            {% include 'devices/event_timeline.html' %}
-          {% endwith %}
-        </div>
-      </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      {% with object_list as event_list and True as hide_edit_url and True as show_device %}
+        {% include 'devices/event_timeline.html' %}
+      {% endwith %}
     </div>
   </div>
 {% endblock %}
