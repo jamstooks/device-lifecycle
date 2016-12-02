@@ -35,7 +35,7 @@ class DeviceFilter(django_filters.FilterSet):
 
         # device_type
         _types = kwargs['queryset'].values_list(
-            'device_type', flat=True).distinct().order_by()
+            'device_type', flat=True).distinct().order_by('device_type')
         _type_choices = [(t, t) for t in _types]
 
         self.filters['device_type'].extra.update(

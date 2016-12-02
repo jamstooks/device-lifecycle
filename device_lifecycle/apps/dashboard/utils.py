@@ -1,7 +1,3 @@
-"""
-    Not using this now, but here if we want to display messages
-"""
-
 from django.contrib import messages
 from django.db.models.functions import TruncYear
 
@@ -11,14 +7,16 @@ def get_device_qs_purchase_years(qs):
     _qs = qs.filter(purchaseevent__date__isnull=False)
     _qs = qs.annotate(year=TruncYear('purchaseevent__date'))
     years = []
-    for y in _qs.values_list('year', flat=True).order_by():
+    for y in _qs.values_list('year', flat=True).order_by('year'):
         if y and y not in years:  # distinct not support locally in sqlite
             years.append(y)
     return years
 
 
 class FormMessagingMixin(object):
-
+    """
+        Not using this now, but here if I want to display messages
+    """
     def form_valid(self, form):
         messages.add_message(
             self.request, messages.SUCCESS, 'Save successful!')
