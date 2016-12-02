@@ -16,7 +16,12 @@
               {{ device.model }}
             </a>
           </td>
-          <td>{{ device.current_owner }}</td>
+          <td>
+            {% if device.current_owner %}
+              <a href="{{ device.current_owner.get_absolute_url }}">
+                {{ device.current_owner }}</a>
+            {% endif %}
+          </td>
           <td>{{ device.serial }}</td>
           <td>{{ device.purchaseevent.date }}</td>
         </tr>

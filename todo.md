@@ -1,28 +1,33 @@
 # Todo
 
+## Reports
+
+  - [ ] devices w/out purchase details
+  - [ ] purchases (other events) w/out receipts
+  - [ ] purchases (other events) w/out prices
+  - [ ] warranties
+    - [ ] devices with expired warranties
+    - [ ] devices soon to expire
+  - [ ] ages
+    - [ ] general device age bar chart with filtering
+    - [ ] devices in replacement windows
+
 - [ ] Search
   - [ ] serial #
   - [ ] person
-- [ ] undo events
-- [ ] filter devices
-  - [ ] by type
-  - [ ] year purchased or age
-  - [ ] warranty information
-  - [ ] graphs should link to these filtered versions
 - [ ] qr codes
   - [ ] add to review
   - [ ] print options
-- [ ] warranty information
 - [ ] reports
-  - ages of devices
-  - percentage of devices with current warranties
   - missing data (like receipts or purchase prices) - warranties
 - [ ] dashboard
   - [x] overall activity feed
-  - [ ] upcoming warranty expirations
-  - [ ] devices in replacement window
-  - [ ] devices coming up for replacement
+  - [ ] alerts
+    - [ ] upcoming warranty expirations
+    - [ ] devices in replacement window
+      - [ ] devices coming up for replacement
   - [ ] total active devices / total spares / total retired
+  - [ ] totals by type
 - [ ] check-ins
   - [ ] condition assessments
   - [ ] location updates
@@ -39,22 +44,24 @@
   - [ ] integrations
     - [ ] ticketing systems to add events for service requests
     - [ ] vendors, like geek squad to track repairs
+    - [ ] recycling/disposal providers
   - [ ] initial sale vendor
   - [ ] notifications/alerts
     - [ ] when devices are added and repaired
     - [ ] decommissions
     - [ ] user settings
   - [ ] tools for owners
+    - [ ] review device
     - [ ] report theft
     - [ ] report repair
   - [ ] allow categories for people (maybe departments?)
-  - [ ] vendors as object
-    - [ ] phone
-    - [ ] how to recycle
+  - [ ] vendors as objects
+    - [ ] phone, website, address, policies
+    - [ ] how to recycle and other information
   - [ ] general documentation tab...
     - [ ] lifecycle policy
   - [ ] partnerships
     - [ ] recycling companies
   - [ ] software tracking
-    - [ ] installed software and licenses
+    - [ ] installed software and licenses (codes and valid dates)
     - [ ] software requests?
