@@ -1,5 +1,7 @@
 {% extends 'devices/events/event_card_base.html' %}
 
+{% load filename %}
+
 {% block badge-color %}warning{% endblock %}
 
 {% block event_buttons %}
@@ -19,7 +21,7 @@
     <dd>
       {% if event.purchaseevent.receipt %}
         <a href="{{ event.purchaseevent.receipt.url }}">
-          {{ event.purchaseevent.receipt }}</a>
+          {{ event.purchaseevent.receipt|filename }}</a>
       {% endif %}
     </dd>
     <dt>Vendor:</dt>

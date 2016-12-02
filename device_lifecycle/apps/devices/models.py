@@ -5,9 +5,10 @@ from django.urls import reverse
 
 from collections import OrderedDict
 from model_utils import Choices
+from organizations.models import Organization
 
 from ..people.models import Person
-from organizations.models import Organization
+from .utils import get_upload_to
 
 
 class DeviceManager(models.Manager):
@@ -101,7 +102,8 @@ class Warranty(models.Model):
     end_date = models.DateField()
     link = models.URLField(
         blank=True, null=True, help_text="A link to more information.")
-    documentation = models.FileField(blank=True, null=True)
+    documentation = models.FileField(
+        upload_to=get_upload_to, blank=True, null=True)
 
     class Meta:
         verbose_name_plural = "Warranties"
@@ -195,7 +197,8 @@ class PurchaseEvent(EventBase):
     vendor_address = models.TextField(blank=True, null=True)
     vendor_website = models.URLField(blank=True, null=True)
     purchase_price = models.FloatField(blank=True, null=True)
-    receipt = models.FileField(blank=True, null=True)
+    receipt = models.FileField(
+        upload_to=get_upload_to, blank=True, null=True)
 
     class Meta:
         verbose_name = 'Purchase'
@@ -227,7 +230,7 @@ class TransferEvent(EventBase):
 
 class RepairEvent(EventBase):
     cost = models.FloatField()
-    receipt = models.FileField(blank=True, null=True)
+    receipt = models.FileField(upload_to=get_upload_to, blank=True, null=True)
     vendor_name = models.CharField(max_length=128)
     vendor_address = models.TextField(blank=True, null=True)
 
@@ -242,7 +245,7 @@ class DecommissionEvent(EventBase):
         ('disposal service', 'Disposal Service'),
     )
     method = models.CharField(max_length=16, choices=METHOD_CHOICES)
-    receipt = models.FileField(blank=True, null=True)
+    receipt = models.FileField(upload_to=get_upload_to, blank=True, null=True)
     cost = models.FloatField(
         help_text="""
         Use positive values when selling, negative if paying a service.
@@ -253,7 +256,8 @@ class DecommissionEvent(EventBase):
 
 
 class LossEvent(EventBase):
-    documentation = models.FileField(blank=True, null=True)
+    documentation = models.FileField(
+        upload_to=get_upload_to, blank=True, null=True)
     recovery_date = models.DateField(blank=True, null=True)
 
     class Meta:

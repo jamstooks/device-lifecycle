@@ -1,5 +1,7 @@
 {% extends 'devices/events/event_card_base.html' %}
 
+{% load filename %}
+
 {% block card_title_style %}
   mdl-color--red mdl-color-text--white
 {% endblock %}
@@ -18,7 +20,7 @@
     <dd>
       {% if event.decommissionevent.receipt %}
         <a href="{{ event.decommissionevent.receipt.url }}">
-          {{ event.decommissionevent.receipt }}</a>
+          {{ event.decommissionevent.receipt|filename }}</a>
       {% endif %}
     </dd>
     <dt>Cost:</dt>

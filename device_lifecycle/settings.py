@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'device_lifecycle.apps.dashboard',
     'device_lifecycle.apps.devices',
     'device_lifecycle.apps.people',
 

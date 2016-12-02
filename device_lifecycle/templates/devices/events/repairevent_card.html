@@ -1,5 +1,7 @@
 {% extends 'devices/events/event_card_base.html' %}
 
+{% load filename %}
+
 {% block badge-color %}warning{% endblock %}
 
 {% block event_buttons %}
@@ -18,7 +20,7 @@
     <dd>
       {% if event.repairevent.receipt %}
         <a href="{{ event.repairevent.receipt.url }}">
-          {{ event.repairevent.receipt }}</a>
+          {{ event.repairevent.receipt|filename }}</a>
       {% endif %}
     </dd>
     <dt>Vendor:</dt>
