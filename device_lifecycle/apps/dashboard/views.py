@@ -401,8 +401,7 @@ class SummaryReport(DashboardBaseView, TemplateView):
 
     def get_context_data(self, *args, **kwargs):
         _ctx = super(SummaryReport, self).get_context_data(*args, **kwargs)
-        _ctx['device_counts'] = Device.objects.exclude(
-            status=Device.STATUS_CHOICES.retired).values(
+        _ctx['device_counts'] = Device.objects.active().values(
             'device_type').annotate(dcount=Count('device_type'))
         return _ctx
 

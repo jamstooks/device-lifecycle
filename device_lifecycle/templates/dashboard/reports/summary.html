@@ -18,6 +18,9 @@
             {% endfor %}
         ],
         type : 'pie',
+        onclick: function(e) {
+          window.location = "{% url 'dashboard:device_list' organization.slug %}?status=active&device_type=" + e.name;
+        }
       },
       color: {
           pattern: colorPattern,

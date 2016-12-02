@@ -24,7 +24,10 @@
             ]{% if not forloop.last %},{% endif %}
           {% endfor %}
         ],
-        type : 'bar'
+        type : 'bar',
+        onclick: function(e) {
+          window.location = "{% url 'dashboard:device_list' organization.slug %}?status=active&date_purchased=" + e.x.getFullYear();
+        }
       },
       axis: {
         y: {
