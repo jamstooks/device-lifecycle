@@ -39,3 +39,20 @@ form.filter-form p {
 form.filter-form p select {
   font-size: .8em;
 }
+
+button.btn-link {
+  border-width: 0px;
+}
+
+.timeline-heading h4 {
+  margin: 0px;
+}
+
+button.btn-event-expand {
+  margin: 0px;
+}
+
+dl.event-device-info {
+  margin: 0px;
+  padding:0px;
+}

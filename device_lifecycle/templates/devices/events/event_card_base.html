@@ -13,29 +13,33 @@
           </a>
         {% endif %}
       {% endblock %}
-      <h4 class="timeline-title">{{ event.instance_type }}</h4>
-      <p><small class="text-muted">
-        <i class="fa fa-calendar"></i> {{ event.date }}
-      </small></p>
-    </div>
-    <div class="timeline-body">
-      {% if show_device %}
-      <dl class="dl-horizontal">
-        <dt>Device:</dt>
-        <dd>
-          <a href="{{ event.device.get_absolute_url }}">{{ event.device.model }}</a>
-        </dd>
-        <dt>Current Owner:</dt>
-        <dd>
-          {% if event.device.current_owner %}
-            <a href="{{ event.device.current_owner.get_absolute_url }}">
+      <h4>
+        {{ event.instance_type }}
+      </h4>
+      <div class="row text-muted">
+        <div class="col-md-6">
+          <i class="fa fa-calendar"></i> {{ event.date }}
+          {% if show_device %}
+            <br><a href="{{ event.device.get_absolute_url }}">{{ event.device.model }}</a>
+          {% endif %}
+          {% if event.device.current_owner and show_device %}
+            <br><a href="{{ event.device.current_owner.get_absolute_url }}">
               {{ event.device.current_owner }}
             </a>
           {% endif %}
-        </dd>
-      </dl>
-      {% endif %}
-      {% block card_content %}<p>{{ event.notes }}</p>{% endblock %}
+        </div>
+        <div class="col-md-6 text-right text-bottom">
+          <button class="btn btn-link btn-event-expand" type="button" data-toggle="collapse" data-target="#collapse_event_{{ event.id }}" aria-expanded="false" aria-controls="collapse_event_{{ event.id }}">
+            Details <i class="pe-7s-angle-down"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="timeline-body">
+      <div class="collapse" id="collapse_event_{{ event.id }}">
+        <br>
+        {% block card_content %}<p>{{ event.notes }}</p>{% endblock %}
+      </div>
     </div>
   </div>
 </li>

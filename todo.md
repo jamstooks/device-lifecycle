@@ -1,8 +1,22 @@
 # Todo
 
+  - [ ] narrower event cards
+  - [ ] loss/theft
+  - [ ] date picker skip by year
+  - [ ] filters to activity feed
+    - [ ] type
+  - [ ] replacement timeline view
+
+## Devices
+
+  - [ ] Speakers
+  - [ ] Clicker
+  - [ ] Voice Recorder
+
 ## Reports
 
   - [ ] devices w/out purchase details
+  - [ ] devices w/out serial #s
   - [ ] purchases (other events) w/out receipts
   - [ ] purchases (other events) w/out prices
   - [ ] warranties
@@ -11,6 +25,7 @@
   - [ ] ages
     - [ ] general device age bar chart with filtering
     - [ ] devices in replacement windows
+  - [ ] replacement timeline
 
 - [ ] Search
   - [ ] serial #
