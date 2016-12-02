@@ -2,14 +2,14 @@
 
 {% block dashboard_content %}
   <div class="card">
-      <div class="header">
-          <h4 class="title">Inventory</h4>
-          <p class="category">
-            {{ filter.qs.count }} active devices
-          </p>
-          <form action="" method="get" class="pull-right">
+      <div class="header">        
+          <form action="" method="get" class="pull-right filter-form">
             {{ filter.form.as_p }}
           </form>
+          <h4 class="title">Inventory</h4>
+          <p class="category">
+            {{ filter.qs.count }} Devices
+          </p>
       </div>
       <div class="content table-responsive table-full-width">
         {% with filter.qs as device_list %}

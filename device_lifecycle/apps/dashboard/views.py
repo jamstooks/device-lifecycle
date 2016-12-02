@@ -118,8 +118,14 @@ class DeviceListView(DeviceBaseView, ListView):
     def get_context_data(self, *args, **kwargs):
         _context = super(DeviceListView, self).get_context_data(
             *args, **kwargs)
+
+        # if there is not get, set an initial filter value
+        data = self.request.GET.copy()
+        if len(data) == 0:
+            data['status'] = Device.STATUS_CHOICES.active
+
         _context['filter'] = DeviceFilter(
-            self.request.GET,
+            data,
             queryset=self.get_queryset())
         return _context
 

@@ -31,3 +31,11 @@
  .title .device-icon {
    margin-right: .8em;
  }
+
+form.filter-form p {
+  text-align: right;
+}
+
+form.filter-form p select {
+  font-size: .8em;
+}
