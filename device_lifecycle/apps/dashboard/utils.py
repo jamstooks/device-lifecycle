@@ -11,7 +11,7 @@ def get_device_qs_purchase_years(qs):
     _qs = qs.filter(purchaseevent__date__isnull=False)
     _qs = qs.annotate(year=TruncYear('purchaseevent__date'))
     years = []
-    for y in _qs.values_list('year', flat=True):
+    for y in _qs.values_list('year', flat=True).order_by():
         if y and y not in years:  # distinct not support locally in sqlite
             years.append(y)
     return years

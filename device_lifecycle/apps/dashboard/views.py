@@ -401,8 +401,11 @@ class SummaryReport(DashboardBaseView, TemplateView):
 
     def get_context_data(self, *args, **kwargs):
         _ctx = super(SummaryReport, self).get_context_data(*args, **kwargs)
-        _ctx['device_counts'] = Device.objects.active().values(
-            'device_type').annotate(dcount=Count('device_type'))
+
+        qs = self.get_organization().device_set.active()
+        qs = qs.values('device_type').annotate(dcount=Count('device_type'))
+
+        _ctx['device_counts'] = qs.order_by()
         return _ctx
 
 
@@ -438,7 +441,7 @@ class AgeReport(DashboardBaseView, TemplateView):
                 qs = qs.annotate(year=TruncYear('purchaseevent__date'))
                 qs = qs.values('year').annotate(ycount=Count('year'))
 
-                for d in qs:
+                for d in qs.order_by():
                     row['values'][years.index(d['year'])] += d['ycount']
                     if max(row['values']) > max_count:
                         max_count = max(row['values'])

@@ -12,7 +12,7 @@ from organizations.models import Organization
 
 class DeviceManager(models.Manager):
     def active(self):
-        return self.exclude(status=self.model.STATUS_CHOICES.retired)
+        return self.filter(status=self.model.STATUS_CHOICES.active)
 
 
 class Device(models.Model):
