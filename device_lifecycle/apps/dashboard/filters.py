@@ -13,7 +13,7 @@ class DeviceFilter(django_filters.FilterSet):
 
     device_type = django_filters.ChoiceFilter(label='Type')
 
-    status = django_filters.ChoiceFilter(label='Type')
+    status = django_filters.ChoiceFilter(label='Status')
 
     class Meta:
         model = Device
