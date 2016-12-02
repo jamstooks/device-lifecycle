@@ -58,7 +58,7 @@ class Device(models.Model):
     device_type = models.CharField(max_length=16, choices=DEVICE_TYPE_CHOICES)
     manufacturer = models.CharField(max_length=32)
     model = models.CharField(max_length=64)
-    serial = models.CharField(max_length=128)
+    serial = models.CharField(max_length=128, blank=True, null=True)
     current_owner = models.ForeignKey(Person, blank=True, null=True)
     status = models.CharField(
         max_length=16, choices=STATUS_CHOICES, default=STATUS_CHOICES.active)
