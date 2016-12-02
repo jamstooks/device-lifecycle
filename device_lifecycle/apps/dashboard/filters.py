@@ -34,8 +34,9 @@ class DeviceFilter(django_filters.FilterSet):
             attrs={'onchange': 'this.form.submit();'})
 
         # device_type
-        _types = kwargs['queryset'].values_list('device_type')
-        _type_choices = [(t[0], t[0]) for t in _types]
+        _types = kwargs['queryset'].values_list(
+            'device_type', flat=True).distinct().order_by()
+        _type_choices = [(t, t) for t in _types]
 
         self.filters['device_type'].extra.update(
             {'choices': [(None, 'All Types')] + _type_choices})
