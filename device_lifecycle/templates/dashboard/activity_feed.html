@@ -26,7 +26,7 @@
   </div>
   <div class="row">
     <div class="col-md-12">
-      {% with object_list as event_list and True as hide_edit_url and True as show_device %}
+      {% with object_list as event_list and True as show_device %}
         {% include 'devices/event_timeline.html' %}
       {% endwith %}
     </div>
