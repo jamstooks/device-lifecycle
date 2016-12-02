@@ -3,6 +3,18 @@
 """
 
 from django.contrib import messages
+from django.db.models.functions import TruncYear
+
+
+def get_device_qs_purchase_years(qs):
+    _qs = qs.order_by('purchaseevent__date')
+    _qs = qs.filter(purchaseevent__date__isnull=False)
+    _qs = qs.annotate(year=TruncYear('purchaseevent__date'))
+    years = []
+    for y in _qs.values_list('year', flat=True):
+        if y and y not in years:  # distinct not support locally in sqlite
+            years.append(y)
+    return years
 
 
 class FormMessagingMixin(object):
