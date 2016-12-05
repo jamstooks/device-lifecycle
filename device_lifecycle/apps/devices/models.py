@@ -36,7 +36,8 @@ class Device(models.Model):
     STATUS_CHOICES = Choices(
         ('active', 'Active'),
         ('spare', 'Spare'),
-        ('retired', 'Retired')
+        ('retired', 'Retired'),
+        ('lost', 'Lost'),
     )
 
     TYPE_ICONS = {
