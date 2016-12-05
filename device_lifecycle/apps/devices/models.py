@@ -88,7 +88,8 @@ class Device(models.Model):
         return {
             'active': 'success',
             'spare': 'warning',
-            'retired': 'danger',
+            'retired': 'muted',
+            'lost': 'danger'
         }[self.status]
 
     def __unicode__(self):
