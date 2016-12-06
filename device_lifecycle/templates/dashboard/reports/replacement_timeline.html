@@ -4,9 +4,11 @@
   {% with 'timeline' as active %}
     {% include 'dashboard/reports/tabs.html' %}
   {% endwith %}
+  <div class="row"><div class="col-md-12">
   <form action="" method="get" class="pull-right filter-form">
     {{ filter.form.as_p }}
   </form>
+  </div></div>
 {% endblock %}
 
 {% block footer_js %}
