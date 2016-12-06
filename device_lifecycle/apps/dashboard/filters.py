@@ -2,10 +2,11 @@ import django_filters
 from django import forms
 
 from ..devices.models import Device
+from ..people.models import Settings
 from .utils import get_device_qs_purchase_years
 
 
-class DeviceFilter(django_filters.FilterSet):
+class InventoryFilterSet(django_filters.FilterSet):
     date_purchased = django_filters.ChoiceFilter(
         label='Year Purchased',
         name='purchaseevent',
@@ -21,7 +22,7 @@ class DeviceFilter(django_filters.FilterSet):
 
     def __init__(self, *args, **kwargs):
 
-        super(DeviceFilter, self).__init__(*args, **kwargs)
+        super(InventoryFilterSet, self).__init__(*args, **kwargs)
 
         # date purchased
         years = get_device_qs_purchase_years(kwargs['queryset'])
@@ -49,4 +50,25 @@ class DeviceFilter(django_filters.FilterSet):
             {'choices': [(None, 'All')] + Device.STATUS_CHOICES})
 
         self.filters['status'].widget = forms.Select(
+            attrs={'onchange': 'this.form.submit();'})
+
+
+class ReplacementTimelineFilterset(django_filters.FilterSet):
+    device_type = django_filters.ChoiceFilter(label='Type')
+
+    class Meta:
+        model = Device
+        fields = ['device_type']
+
+    def __init__(self, *args, **kwargs):
+
+        super(ReplacementTimelineFilterset, self).__init__(*args, **kwargs)
+
+        # device_type
+        self.filters['device_type'].extra.update(
+            {
+                'choices':
+                    [(t, t) for t in Settings.DEVICE_TYPE_CHOICES]})
+
+        self.filters['device_type'].widget = forms.Select(
             attrs={'onchange': 'this.form.submit();'})

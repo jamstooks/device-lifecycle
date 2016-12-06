@@ -16,6 +16,7 @@ class Person(models.Model):
 
     class Meta:
         ordering = ['name']
+        verbose_name_plural = "People"
 
     def get_absolute_url(self):
         return reverse(
@@ -24,3 +25,18 @@ class Person(models.Model):
 
     def __unicode__(self):
         return self.name
+
+
+class Settings(models.Model):
+    DEVICE_TYPE_CHOICES = ('laptop', 'desktop')
+
+    organization = models.OneToOneField(Organization)
+
+    # replacement timeline settings
+    laptop_start = models.IntegerField(default=3)
+    laptop_end = models.IntegerField(default=5)
+    desktop_start = models.IntegerField(default=3)
+    desktop_end = models.IntegerField(default=5)
+
+    class Meta:
+        verbose_name_plural = "Settings"

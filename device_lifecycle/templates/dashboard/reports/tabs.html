@@ -9,4 +9,9 @@
       Ages
     </a>
   </li>
+  <li role="presentation"{% if active == 'timeline' %} class="active"{% endif %}>
+    <a href="{% url 'dashboard:replacement_timeline' organization.slug %}">
+      Replacement Timeline
+    </a>
+  </li>
 </ul>
