@@ -31,7 +31,8 @@ from .views import (
     DecommissionEventUpdateView,
     DecommissionEventDeleteView,
     SummaryReport,
-    AgeReport)
+    AgeReport,
+    ReplacementTimelineReport)
 
 urlpatterns = [
 
@@ -141,4 +142,8 @@ urlpatterns = [
     # reports
     url(r'^reports/$', SummaryReport.as_view(), name='reports_summary'),
     url(r'^reports/ages/$', AgeReport.as_view(), name='reports_age'),
+    url(
+        r'^reports/timeline/$',
+        ReplacementTimelineReport.as_view(),
+        name='replacement_timeline'),
 ]

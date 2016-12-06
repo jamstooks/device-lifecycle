@@ -1,0 +1,52 @@
+{% extends 'dashboard/reports/base.html' %}
+
+{% block report_tabs %}
+  {% with 'timeline' as active %}
+    {% include 'dashboard/reports/tabs.html' %}
+  {% endwith %}
+  <form action="" method="get" class="pull-right filter-form">
+    {{ filter.form.as_p }}
+  </form>
+{% endblock %}
+
+{% block footer_js %}
+  {{ block.super }}
+  <script>
+  var chart = c3.generate({
+    data: {
+        x: 'years',
+        columns: [
+          {% for k,v_list in chart_data.items %}
+            [
+              '{{ k }}', {% for v in v_list %}{{ v }}{% if not forloop.last %}, {% endif %}{% endfor %}
+            ]{% if not forloop.last %},{% endif %}
+          {% endfor %}
+            // ['x', 2016, 2017, 2018, 2019],
+            // ['1st year', 2, 1, 2, 4,],
+            // ['2nd year', 3, 2, 1, 2,],
+            // ['3rd year', 0, 3, 2, 1,]
+        ],
+        type: 'bar',
+        groups: [
+          [
+            {% for k,v_list in chart_data.items %}
+              {% if k != 'years' %}
+                '{{ k }}'{% if not forloop.last %},{% endif %}
+              {% endif %}
+            {% endfor %}
+          ]
+        ]
+    },
+    color: {
+      pattern: colorPattern
+    },
+    axis: {
+      y: {
+        tick: {
+          values: [{% for y in y_values %}{{ y }}{% if not forloop.last %},{% endif %}{% endfor %}]
+        }
+      }
+    }
+});
+  </script>
+{% endblock %}
