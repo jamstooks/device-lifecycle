@@ -1,7 +1,7 @@
 {% extends "devices/device_form.html" %}
 
 {% block dashboard_content %}
-  {% url 'dashboard:device_delete' device.id as delete_url %}
+  {% url 'dashboard:device_delete' organization.slug device.id as delete_url %}
   {{ block.super }}
 {% endblock %}
 
