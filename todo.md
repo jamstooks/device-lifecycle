@@ -60,6 +60,7 @@
     - [ ] ticketing systems to add events for service requests
     - [ ] vendors, like geek squad to track repairs
     - [ ] recycling/disposal providers
+    - [ ] EPEAT?
   - [ ] initial sale vendor
   - [ ] notifications/alerts
     - [ ] when devices are added and repaired
