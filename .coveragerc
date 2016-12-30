@@ -1,0 +1,6 @@
+[run]
+source = device_lifecycle
+omit =
+    *tests*
+    *migrations*
+    device_lifecycle/wsgi.py

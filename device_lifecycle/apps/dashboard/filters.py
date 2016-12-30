@@ -11,9 +11,7 @@ class InventoryFilterSet(django_filters.FilterSet):
         label='Year Purchased',
         name='purchaseevent',
         lookup_expr='date__year')
-
     device_type = django_filters.ChoiceFilter(label='Type')
-
     status = django_filters.ChoiceFilter(label='Status')
 
     class Meta:

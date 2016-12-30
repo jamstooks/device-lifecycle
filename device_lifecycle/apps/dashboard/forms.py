@@ -68,7 +68,7 @@ class PurchaseEventForm(DeviceChildForm):
         model = PurchaseEvent
         fields = [
             'date', 'vendor_name', 'vendor_address',
-            'vendor_website', 'purchase_price', 'receipt']
+            'vendor_website', 'purchase_price', 'receipt', 'notes']
 
     def save(self, device, commit=True):
         self.instance.purchased_device = device
@@ -106,7 +106,7 @@ class TransferEventForm(DeviceChildForm):
         self.fields['transferred_to'].queryset = organization.person_set.all()
 
     def save(self, device, transferred_from, commit=True):
-        if not hasattr(self.instance, 'id'):
+        if self.instance.id is None:
             # only update the transferred from when created
             self.instance.transferred_from = transferred_from
         return super(TransferEventForm, self).save(device, commit)

@@ -378,8 +378,9 @@ class DecommissionEventBaseView(DeviceChildEditMixin):
         device = self.get_device()
         self.object = form.save(device=device)
 
-        # after saving, the device's current owner needs to change
+        # after saving, the device's current owner and status needs to change
         self.object.device.status = self.object.device.STATUS_CHOICES.retired
+        self.object.device.current_owner = None
         self.object.device.save()
 
         return HttpResponseRedirect(self.get_success_url())
