@@ -17,7 +17,9 @@ class ReportTestCase(BaseTestCase):
     def testReports(self):
         self.client.login(**self.admin_cred)
 
-        names = ['reports_summary', 'reports_age', 'replacement_timeline']
+        names = [
+            'reports_summary', 'reports_age',
+            'replacement_timeline', 'activity_feed']
 
         for name in names:
             url = reverse('dashboard:%s' % name, kwargs=self.org_url_kwargs)
