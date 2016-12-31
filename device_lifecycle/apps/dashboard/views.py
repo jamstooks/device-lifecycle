@@ -58,7 +58,7 @@ class DashboardRedirectView(LoginRequiredMixin, TemplateView):
         org_list = []
         for org_user in self.ou_list:
             org_list.append(org_user.organization)
-        _context['organization_list'] = self.org_list
+        _context['organization_list'] = org_list
         return _context
 
 

@@ -2,7 +2,10 @@ from django.test import TestCase
 from django.contrib.auth import get_user_model
 
 from organizations.models import Organization, OrganizationUser
-from ..apps.people.models import Person
+from ..apps.people.models import Person, Settings
+from ..apps.devices.models import Device, PurchaseEvent
+
+import datetime
 
 User = get_user_model()
 
@@ -25,6 +28,7 @@ class BaseTestCase(TestCase):
             name='testorg',
             slug='testorg'
         )
+        org_settings = Settings.objects.create(organization=self.org)
         org_user = OrganizationUser.objects.create(
             organization=self.org,
             user=self.admin_user,
@@ -44,3 +48,35 @@ class BaseTestCase(TestCase):
         )
 
         return super(BaseTestCase, self).setUp()
+
+    def init_two_devices(self):
+        self.device1 = Device.objects.create(
+            organization=self.org,
+            status='active',
+            device_type='laptop',
+            manufacturer='Apple',
+            model='Macbook 1',
+            serial='1000',
+            current_owner=self.person1,
+            description="blah" * 3
+        )
+        self.purchase_event1 = PurchaseEvent.objects.create(
+            device=self.device1,
+            purchased_device=self.device1,
+            date=datetime.date(year=2017, month=1, day=1)
+        )
+        self.device2 = Device.objects.create(
+            organization=self.org,
+            status='spare',
+            device_type='desktop',
+            manufacturer='Apple',
+            model='Macbook 2',
+            serial='1000',
+            current_owner=self.person1,
+            description="blah" * 3
+        )
+        self.purchase_event2 = PurchaseEvent.objects.create(
+            device=self.device2,
+            purchased_device=self.device2,
+            date=datetime.date(year=2016, month=1, day=1)
+        )

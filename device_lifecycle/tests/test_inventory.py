@@ -16,36 +16,7 @@ class InventoryTestCase(BaseTestCase):
     """
     def setUp(self):
         super(InventoryTestCase, self).setUp()
-        self.device1 = Device.objects.create(
-            organization=self.org,
-            status='active',
-            device_type='laptop',
-            manufacturer='Apple',
-            model='Macbook 1',
-            serial='1000',
-            current_owner=self.person1,
-            description="blah" * 3
-        )
-        self.purchase_event1 = PurchaseEvent.objects.create(
-            device=self.device1,
-            purchased_device=self.device1,
-            date=datetime.date(year=2017, month=1, day=1)
-        )
-        self.device2 = Device.objects.create(
-            organization=self.org,
-            status='spare',
-            device_type='desktop',
-            manufacturer='Apple',
-            model='Macbook 2',
-            serial='1000',
-            current_owner=self.person1,
-            description="blah" * 3
-        )
-        self.purchase_event2 = PurchaseEvent.objects.create(
-            device=self.device2,
-            purchased_device=self.device2,
-            date=datetime.date(year=2016, month=1, day=1)
-        )
+        self.init_two_devices()
 
     def testInventory(self):
         self.client.login(**self.admin_cred)
