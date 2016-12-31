@@ -26,12 +26,20 @@ class PeopleTestCase(BaseTestCase):
         url = reverse('dashboard:person_add', kwargs=self.org_url_kwargs)
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
+
+        # invalid
         post_dict = {
-            'name': "person 3",
+            'name': '',
             'position': 'test dummy',
             'email': 'person@example.com',
             'is_active': 'yes'
         }
+        response = self.client.post(url, post_dict)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(Person.objects.count(), 2)
+
+        # valid
+        post_dict['name'] = 'person 3'
         response = self.client.post(url, post_dict)
         self.assertEqual(response.status_code, 302)
         self.assertEqual(Person.objects.count(), 3)
