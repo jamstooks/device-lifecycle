@@ -7,9 +7,13 @@ django-extensions==1.7.5
 django-organizations==0.8.2
 django-model-utils==2.6
 ipython
+xlwt==1.1.2
 
 # deployment specific
 django-s3-folder-storage==0.5
 gunicorn==19.6.0
 psycopg2
 whitenoise==3.2.2
+
+# non pypi
+https://github.com/danpetrikin/django-excel-response/archive/1.51.zip
