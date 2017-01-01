@@ -1,5 +1,6 @@
 from base import BaseTestCase
 
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.urlresolvers import reverse
 
 from ..apps.devices.models import (
@@ -8,6 +9,7 @@ from ..apps.devices.models import (
 from ..apps.people.models import Person
 
 import datetime
+import os
 
 
 class InventoryTestCase(BaseTestCase):
@@ -128,7 +130,7 @@ class DevicesTestCase(BaseTestCase):
         self.assertEqual(response.status_code, 200)
 
         post_dict['description'] = "blerg" * 2
-        response = self.client.post(url, post_dict)
+        response = self.client.post(url, post_dict, format='multipart')
         self.assertEqual(response.status_code, 302)
         device.refresh_from_db()
         self.assertEqual(device.description, "blerg" * 2)
@@ -161,6 +163,13 @@ class ChildTestBase(BaseTestCase):
         )
         self.device_kwargs = {'pk': self.device1.pk}
         self.device_kwargs.update(self.org_url_kwargs)
+        self.filepath = os.path.join(
+            os.path.dirname(__file__), 'media/test.txt')
+        # self.upload_file = SimpleUploadedFile("test.txt", b"file content")
+        self.upload_file = open(self.filepath, 'r')
+
+    def tearDown(self):
+        self.upload_file.close()
 
     def get_create_post_dict(self):
         return NotImplemented
@@ -187,6 +196,7 @@ class ChildTestBase(BaseTestCase):
         self.pre_create()
 
         response = self.client.post(url, post_dict)
+        self.upload_file.seek(0)  # reuse the file
         self.assertEqual(response.status_code, 302)
         self.device1.refresh_from_db()
         self.assertEqual(self.childClass.objects.count(), 1)
@@ -217,6 +227,7 @@ class ChildTestBase(BaseTestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         response = self.client.post(url, self.get_modify_post_dict())
+        self.upload_file.seek(0)  # reuse the file
         self.assertEqual(response.status_code, 302)
 
         self.post_modify(self.childClass.objects.all()[0])
@@ -310,6 +321,7 @@ class RepairEventTestCase(ChildTestBase, ChildTestMixin):
         return {
             'date': "2017-1-1",
             'cost': '200',
+            'receipt': self.upload_file,
             'vendor_name': "Vendor Name",
             'vendor_address': "addy",
             'notes': "blah" * 3
@@ -326,7 +338,8 @@ class PurchaseEventTestCase(ChildTestBase, ChildTestMixin):
             'vendor_name': "Vendor Name",
             'vendor_address': "addy",
             'purchase_price': '200',
-            'notes': "blah" * 3
+            'notes': "blah" * 3,
+            'receipt': self.upload_file
         }
 
     def post_create(self, event):
@@ -342,7 +355,8 @@ class DecommissionEventTestCase(ChildTestBase, ChildTestMixin):
             'date': "2017-1-1",
             'method': "recycled",
             'cost': '200',
-            'notes': "blah" * 3
+            'notes': "blah" * 3,
+            'receipt': self.upload_file
         }
 
     def post_create(self, event):
@@ -359,7 +373,8 @@ class WarrantyTestCase(ChildTestBase, ChildTestMixin):
         return {
             'start_date': "2017-1-1",
             'end_date': "2018-1-1",
-            'description': "blah" * 3
+            'description': "blah" * 3,
+            'documentation': self.upload_file
         }
 
     def get_modify_post_dict(self):
