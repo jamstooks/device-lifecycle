@@ -9,13 +9,17 @@ env:
   global:
   - DATABASE_URL=postgresql://postgres@localhost/travis_ci_test
   - SECRET_KEY=blahblahblah
+  - USE_S3=1
+  - AWS_STORAGE_BUCKET_NAME=device-lifecycle-dev
+  - secure: HByQ/EurJ81uVKSHCX7dAfeJTpSe8mvY7ismn6jMIVH/KdC5bMww3+Y4E9nso9wuwiT3lifnDFKDJ5MVfFUHTxK0WCLB+kws58WQifGPg8/jMxumMIbN/EAXQhpNPCwRfSqCyYb14WEmQKsIyvVCOSJX2tmFdn5D5rMgFvRvEO50uvbSO6mWiCcHAKGYEhazBts9psyVp2cgkQpop49xyORvL0ImNBkja0z9c9tRZK1i9dtyCGgHo87LZiMzBNy8VIOck9+4Tfnw1U7MWJP8btG2EZuqJj0d5znGkooWLNn+g73qQifBFLNHd/3be1bGndCiwmdw+SReaNEy/xV9gvkwU5w/tiGRBxo8f8weOc6cntyzO9axhYTr9NfGBGMmg0EUHL8WZ8FBzXdh22jDmjtmgCPn8O262G3raNPF/SbsXruw102QyzaycEH3tcXshJCMZqd6BUqxcqPdinKmNfeRuH8z5gN5GKbVkIv8qsKMwJ55G6qXbsKmmIgxXK6D4987eNPbPiiG/qvH03+dEd/wrGqUxk9xmLH316AU/LXQQVxBMDegROhGlHQwxL0qctI9EXXMciv79suE1A8wSBpQMs6cl5zk3PpLDWlUH6hc45QmTuoX8Iyve2h6KvWTWV8ZmvWXznpgKB1/cpjtHVNH+FqhsjJvb7YtJeGHuQs=
+  - secure: UnGOcQmMLkqdCCqBVSsD4AmcwvHv6P5nqo1qlyUL8zxYJVSAAjyQNusVE3Xu1TugwJKgtJE15XH1KiXqxWmabSf21mJqK9U9YAG9xPU+7N7eMto3JXuaSHS9ahFus5hbv26xSescCCbGMDawLT6YclQiGOu6FBJ5l0sux3MuAh0Fw9MjYu0iRrqsaC66a0vrq2kxIMqNhep8akjUwvJOLwtLoZFdvsOdkTPCNbsUPJzfq3vPJovtt0k5Wy/u4hoUU7on08yhMW2eEDGC3T61O8QVwWX8R6X8R4uPWxKBhmxDUc/BSJJ9BoVSr0MucVw5pSABLoPm6FSUnEkyL0A23kHk5LSIqUreQi2etyQQ5CrwtFZ3CNJVPsKbq34Ai0nmbuO3UEvyzZzj+SmrUDgZrM5Q5HEG9NcJqupxq1u+iuVzEvpJ0SCWOfAHvyq2fEyA0+p1IpWrmPjHeLl1KegWIIoQawrJarb5iyBTD3L7hQMDORjLzPvAeuY0KKSX5IeiDfpn0SYGKr3I7kBRpFVsj8fDY+u5wAticH8gj2hwE2aBZnKpCOJhnnjHFhxKBW68jPb9n1CEguAcSkkSC+ZQIor2Iajh3rxAqIFtK8FHGyOmi+q8XwrmlMLPrPfRusHmxc1+Ib0qp7r0lwLShmqkMNPJxoyPI+s+HEQD4JQSlBw=
 install:
-    - pip install -U pip
-    - pip install -U setuptools
-    - pip install -r requirements.txt
-    - pip install -r requirements_test.txt
+- pip install -U pip
+- pip install -U setuptools
+- pip install -r requirements.txt
+- pip install -r requirements_test.txt
 before_script:
-    - python manage.py collectstatic --noinput --verbosity 0
+- python manage.py collectstatic --noinput --verbosity 0
 script: coverage run manage.py test -v3
 after_success: coveralls
 notifications:

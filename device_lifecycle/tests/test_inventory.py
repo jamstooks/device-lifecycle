@@ -1,6 +1,5 @@
 from base import BaseTestCase
 
-from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.urlresolvers import reverse
 
 from ..apps.devices.models import (
@@ -165,7 +164,6 @@ class ChildTestBase(BaseTestCase):
         self.device_kwargs.update(self.org_url_kwargs)
         self.filepath = os.path.join(
             os.path.dirname(__file__), 'media/test.txt')
-        # self.upload_file = SimpleUploadedFile("test.txt", b"file content")
         self.upload_file = open(self.filepath, 'r')
 
     def tearDown(self):
