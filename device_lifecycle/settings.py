@@ -175,3 +175,6 @@ SITE_ID = 1
 #################################################
 SECURE_SSL_REDIRECT = os.environ.get('SECURE_SSL_REDIRECT', False)
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+ACME_CHALLENGE_URL_SLUG = os.environ.get('ACME_CHALLENGE_URL_SLUG', None)
+ACME_CHALLENGE_TEMPLATE_CONTENT = os.environ.get(
+    'ACME_CHALLENGE_TEMPLATE_CONTENT', None)
