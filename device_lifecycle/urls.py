@@ -19,4 +19,5 @@ urlpatterns = [
     ),
     url(r'^accounts/', include('allauth.urls')),
     url(r'^admin/', admin.site.urls),
+    url(r'^.well-known/acme-challenge/', include('acme_challenge.urls')),
 ]

@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'device_lifecycle.apps.devices',
     'device_lifecycle.apps.people',
 
+    'acme_challenge',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -49,7 +50,6 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'sslify.middleware.SSLifyMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -173,5 +173,4 @@ SITE_ID = 1
 #################################################
 # ssl
 #################################################
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SSLIFY_DISABLE = os.environ.get('SSLIFY_DISABLE', False)
+SECURE_SSL_REDIRECT = os.environ.get('SECURE_SSL_REDIRECT', False)
