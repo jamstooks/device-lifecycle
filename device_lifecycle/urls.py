@@ -5,7 +5,8 @@ from django.views.generic.base import RedirectView, TemplateView
 from .apps.dashboard.views import DashboardRedirectView
 
 urlpatterns = [
-    url(r'^$', TemplateView.as_view(template_name='recruit.html')),
+    url(r'^$', RedirectView.as_view(url='/accounts/login/')),
+    url(r'^home/$', TemplateView.as_view(template_name='recruit.html')),
     url(
         '^dashboard/$',
         DashboardRedirectView.as_view(),
