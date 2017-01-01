@@ -102,7 +102,9 @@
         <li><a href="{% url 'dashboard:note_add' organization.slug device.pk %}">Note</a></li>
         <li><a href="{% url 'dashboard:transfer_add' organization.slug device.pk %}">Transfer</a></li>
         <li><a href="{% url 'dashboard:repair_add' organization.slug device.pk %}">Repair</a></li>
-        <li><a href="{% url 'dashboard:decommission_add' organization.slug device.pk %}">Decommission</a></li>
+        {% if not device.decommissionevent %}
+          <li><a href="{% url 'dashboard:decommission_add' organization.slug device.pk %}">Decommission</a></li>
+        {% endif %}
         <li><a href="{% url 'dashboard:warranty_add' organization.slug device.pk %}">Warranty</a></li>
       </ul>
     </div>

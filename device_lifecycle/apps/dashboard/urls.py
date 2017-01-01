@@ -7,6 +7,7 @@ from .views import (
     DeviceDeleteView,
     DeviceDetailView,
     DeviceListView,
+    DeviceListExcelView,
     DeviceUpdateView,
     PersonList,
     PersonDetail,
@@ -39,6 +40,10 @@ urlpatterns = [
     # devices
     # url(r'^$', Dashboard.as_view(), name='dashboard'),
     url(r'^$', DeviceListView.as_view(), name='device_list'),
+    url(
+        r'^export/$',
+        DeviceListExcelView.as_view(),
+        name='device_list_export'),
     url(r'^activity/$', ActivityFeedView.as_view(), name='activity_feed'),
     url(r'^devices/add/$', DeviceCreateView.as_view(), name='device_add'),
     url(

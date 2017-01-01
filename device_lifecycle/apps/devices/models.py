@@ -246,6 +246,7 @@ class DecommissionEvent(EventBase):
         ('sold', 'Sold'),
         ('disposal service', 'Disposal Service'),
     )
+    retired_device = models.OneToOneField(Device)
     method = models.CharField(max_length=16, choices=METHOD_CHOICES)
     receipt = models.FileField(upload_to=get_upload_to, blank=True, null=True)
     cost = models.FloatField(

@@ -20,6 +20,7 @@ from .utils import get_device_qs_purchase_years
 
 from collections import OrderedDict
 from datetime import date, timedelta
+from excel_response3 import ExcelResponse
 from organizations.mixins import MembershipRequiredMixin
 from organizations.models import Organization, OrganizationUser
 
@@ -125,10 +126,45 @@ class DeviceListView(DeviceBaseView, ListView):
         if len(data) == 0:
             data['status'] = Device.STATUS_CHOICES.active
 
-        _context['filter'] = InventoryFilterSet(
+        self.filter = InventoryFilterSet(
             data,
             queryset=self.get_queryset())
+
+        _context['filter'] = self.filter
+        export_link = reverse(
+            'dashboard:device_list_export',
+            kwargs={'org_slug': self.get_organization().slug}
+            )
+        _context['export_link'] = "%s?%s" % (export_link, data.urlencode())
         return _context
+
+
+class DeviceListExcelView(DeviceListView):
+
+    def render_to_response(self, context, **response_kwargs):
+        rows = []
+        headers = [
+            'manufacturer', 'model', 'status', 'owner', 'serial #',
+            'purchase date', 'date retired'
+        ]
+        rows.append(headers)
+        for device in self.filter.qs:
+            row = [
+                device.manufacturer, device.model, device.status,
+                device.current_owner, device.serial
+            ]
+            try:
+                row.append(device.purchaseevent.date)
+            except:  # RelatedObjectDoesNotExist
+                row.append(None)
+            try:
+                row.append(device.decommissionevent.date)
+            except:  # RelatedObjectDoesNotExist
+                row.append(None)
+
+            rows.append(row)
+
+        return ExcelResponse(rows)
 
 
 class DeviceDetailView(DeviceBaseView, DetailView):
@@ -525,7 +561,6 @@ class ReplacementTimelineReport(DeviceBaseView, TemplateView):
 
         for offset in range(window_start, window_end+1):
             key = "Year %d" % (offset - window_start + 1)
-            # import pdb; pdb.set_trace()
             chart_data[key] = []
             for year in year_list:
                 row = chart_data[key].append(
