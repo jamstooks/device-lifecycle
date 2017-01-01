@@ -94,6 +94,10 @@ class DecommissionEventForm(DeviceChildForm):
         model = DecommissionEvent
         fields = ['date', 'method', 'cost', 'receipt', 'notes']
 
+    def save(self, device, commit=True):
+        self.instance.retired_device = device
+        return super(DecommissionEventForm, self).save(device, commit)
+
 
 class TransferEventForm(DeviceChildForm):
     class Meta:
