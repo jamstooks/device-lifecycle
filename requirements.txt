@@ -11,9 +11,11 @@ xlwt==1.1.2
 
 # deployment specific
 django-s3-folder-storage==0.5
+django-sslify==0.2.7
 gunicorn==19.6.0
 psycopg2
 whitenoise==3.2.2
 
 # non pypi
+https://github.com/jamstooks/django-acme-challenge/archive/v1.0.zip
 https://github.com/danpetrikin/django-excel-response/archive/1.51.zip
