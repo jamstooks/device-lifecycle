@@ -55,6 +55,32 @@ class InventoryTestCase(BaseTestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.context['filter'].qs), 1)
 
+    def testExport(self):
+        self.client.login(**self.admin_cred)
+
+        # unfiltered
+        url = reverse(
+            'dashboard:device_list_export', kwargs=self.org_url_kwargs)
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.data), 2)
+        self.assertEqual(
+            response._headers['content-type'][1],
+            'application/vnd.ms-excel')
+
+        # filtered
+        filter_dict = {
+            'date_purchased': '',
+            'device_type': '',
+            'status': ''
+        }
+        response = self.client.get(url, filter_dict)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.data), 3)
+        self.assertEqual(
+            response._headers['content-type'][1],
+            'application/vnd.ms-excel')
+
 
 class DevicesTestCase(BaseTestCase):
     """
@@ -303,6 +329,9 @@ class PurchaseEventTestCase(ChildTestBase, ChildTestMixin):
             'notes': "blah" * 3
         }
 
+    def post_create(self, event):
+        self.assertEqual(event.device.purchaseevent.id, event.id)
+
 
 class DecommissionEventTestCase(ChildTestBase, ChildTestMixin):
     prefix = "decommission"
@@ -319,6 +348,7 @@ class DecommissionEventTestCase(ChildTestBase, ChildTestMixin):
     def post_create(self, event):
         self.assertEqual(event.device.status, 'retired')
         self.assertEqual(event.device.current_owner, None)
+        self.assertEqual(event.device.decommissionevent.id, event.id)
 
 
 class WarrantyTestCase(ChildTestBase, ChildTestMixin):

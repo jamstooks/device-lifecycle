@@ -2,13 +2,19 @@
 
 {% block dashboard_content %}
   <div class="card">
-      <div class="header">        
+      <div class="header">
           <form action="" method="get" class="pull-right filter-form">
             {{ filter.form.as_p }}
           </form>
           <h4 class="title">Inventory</h4>
           <p class="category">
             {{ filter.qs.count }} Devices
+          </p>
+          <p class="category" style="margin-top: 2em;">
+            <a href="{{ export_link }}">
+              <i class="fa fa-download"></i>
+              Export
+            </a>
           </p>
       </div>
       <div class="content table-responsive table-full-width">
