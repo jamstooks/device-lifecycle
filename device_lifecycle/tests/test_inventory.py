@@ -201,7 +201,7 @@ class ChildTestBase(BaseTestCase):
 
         self.post_create(self.childClass.objects.all()[0])
 
-    def get_modify_post_dict(self):
+    def get_modify_post_dict(self, event):
         " simplest option is just to change the note "
         post_dict = self.get_create_post_dict()
         post_dict['notes'] = "blerg" * 2
@@ -224,7 +224,7 @@ class ChildTestBase(BaseTestCase):
 
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        response = self.client.post(url, self.get_modify_post_dict())
+        response = self.client.post(url, self.get_modify_post_dict(event))
         self.upload_file.seek(0)  # reuse the file
         self.assertEqual(response.status_code, 302)
 
@@ -288,9 +288,10 @@ class TransferEventTestCase(ChildTestBase, ChildTestMixin):
         self.assertEqual(event.transferred_to, self.person2)
         self.assertEqual(event.transferred_from, self.person1)
 
-    def get_modify_post_dict(self):
+    def get_modify_post_dict(self, event):
         post_dict = self.get_create_post_dict()
         post_dict['transferred_to'] = ''
+        post_dict['transferred_from'] = event.transferred_from.id
         return post_dict
 
     def post_modify(self, event):
@@ -375,7 +376,7 @@ class WarrantyTestCase(ChildTestBase, ChildTestMixin):
             'documentation': self.upload_file
         }
 
-    def get_modify_post_dict(self):
+    def get_modify_post_dict(self, event):
         " simplest option is just to change the note "
         post_dict = self.get_create_post_dict()
         post_dict['description'] = "blerg" * 2
