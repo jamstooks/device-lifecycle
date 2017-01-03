@@ -14,7 +14,8 @@ from ..devices.models import (
 from .filters import InventoryFilterSet, ReplacementTimelineFilterset
 from .forms import (
     DeviceForm, PersonForm, PurchaseEventForm, NoteEventForm, RepairEventForm,
-    TransferEventForm, DecommissionEventForm, WarrantyForm)
+    TransferEventForm, TransferEventEditForm, DecommissionEventForm,
+    WarrantyForm)
 from ..people.models import Person, Settings
 from .utils import get_device_qs_purchase_years
 
@@ -398,6 +399,7 @@ class TransferEventCreateView(TransferEventBaseView, CreateView):
 
 class TransferEventUpdateView(TransferEventBaseView, UpdateView):
     form_title = "Change this transfer"
+    form_class = TransferEventEditForm
 
 
 class TransferEventDeleteView(TransferEventBaseView, DeleteView):

@@ -114,3 +114,9 @@ class TransferEventForm(DeviceChildForm):
             # only update the transferred from when created
             self.instance.transferred_from = transferred_from
         return super(TransferEventForm, self).save(device, commit)
+
+
+class TransferEventEditForm(TransferEventForm):
+    class Meta:
+        model = TransferEvent
+        fields = ['date', 'transferred_from', 'transferred_to', 'notes']
