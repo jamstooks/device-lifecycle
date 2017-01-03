@@ -21,6 +21,7 @@
         <table class="table table-hover table-striped">
             <thead>
               <th>Model</th>
+              <th>Status</th>
               <th>Manufacturer</th>
               <th>Serial #</th>
               <th>Purhcase Date</th>
@@ -35,6 +36,10 @@
                     <a href="{{ device.get_absolute_url }}">
                       {{ device.model }}
                     </a>
+                  </td>
+                  <td>
+                    <span class="text-{{ device.get_status_class }}">
+                      {{ device.status }}</span>
                   </td>
                   <td>{{ device.manufacturer }}</td>
                   <td>{{ device.serial }}</td>
