@@ -1,0 +1,148 @@
+{% extends 'recruit/base.html' %}
+
+{% load static %}
+
+{% block recruit_content %}
+    <div class="parallax filter-gradient blue" data-color="blue">
+        <div class= "container">
+            <div class="row">
+                <div class="col-md-7  hidden-xs">
+                    <div class="parallax-image">
+                        <img src="{% static 'img/mac1.png' %}" alt="looks beautiful on a desktop"/>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="description text-center">
+                        <h2>Super, Easy Device Management</h2>
+                        <br>
+                        <h5>
+                          Asset management, tracking and reporting made easy.
+                          Stop using spreadsheets or outdated software.<br><br>
+                          A modern and
+                          convenient way to track devices across your organization.
+                        </h5>
+                        <div class="buttons">
+                            <a href="#" class="btn btn-fill btn-neutral">
+                            <i class="fa fa-superpowers"></i> Get Started
+                            </a>&nbsp;
+                            <a href="#" class="btn btn-fill btn-neutral">
+                            <i class="fa fa-video-camera"></i> See it in Action
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section section-gray section-clients">
+        <div class="container text-center">
+            <h4 class="header-text">It might even be free for you...</h4>
+            <p>
+              DeviceLifecycle is free for small non-profits and our
+              entry-level plans will always be free.
+              <br>Even if you don't
+              fit into those plans, you'll still be amazed at how
+              cheap it is.
+            </p>
+            <!-- <h4 class="header-text">Why Device Lifecycle?</h4>
+            <p>
+              If you're working with spreadsheets then I don't even
+              need to answer that question, just give the demo a shot
+              and prepare to be blown away.
+              Compare Device Lifecycle to other "asset management" tools
+              out there, and you'll see the advantages of a modern,
+              portable, mobile-friendly, multi-user platform.
+            </p> -->
+        </div>
+    </div>
+    <div class="section section-presentation">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5 hidden-xs">
+                    <div class="description">
+                        <h4 class="header-text">Simplicity First</h4>
+                        <p>
+                          At the heart of this tool is <em>simplicity</em>.
+                          It's simple to understand, and won't get in your way.
+                        </p>
+                        <p>
+                          Designed and built by a web developer in a management position
+                          finding a complete lack of useful options out there for a
+                          small business to manage it's electronics.
+                        </p>
+                        <p>
+                          In no way does this sacrifice functionality;
+                          Device Lifecycle is a comprehensive tracking system.
+                          Get a glimpse of the features below...
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-6 ">
+                    <img src="{% static 'img/phone_and_laptop.png' %}" style="margin-top:-50px" alt="phone and browser support"/>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section section-features">
+        <div class="container">
+            <h4 class="header-text text-center">Features</h4>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card card-blue">
+                        <div class="icon">
+                            <i class="pe-7s-note2"></i>
+                        </div>
+                        <div class="text">
+                            <h4>Easy Tracking</h4>
+                            <p>Designed to simplify, not complicate, this is a well-organized and comprehensive application where you can quickly get to what you need.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card card-blue">
+                        <div class="icon">
+                            <i class="pe-7s-graph2"></i>
+                        </div>
+                        <h4>Useful Reporting</h4>
+                        <p>
+                          The system comes with several useful report and we continue to improve those with feedback from our community.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card card-blue">
+                        <div class="icon">
+                            <i class="pe-7s-users"></i>
+                        </div>
+                        <h4>Bring your team</h4>
+                        <p>
+                          Grant access to other members of your staff to make reporting and management tasks easier.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card card-blue">
+                        <div class="icon">
+                            <i class="pe-7s-piggy"></i>
+                        </div>
+                        <h4>Cost Effective</h4>
+                        <p>Device Lifecycle is a fairly-priced tool and we have worked hard to ensure that it will continue to be.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section section-no-padding">
+        <div class="parallax filter-gradient blue" data-color="blue">
+            <div class="parallax-background">
+                <img class ="parallax-background-image" src="{% static 'x_awesome_landing_page/assets/img/showcases/showcase-2/bg2.jpg' %}" alt="use it in your office">
+            </div>
+            <div class="info">
+                <h1>Free to Start!</h1>
+                <p>Our demo-level is always free</p>
+                <a href="" class="btn btn-neutral btn-lg btn-fill">GET STARTED</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

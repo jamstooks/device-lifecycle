@@ -1,5 +1,6 @@
 device_lifecycle.db
 staticfiles
+.html_validation
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

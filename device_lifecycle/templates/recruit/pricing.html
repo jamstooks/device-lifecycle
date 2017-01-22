@@ -1,0 +1,140 @@
+{% extends 'recruit/base.html' %}
+
+{% load static %}
+
+{% block recruit_content %}
+
+    <div class="filter-gradient blue static-page-header" data-color="blue">
+    </div>
+
+    <div class="section section-features">
+        <div class="container">
+            <h4 class="header-text text-center">Fair Pricing</h4>
+            <p class="text-center">
+              In order to provide a fair pricing model, we don't have any sort
+              of tier system. Just pay for what you use.
+            </p>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card card-blue">
+                        <div class="icon">
+                            <i class="pe-7s-user"></i>
+                        </div>
+                        <div class="text">
+                            <h4>Staff People</h4>
+                            <p>
+                              Each staff person costs <stron>$1/month</strong>.
+                            </p>
+                            <p>
+                              Your first 10 people are free!
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card card-blue">
+                        <div class="icon">
+                            <i class="pe-7s-note2"></i>
+                        </div>
+                        <h4>Devices</h4>
+                        <p>
+                          Staff can have up to 5 devices.
+                        </p>
+                        <p>
+                          Staff with more(up to 10), cost $2/month.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card card-blue">
+                        <div class="icon">
+                            <i class="pe-7s-users"></i>
+                        </div>
+                        <h4>Admins</h4>
+                        <p>
+                          You get two admins strait out of the box.
+                        </p>
+                        <p>
+                          Additional admins are $1/month.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card card-blue">
+                        <div class="icon">
+                            <i class="pe-7s-piggy"></i>
+                        </div>
+                        <h4>Getting Started</h4>
+                        <p>
+                          Ideally this is free for a lot of small organizations.
+                        </p>
+                        <p>
+                          The starting tier is 10 staff people.
+                        </p>
+                        <p>
+
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  <div class="section section-features">
+    <div class="container">
+      <h4 class="header-text text-center">Pricing Tiers</h4>
+      <div class="row">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Free Tier</th>
+              <th>Tier 1</th>
+              <th>Tier 2</th>
+              <th>Tier 3</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>People</th>
+              <td>10 staff</td>
+              <td>20 staff</td>
+              <td>50 staff</td>
+              <td>100 staff</td>
+            </tr>
+            <tr>
+              <th>Devices</th>
+              <td>2/person</td>
+              <td>3/person</td>
+              <td>5/person</td>
+              <td>6/person</td>
+            </tr>
+            <tr>
+              <th>Admins</th>
+              <td>1</td>
+              <td>2</td>
+              <td>4</td>
+              <td>8</td>
+            </tr>
+            <tr class="success">
+              <td>Businesses</td>
+              <td>Free</td>
+              <td>$5/month</td>
+              <td>$10/month</td>
+              <td>$20/month</td>
+            </tr>
+            <tr class="info">
+              <td>Nonprofits</td>
+              <td>Free</td>
+              <td>Free</td>
+              <td>$5/month</td>
+              <td>$10/month</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="text-center">
+          <a href="#">Need more?</a>
+        </p>
+      </div>
+    </div>
+  </div>
+{% endblock %}

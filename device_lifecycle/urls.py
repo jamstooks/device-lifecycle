@@ -6,7 +6,21 @@ from .apps.dashboard.views import DashboardRedirectView
 
 urlpatterns = [
     url(r'^$', RedirectView.as_view(url='/accounts/login/')),
-    url(r'^home/$', TemplateView.as_view(template_name='recruit.html')),
+
+    # Recruitment
+    url(r'^home/$', TemplateView.as_view(
+        template_name='recruit/home.html'), name='recruit_home'),
+    url(r'^pricing/$', TemplateView.as_view(
+        template_name='recruit/pricing.html'), name='recruit_pricing'),
+    url(
+        r'^join/',
+        include(
+            'device_lifecycle.apps.subscriptions.urls',
+            namespace='join')
+    ),
+    url(r'^account/', include('djstripe.urls', namespace="djstripe")),
+
+    # The app
     url(
         '^dashboard/$',
         DashboardRedirectView.as_view(),
@@ -17,7 +31,11 @@ urlpatterns = [
             'device_lifecycle.apps.dashboard.urls',
             namespace='dashboard')
     ),
+
+    # Accounts
     url(r'^accounts/', include('allauth.urls')),
+
+    # Dev
     url(r'^admin/', admin.site.urls),
     url(r'^.well-known/acme-challenge/', include('acme_challenge.urls')),
 ]

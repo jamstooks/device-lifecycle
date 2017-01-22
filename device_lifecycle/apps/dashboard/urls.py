@@ -1,4 +1,4 @@
-from django.conf.urls import url
+from django.conf.urls import include, url
 
 from .views import (
     ActivityFeedView,
@@ -151,4 +151,5 @@ urlpatterns = [
         r'^reports/timeline/$',
         ReplacementTimelineReport.as_view(),
         name='replacement_timeline'),
+
 ]

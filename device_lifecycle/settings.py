@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'bootstrapform',
     'bootstrap_notify',
+    'djstripe',
     'organizations',
 ]
 
@@ -178,3 +179,32 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 ACME_CHALLENGE_URL_SLUG = os.environ.get('ACME_CHALLENGE_URL_SLUG', None)
 ACME_CHALLENGE_TEMPLATE_CONTENT = os.environ.get(
     'ACME_CHALLENGE_TEMPLATE_CONTENT', None)
+
+#################################################
+# stripe
+#################################################
+STRIPE_PUBLIC_KEY = os.environ.get('STRIPE_PUBLIC_KEY', None)
+STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY', None)
+DJSTRIPE_PLANS = {
+    "basic": {
+        "stripe_plan_id": "basic",
+        "name": "Basic Montly Plan ($5/month)",
+        "description": "Basic access to DeviceLifecycle.com",
+        "price": 500,  # $5.00
+        "currency": "usd",
+        "interval": "month"
+    },
+}
+
+#################################################
+# HTML Validation (for tests)
+#################################################
+HTMLVALIDATOR_ENABLED = os.environ.get('HTMLVALIDATOR_ENABLED', True)
+HTMLVALIDATOR_FAILFAST = os.environ.get('HTMLVALIDATOR_FAILFAST', True)
+HTMLVALIDATOR_DUMPDIR = os.environ.get(
+    'HTMLVALIDATOR_DUMPDIR', '.html_validation')
+HTMLVALIDATOR_OUTPUT = os.environ.get('HTMLVALIDATOR_FAILFAST', 'file')
+# or 'stdout'
+HTMLVALIDATOR_VNU_JAR = os.environ.get(
+    'HTMLVALIDATOR_VNU_JAR',
+    os.path.join(PROJECT_DIR, 'tests/vnu/vnu.jar'))
