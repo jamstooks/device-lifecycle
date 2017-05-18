@@ -1,19 +1,19 @@
 dj-database-url
-Django==1.10.3
-django-allauth==0.29.0
+Django==1.10.7
+django-allauth==0.32.0
 django-bootstrap-form==3.2.1
-django-filter==1.0.1
-django-extensions==1.7.5
-django-organizations==0.8.2
-django-model-utils==2.6
+django-filter==1.0.3
+django-extensions==1.7.9
+django-organizations==0.9.1
+django-model-utils==3.0.0
 ipython
-xlwt==1.1.2
+xlwt==1.2.0
 
 # deployment specific
 django-s3-folder-storage==0.5
-gunicorn==19.6.0
+gunicorn==19.7.1
 psycopg2
-whitenoise==3.2.2
+whitenoise==3.3.0
 
 # non pypi
 https://github.com/jamstooks/django-acme-challenge/archive/v1.0.zip
